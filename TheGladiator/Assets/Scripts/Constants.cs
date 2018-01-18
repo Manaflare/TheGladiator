@@ -15,6 +15,6 @@ public static class Constants
     }
 
     public static string playerName = "Hello Player";
-    public int PlayerIndex = 0;
+    public static int PlayerIndex = 0;
 }
 
