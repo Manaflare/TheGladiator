@@ -13,6 +13,19 @@ public static class Constants
         AFTERNOON,
         NIGHT,
     }
+    public enum ArmorIndex
+    {
+        HELMET = 0,
+        UPPER_BODY,
+        LOWER_BODY,
+        SHIELDS,
+    }
+
+    public enum ItemIndex
+    {
+        WEAPON =0,
+        ARMOR,
+    }
 
     public static string playerName = "Hello Player";
     public static int PlayerIndex = 0;
