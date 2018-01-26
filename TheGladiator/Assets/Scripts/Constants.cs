@@ -21,6 +21,14 @@ public static class Constants
         SHIELDS,
     }
 
+    public enum HouseType
+    {
+        SMALL = 0,
+        MEDIUM,
+        HUGE,
+        MANSION,
+    }
+
     public enum ItemIndex
     {
         WEAPON =0,

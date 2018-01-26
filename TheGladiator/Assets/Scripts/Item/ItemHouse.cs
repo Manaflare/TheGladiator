@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemHouse : Item {
 
+    public Constants.HouseType houseType;
     // Use this for initialization
     protected override void Start()
     {
