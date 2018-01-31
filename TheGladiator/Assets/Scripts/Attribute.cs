@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[System.Serializable]
+public class ListStatus
+{
+    public List<Status> statusList;
+}
+[System.Serializable]
 public struct Status
 {
-    int Strength;
-    int Agility;
-    int Dexterity;
+    public byte Strength;
+    public byte Agility;
+    public byte Dexterity;
+    public short Stamina;
 }
 
 public class Attribute : MonoBehaviour
