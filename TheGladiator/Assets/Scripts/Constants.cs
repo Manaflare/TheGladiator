@@ -37,5 +37,12 @@ public static class Constants
 
     public static string playerName = "Hello Player";
     public static int PlayerIndex = 0;
+
+
+
+    public static string KEY_STRENGTH = "Strength";
+    public static string KEY_AGILITY = "Agility";
+    public static string KEY_DEXTERITY = "Dexterity";
+    public static string KEY_STAMINA = "Stamina";
 }
 

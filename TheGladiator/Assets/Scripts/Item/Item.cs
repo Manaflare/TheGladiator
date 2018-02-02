@@ -6,7 +6,7 @@ public abstract class Item : MonoBehaviour {
 
     public GameObject Owner;
     public GameObject Effect;
-    public float value;
+    public List<float> values;
 
     // Use this for initialization
     protected virtual void Start ()
