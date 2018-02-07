@@ -1,1 +1,2 @@
 # TheGladiator
+Magic
