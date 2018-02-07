@@ -12,7 +12,7 @@ public static class Utility
     };
 
 
-    public static ListStatus GetStatusFromJSON(int fileNumber)
+    public static ListStatus GetStatsFromJSON(int fileNumber)
     {
         string fileName;
         if(JsonFileList.TryGetValue(fileNumber, out fileName) == true)
