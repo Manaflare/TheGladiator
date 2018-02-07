@@ -6,8 +6,8 @@ public class AIManager : MonoBehaviour {
     float playerTime;
     float enemyTime;
 
-    int p1Strength = 10, p1Health = 100;
-    int eStrength = 15, eHealth = 100;
+    public Stats p1;
+    public Stats e;
 
     public float playerDelayTime;
     public float enemyDelayTime;
@@ -17,27 +17,27 @@ public class AIManager : MonoBehaviour {
         playerTime = 0.0f;
         enemyTime = 0.0f;
 	}
-    void attack()
+    void attack(Stats player, Stats enemy)
     {
-
-
         if (playerTime >= playerDelayTime)
         {
-            eHealth -= p1Strength;
+            enemy.HP -= player.Strength;
             playerTime = 0.0f;
+            Debug.Log("Player Attack");
         }
         if (enemyTime >= enemyDelayTime)
         {
-            p1Health -= eStrength;
+            player.HP -= enemy.Strength;
             enemyTime = 0.0f;
+            Debug.Log("Enemy Attack");
         }
 
-        if (p1Health <= 0)
+        if (player.HP <= 0)
         {
             Debug.Log("Player Lost");
             noOneDead = false;
         }
-        if (eHealth <= 0)
+        if (enemy.HP <= 0)
         {
             Debug.Log("Enemy Lost");
             noOneDead = false;
@@ -48,7 +48,7 @@ public class AIManager : MonoBehaviour {
 	void Update () {
         playerTime += Time.deltaTime;
         enemyTime += Time.deltaTime;
-        if (noOneDead) attack();
+        if (noOneDead) attack(p1, e);
         //Debug.Log("Player Hp: " + p1Health);
         //Debug.Log("Enemy Hp: " + eHealth);
     }
