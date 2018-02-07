@@ -20,9 +20,7 @@ public struct Stats
 
 public class Attribute : MonoBehaviour
 {
-
     public Stats STATS { get; private set; }
-
     public bool IsAlive { get; private set; }
     public bool IsDying { get; private set; }
 
@@ -40,6 +38,6 @@ public class Attribute : MonoBehaviour
     
     public void takeDamage(byte damage)
     {
-        HP -= damage;
+        //STATS.HP -= damage;
     }
 }
