@@ -44,5 +44,17 @@ public static class Constants
     public static string KEY_AGILITY = "Agility";
     public static string KEY_DEXTERITY = "Dexterity";
     public static string KEY_STAMINA = "Stamina";
+
+    public static byte MAX_STAT_LEVEL = byte.MaxValue;
+
+    public static float MINIMUM_DELAY = 0.5f;
+    public static float BASE_TIME = 2.0f;
+    public static float MODIFIABLE_TIME = BASE_TIME - MINIMUM_DELAY;
+
+
+    public static float MINIMUM_ACCURACY = 0.5f;
+    public static float MAXIMUM_ACCURACY = 0.95f;
+    public static float ACCURACY_STEP_AMOUNT = (MAXIMUM_ACCURACY - MINIMUM_ACCURACY) / MAX_STAT_LEVEL;
+
 }
 

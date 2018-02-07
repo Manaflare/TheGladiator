@@ -9,10 +9,10 @@ public class AIManager : MonoBehaviour {
     public Stats e;
 
     [Header("Delay Settings")]
-    [Range(0.0f, 3.0f)]
-    public float playerDelayTime;
-    [Range(0.0f, 3.0f)]
-    public float enemyDelayTime;
+    [SerializeField]
+    private float playerDelayTime;
+    [SerializeField]
+    private float enemyDelayTime;
 
     float playerTime;
     float enemyTime;
@@ -22,20 +22,61 @@ public class AIManager : MonoBehaviour {
 	void Start () {
         playerTime = 0.0f;
         enemyTime = 0.0f;
+
+        playerDelayTime = calculateDelay(p1);
+        enemyDelayTime = calculateDelay(e);
+
 	}
+    float calculateDelay(Stats s)
+    {
+        
+        float agilityDifference = (Constants.MAX_STAT_LEVEL - s.Agility);
+        float maxPercentage = agilityDifference / Constants.MAX_STAT_LEVEL;
+        float timeWithoutMinimum = Constants.MODIFIABLE_TIME * maxPercentage;
+        float attackDelay = timeWithoutMinimum + Constants.MINIMUM_DELAY;
+
+        return attackDelay;
+    }
+
+    bool attackHits(int dex)
+    {
+        float accuracy = 100 * (Constants.MINIMUM_ACCURACY + (Constants.ACCURACY_STEP_AMOUNT * dex));
+
+        bool result = (Random.Range(0, 100) > accuracy) ? true : false; 
+
+        return result;
+    }
     void attack(Stats player, Stats enemy)
     {
+
         if (playerTime >= playerDelayTime)
         {
-            enemy.HP -= player.Strength;
+            bool hit = attackHits(player.Dexterity);
+            if (hit)
+            {
+                enemy.HP -= player.Strength;
+                Debug.Log("Player Attack");
+            }
+            else if (!hit)
+            {
+                Debug.Log("Player Missed");
+            }
             playerTime = 0.0f;
-            Debug.Log("Player Attack");
         }
-        if (enemyTime >= enemyDelayTime)
+        if (enemyTime >= enemyDelayTime && attackHits(enemy.Dexterity))
         {
-            player.HP -= enemy.Strength;
+            bool hit = attackHits(enemy.Dexterity);
+            if (hit)
+            {
+                player.HP -= enemy.Strength;
+                Debug.Log("Enemy Attack");
+            }
+            else if (!hit)
+            {
+                Debug.Log("Enemy Missed");
+            }
             enemyTime = 0.0f;
-            Debug.Log("Enemy Attack");
+
         }
 
         if (player.HP <= 0)
