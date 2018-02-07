@@ -7,6 +7,11 @@ public class AIManager : MonoBehaviour {
     [Header("Player Settings")]
     public Stats p1;
     public Stats e;
+    public Character p1c;
+    public Character ec;
+
+    public Animator anim;
+    public Animator anim2;
 
     [Header("Delay Settings")]
     [SerializeField]
@@ -17,7 +22,10 @@ public class AIManager : MonoBehaviour {
     float playerTime;
     float enemyTime;
 
+    bool animationPlaying = false;
+
     bool noOneDead = true;
+    bool timeIsRunning = true;
 	// Use this for initialization
 	void Start () {
         playerTime = 0.0f;
@@ -42,12 +50,13 @@ public class AIManager : MonoBehaviour {
     {
         float accuracy = 100 * (Constants.MINIMUM_ACCURACY + (Constants.ACCURACY_STEP_AMOUNT * dex));
 
-        bool result = (Random.Range(0, 100) > accuracy) ? true : false; 
+        bool result = (Random.Range(0, 100) < accuracy) ? true : false; 
 
         return result;
     }
     void attack(Stats player, Stats enemy)
     {
+        timeIsRunning = false;
 
         if (playerTime >= playerDelayTime)
         {
@@ -56,6 +65,8 @@ public class AIManager : MonoBehaviour {
             {
                 enemy.HP -= player.Strength;
                 Debug.Log("Player Attack");
+                animationPlaying = true;
+                anim.SetBool("playerAttack", true);
             }
             else if (!hit)
             {
@@ -70,6 +81,7 @@ public class AIManager : MonoBehaviour {
             {
                 player.HP -= enemy.Strength;
                 Debug.Log("Enemy Attack");
+                anim2.SetBool("enemyAttack", true);
             }
             else if (!hit)
             {
@@ -93,8 +105,15 @@ public class AIManager : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-        playerTime += Time.deltaTime;
-        enemyTime += Time.deltaTime;
+        anim.SetBool("playerAttack", false);
+        anim2.SetBool("enemyAttack", false);
+        //Debug.Log(p1c.isAttacking);
+        if (!p1c.isAttacking && !ec.isAttacking)
+        {
+           
+            playerTime += Time.deltaTime;
+            enemyTime += Time.deltaTime;
+        }
         if (noOneDead) attack(p1, e);
         //Debug.Log("Player Hp: " + p1Health);
         //Debug.Log("Enemy Hp: " + eHealth);

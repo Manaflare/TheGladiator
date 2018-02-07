@@ -338,6 +338,7 @@ GameObject:
   - component: {fileID: 615698082}
   - component: {fileID: 615698084}
   - component: {fileID: 615698085}
+  - component: {fileID: 615698086}
   m_Layer: 5
   m_Name: Player1
   m_TagString: player1
@@ -405,7 +406,7 @@ Animator:
   m_GameObject: {fileID: 615698080}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3ed62507a81b3254caaf8c72ba87e453, type: 2}
+  m_Controller: {fileID: 9100000, guid: ee091b4bff733ae4294a869f1bc53075, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -424,6 +425,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc36fa582f64c45a00e7bf4c7368bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &615698086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 615698080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fe637608cd942409a01f5b747e05d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAttacking: 0
 --- !u!1 &701197981
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,6 +532,8 @@ GameObject:
   - component: {fileID: 1053256179}
   - component: {fileID: 1053256178}
   - component: {fileID: 1053256180}
+  - component: {fileID: 1053256181}
+  - component: {fileID: 1053256182}
   m_Layer: 5
   m_Name: Player2
   m_TagString: player2
@@ -588,6 +603,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a6bf79dece8f24998100e9222649a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1053256181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1053256176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9fe637608cd942409a01f5b747e05d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAttacking: 0
+--- !u!95 &1053256182
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1053256176}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eaf974a29f9979746a907cf6c2be69bd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1485092356
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,16 +782,20 @@ MonoBehaviour:
     HP: 25
     MAXHP: 25
     Strength: 5
-    Agility: 10
-    Dexterity: 10
+    Agility: 255
+    Dexterity: 200
     Stamina: 10
   e:
     HP: 25
     MAXHP: 25
     Strength: 6
-    Agility: 10
-    Dexterity: 10
+    Agility: 255
+    Dexterity: 200
     Stamina: 10
+  p1c: {fileID: 615698086}
+  ec: {fileID: 1053256181}
+  anim: {fileID: 615698084}
+  anim2: {fileID: 1053256182}
   playerDelayTime: 2
   enemyDelayTime: 2
 --- !u!4 &1743952558
