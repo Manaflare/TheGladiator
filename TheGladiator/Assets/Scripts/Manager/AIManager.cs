@@ -8,7 +8,10 @@ public class AIManager : MonoBehaviour {
 	void Start () {
 		
 	}
-	
+    void attack()
+    {
+
+    }
 	// Update is called once per frame
 	void Update () {
 		
