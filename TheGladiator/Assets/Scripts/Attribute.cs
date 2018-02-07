@@ -8,10 +8,10 @@ public class ListStatus
     public List<Stats> statsList;
 }
 [System.Serializable]
-public struct Stats
+public class Stats
 {
-    public float HP;
-    public float MAXHP;
+    public int HP;
+    public int MAXHP;
     public byte Strength;
     public byte Agility;
     public byte Dexterity;
