@@ -1,1 +1,1 @@
-
+"C:\Program Files\Unity\Editor\Unity.exe" -batchmode -projectPath "P:\Jenkins\Charmander\Project_Charmander\TheGladiator\" -executeMethod BuildScript.PerformAllBuilds -quit -logFile ./jenkins/Charmander/UnityBuildOutput
