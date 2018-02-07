@@ -5,11 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class ListStatus
 {
-    public List<Status> statusList;
+    public List<Stats> statsList;
 }
 [System.Serializable]
-public struct Status
+public struct Stats
 {
+    public float HP;
+    public float MAXHP;
     public byte Strength;
     public byte Agility;
     public byte Dexterity;
@@ -18,12 +20,7 @@ public struct Status
 
 public class Attribute : MonoBehaviour
 {
-
-    public Status STATUS = new Status();
-    public float HP { get; private set; }
-    public float MAXHP { get; private set; }
-    public float MP { get; private set; }
-    public float MAXMP { get; private set; }
+    public Stats STATS { get; private set; }
     public bool IsAlive { get; private set; }
     public bool IsDying { get; private set; }
 
@@ -38,4 +35,9 @@ public class Attribute : MonoBehaviour
     {
 		
 	}
+    
+    public void takeDamage(byte damage)
+    {
+        //STATS.HP -= damage;
+    }
 }

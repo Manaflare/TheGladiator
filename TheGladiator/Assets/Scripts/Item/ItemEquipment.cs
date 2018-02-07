@@ -6,7 +6,7 @@ public class ItemEquipment : Item {
 
     // Use this for initialization
     public Transform EquipPoint;
-    public List<Status> AddableStatus;
+    public List<Stats> AddableStatus;
 
     protected override void Start () {
 		

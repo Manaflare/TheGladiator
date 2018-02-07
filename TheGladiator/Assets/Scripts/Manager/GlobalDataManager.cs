@@ -8,6 +8,10 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     public void Initialize()
     {
         Debug.Log("boot Done " + typeof(GlobalDataManager));
+        ListStatus testStatus = Utility.ReadStatsFromJSON(1);
+        Debug.Log("Stamina : " + testStatus.statsList[0].Stamina);
+        Debug.Log("Stamina : " + testStatus.statsList[1].Stamina);
+
     }
 	
 	// Update is called once per frame
@@ -18,13 +22,13 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     public void SaveAllData()
     {
         //get data from player attribute and save it to json File
-        Utility.WriteStatusToJSON(1, ref playerStatus);
+        Utility.WriteStatsToJSON(1, ref playerStatus);
     }
 
     public void LoadallData()
     {
         //get data from json and put it into player status
-        playerStatus = Utility.ReadStatusFromJSON(1);    
+        playerStatus = Utility.ReadStatsFromJSON(1);    
         
     }
 }

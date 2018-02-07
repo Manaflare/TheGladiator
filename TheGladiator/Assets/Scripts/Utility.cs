@@ -12,7 +12,7 @@ public static class Utility
     };
 
 
-    public static ListStatus ReadStatusFromJSON(int fileNumber)
+    public static ListStatus ReadStatsFromJSON(int fileNumber)
     {
         string fileName;
         if(JsonFileList.TryGetValue(fileNumber, out fileName) == true)
@@ -28,7 +28,7 @@ public static class Utility
        
     }
 
-    public static void WriteStatusToJSON(int fileNumber, ref ListStatus status)
+    public static void WriteStatsToJSON(int fileNumber, ref ListStatus status)
     {
         string fileName;
         if (JsonFileList.TryGetValue(fileNumber, out fileName) == true)
