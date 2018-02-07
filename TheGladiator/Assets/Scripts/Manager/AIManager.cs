@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AIManager : MonoBehaviour {
-    float playerTime;
-    float enemyTime;
 
+    [Header("Player Settings")]
     public Stats p1;
     public Stats e;
 
+    [Header("Delay Settings")]
+    [Range(0.0f, 3.0f)]
     public float playerDelayTime;
+    [Range(0.0f, 3.0f)]
     public float enemyDelayTime;
+
+    float playerTime;
+    float enemyTime;
+
     bool noOneDead = true;
 	// Use this for initialization
 	void Start () {
