@@ -12,7 +12,7 @@ public static class Utility
     };
 
 
-    public static ListStatus GetStatusFromJSON(int fileNumber)
+    public static ListStatus ReadStatusFromJSON(int fileNumber)
     {
         string fileName;
         if(JsonFileList.TryGetValue(fileNumber, out fileName) == true)
@@ -20,10 +20,31 @@ public static class Utility
             string jsonString = System.IO.File.ReadAllText(Application.dataPath + fileName);
             return JsonUtility.FromJson<ListStatus>(jsonString);
         }
-
-        throw new System.Exception("There is no fileNumber in the list");
+        else
+        {
+            throw new System.Exception("There is no fileNumber in the list");
+        }
+        
        
     }
+
+    public static void WriteStatusToJSON(int fileNumber, ref ListStatus status)
+    {
+        string fileName;
+        if (JsonFileList.TryGetValue(fileNumber, out fileName) == true)
+        {
+            string jsonString = JsonUtility.ToJson(status);
+            System.IO.File.WriteAllText(Application.dataPath + fileName, jsonString);
+        }
+        else
+        {
+            throw new System.Exception("There is no fileNumber in the list");
+        }
+
+        
+
+    }
+
 
     public static string ConvertString(int number)
     {

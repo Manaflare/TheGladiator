@@ -19,7 +19,7 @@ public struct Status
 public class Attribute : MonoBehaviour
 {
 
-    public Status STATUS { get; private set; }
+    public Status STATUS = new Status();
     public float HP { get; private set; }
     public float MAXHP { get; private set; }
     public float MP { get; private set; }
