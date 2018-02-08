@@ -13,6 +13,8 @@ public class AIManager : MonoBehaviour {
     public Animator anim;
     public Animator anim2;
 
+    bool gore = true;
+
     [Header("Delay Settings")]
     [SerializeField]
     private float playerDelayTime;
@@ -80,8 +82,8 @@ public class AIManager : MonoBehaviour {
             if (hit)
             {
                 player.HP -= enemy.Strength;
-                Debug.Log("Enemy Attack");
                 anim2.SetBool("enemyAttack", true);
+                Debug.Log("Enemy Attack");
             }
             else if (!hit)
             {
@@ -95,6 +97,7 @@ public class AIManager : MonoBehaviour {
         {
             Debug.Log("Player Lost");
             noOneDead = false;
+            
         }
         if (enemy.HP <= 0)
         {
@@ -103,8 +106,18 @@ public class AIManager : MonoBehaviour {
         }
 
     }
-	// Update is called once per frame
-	void Update () {
+    void playGore()
+    {
+        GameObject.FindGameObjectWithTag("player1").GetComponent<PlayerAttribute>().onDeath();
+        GameObject.FindGameObjectWithTag("player1").SetActive(false);
+    }
+    void playGoreEnemy()
+    {
+        GameObject.FindGameObjectWithTag("player2").GetComponent<EnemyAttribute>().onDeath();
+        GameObject.FindGameObjectWithTag("player2").SetActive(false);
+    }
+    // Update is called once per frame
+    void Update () {
         anim.SetBool("playerAttack", false);
         anim2.SetBool("enemyAttack", false);
         //Debug.Log(p1c.isAttacking);
@@ -115,7 +128,17 @@ public class AIManager : MonoBehaviour {
             enemyTime += Time.deltaTime;
         }
         if (noOneDead) attack(p1, e);
-        //Debug.Log("Player Hp: " + p1Health);
-        //Debug.Log("Enemy Hp: " + eHealth);
+
+        if (gore && !p1c.isAttacking && !ec.isAttacking && p1.HP <= 0)
+        {
+            gore = false;
+            Invoke("playGore", 0.84f);
+        }
+        if (gore && !p1c.isAttacking && !ec.isAttacking && e.HP <= 0)
+        {
+            gore = false;
+            Invoke("playGoreEnemy", 0.84f);
+        }
+
     }
 }

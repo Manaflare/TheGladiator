@@ -425,6 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc36fa582f64c45a00e7bf4c7368bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gorePrefab: {fileID: 1347842030012010, guid: 0a23d082c921700458b9be84a6d03598, type: 2}
 --- !u!114 &615698086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,7 +517,7 @@ Transform:
   m_GameObject: {fileID: 701197981}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2.44, z: 0.07}
-  m_LocalScale: {x: 25, y: 1, z: 0.19}
+  m_LocalScale: {x: 25, y: 3.17, z: 0.19}
   m_Children: []
   m_Father: {fileID: 1485092357}
   m_RootOrder: 1
@@ -603,6 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a6bf79dece8f24998100e9222649a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gorePrefab: {fileID: 1347842030012010, guid: 0a23d082c921700458b9be84a6d03598, type: 2}
 --- !u!114 &1053256181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -781,16 +783,16 @@ MonoBehaviour:
   p1:
     HP: 25
     MAXHP: 25
-    Strength: 5
+    Strength: 24
     Agility: 255
-    Dexterity: 200
+    Dexterity: 255
     Stamina: 10
   e:
     HP: 25
     MAXHP: 25
-    Strength: 6
+    Strength: 0
     Agility: 255
-    Dexterity: 200
+    Dexterity: 255
     Stamina: 10
   p1c: {fileID: 615698086}
   ec: {fileID: 1053256181}
@@ -822,9 +824,10 @@ GameObject:
   - component: {fileID: 2073751877}
   - component: {fileID: 2073751876}
   - component: {fileID: 2073751875}
+  - component: {fileID: 2073751879}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: playercanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -906,3 +909,15 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!65 &2073751879
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2073751874}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 800, y: 530, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
