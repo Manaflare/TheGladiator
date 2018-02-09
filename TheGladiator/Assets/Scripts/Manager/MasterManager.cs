@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(LoadSceneManager))]
 [RequireComponent(typeof(GlobalDataManager))]
 [RequireComponent(typeof(SoundManager))]
-
+[RequireComponent(typeof(InputManager))]
 public class MasterManager : MonoBehaviour {
 
     private List<IManager> managerList = new List<IManager>();
@@ -14,17 +14,21 @@ public class MasterManager : MonoBehaviour {
     public static GlobalDataManager ManagerGlobalData   { get; private set; }
     public static SoundManager      ManagerSound        { get; private set; }
 
+    public static InputManager ManagerInput { get; private set; }
+
 
     private void Awake()
     {
         ManagerLoadScene = GetComponent<LoadSceneManager>();
         ManagerGlobalData = GetComponent<GlobalDataManager>();
         ManagerSound = GetComponent<SoundManager>();
+        ManagerInput = GetComponent<InputManager>();
 
         //added all manager in the manager list
         managerList.Add(ManagerLoadScene);
         managerList.Add(ManagerGlobalData);
         managerList.Add(ManagerSound);
+        managerList.Add(ManagerInput);
 
         StartCoroutine(IE_BootAllManager());
 
