@@ -56,5 +56,9 @@ public static class Constants
     public static float MAXIMUM_ACCURACY = 0.95f;
     public static float ACCURACY_STEP_AMOUNT = (MAXIMUM_ACCURACY - MINIMUM_ACCURACY) / MAX_STAT_LEVEL;
 
+    public static float MINIMUM_DODGE = 0.0f; //Added for customizablity
+    public static float MAXIMUM_DODGE = 0.7F;
+    public static float DODGE_STEP_AMOUNT = (MAXIMUM_DODGE - MINIMUM_DODGE) / MAX_STAT_LEVEL;
+
 }
 
