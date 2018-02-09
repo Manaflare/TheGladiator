@@ -25,6 +25,7 @@ public class Gore : MonoBehaviour {
         {
             enable.GetComponent<PointEffector2D>().enabled = true;
             enable.GetComponent<Rigidbody2D>().AddTorque(18000.0f);
+            
         }
         int currentLayerLength = 3;
         
@@ -70,15 +71,23 @@ public class Gore : MonoBehaviour {
 
     void Update()
     {
-        timeAlive += Time.deltaTime;
+        //timeAlive += Time.deltaTime;
         if (timeAlive < maxTime)
         {
-
+            //Dimensions of Canvas Based off Gore offset position
             float MinBoundaryY = Mathf.Abs(canvas.GetComponent<RectTransform>().rect.height / 2 + this.GetComponent<RectTransform>().anchoredPosition.y) * -1;
             float MaxBoundaryY = canvas.GetComponent<RectTransform>().rect.height + MinBoundaryY;
 
             float MinBoundaryX = Mathf.Abs(canvas.GetComponent<RectTransform>().rect.width / 2 + this.GetComponent<RectTransform>().anchoredPosition.x) * -1;
             float MaxBoundaryX = canvas.GetComponent<RectTransform>().rect.width + MinBoundaryX;
+
+            //Offsets
+            MinBoundaryX += 5.0f; //Where Player is
+            MinBoundaryY += 75.0f; //Added for a "Ground"-esque feel
+
+            MaxBoundaryX += -5.0f; //Where Enemy is
+            MaxBoundaryY += 0;
+
 
             foreach (Image i in imageChildren)
             {
@@ -90,6 +99,7 @@ public class Gore : MonoBehaviour {
 
                 if (i.GetComponent<RectTransform>().anchoredPosition.y >= MaxBoundaryY)
                 {
+                    i.GetComponent<Rigidbody2D>().AddForce(new Vector2(i.GetComponent<Rigidbody2D>().velocity.y, -5000.0f));
                     i.GetComponent<RectTransform>().anchoredPosition = new Vector2(i.GetComponent<RectTransform>().anchoredPosition.x, MaxBoundaryY);
                     i.GetComponent<PointEffector2D>().enabled = false;
 
@@ -97,6 +107,7 @@ public class Gore : MonoBehaviour {
 
                 if (i.GetComponent<RectTransform>().anchoredPosition.x <= MinBoundaryX)
                 {
+                    i.GetComponent<Rigidbody2D>().AddForce(new Vector2(2000.0f * -1, i.GetComponent<Rigidbody2D>().velocity.y));
                     i.GetComponent<RectTransform>().anchoredPosition = new Vector2(MinBoundaryX, i.GetComponent<RectTransform>().anchoredPosition.y);
                     i.GetComponent<PointEffector2D>().enabled = false;
 
@@ -104,6 +115,7 @@ public class Gore : MonoBehaviour {
 
                 if (i.GetComponent<RectTransform>().anchoredPosition.x >= MaxBoundaryX)
                 {
+                    i.GetComponent<Rigidbody2D>().AddForce(new Vector2(-2000.0f, i.GetComponent<Rigidbody2D>().velocity.y));
                     i.GetComponent<RectTransform>().anchoredPosition = new Vector2(MaxBoundaryX, i.GetComponent<RectTransform>().anchoredPosition.y);
                     i.GetComponent<PointEffector2D>().enabled = false;
 
@@ -116,8 +128,9 @@ public class Gore : MonoBehaviour {
         {
             foreach(Image i in imageChildren)
             {
-                Destroy(i);
+                Destroy(i.gameObject);
             }
+            Destroy(this.gameObject);
             imageChildren = new Image[46];
         }
     }

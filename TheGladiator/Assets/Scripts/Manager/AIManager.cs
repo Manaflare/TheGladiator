@@ -28,15 +28,27 @@ public class AIManager : MonoBehaviour {
 
     bool noOneDead = true;
     bool timeIsRunning = true;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
         playerTime = 0.0f;
         enemyTime = 0.0f;
 
         playerDelayTime = calculateDelay(p1);
         enemyDelayTime = calculateDelay(e);
 
-	}
+        agilityTest(p1, e);
+
+
+
+    }
+    void agilityTest(Stats player, Stats enemy)
+    {   
+        if (player.Agility == enemy.Agility)
+        {
+            player.Agility++;
+        }
+    }
+
     float calculateDelay(Stats s)
     {
         
@@ -51,11 +63,11 @@ public class AIManager : MonoBehaviour {
     bool attackHits(int dex)
     {
         float accuracy = 100 * (Constants.MINIMUM_ACCURACY + (Constants.ACCURACY_STEP_AMOUNT * dex));
-
         bool result = (Random.Range(0, 100) < accuracy) ? true : false; 
 
         return result;
     }
+
     void attack(Stats player, Stats enemy)
     {
         timeIsRunning = false;
