@@ -23,13 +23,36 @@ public class TownManager : MonoBehaviour {
         }
     }
 
+
+    public GameObject[] Objects;
+    public GameObject[] Panels;
+    private int selectedIndex = 0;
+
 	// Use this for initialization
 	void Start () {
-		
-	}
+        Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+		if(MasterManager.ManagerInput.GetKeyDown(KeyCode.UpArrow))
+        {
+            Objects[selectedIndex].GetComponent<GlowButton>().EndGlow();
+            ++selectedIndex;
+            selectedIndex = Mathf.Min(selectedIndex, Objects.Length - 1);
+            Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
+        }
+        else if (MasterManager.ManagerInput.GetKeyDown(KeyCode.DownArrow))
+        {
+            Objects[selectedIndex].GetComponent<GlowButton>().EndGlow();
+            --selectedIndex;
+            selectedIndex = Mathf.Max(0, selectedIndex);
+            Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
+        }
+
+        if(MasterManager.ManagerInput.GetKeyDown(KeyCode.Return))
+        {
+            Panels[selectedIndex].SetActive(true);
+        }
+    }
 }
