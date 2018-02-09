@@ -20,6 +20,7 @@ public class Stats
 
 public class Attribute : MonoBehaviour
 {
+    public GameObject gorePrefab;
     public Stats STATS { get; private set; }
     public bool IsAlive { get; private set; }
     public bool IsDying { get; private set; }
@@ -29,7 +30,12 @@ public class Attribute : MonoBehaviour
     {
 		
 	}
-
+    public virtual void onDeath()
+    {
+        GameObject gore = Instantiate(gorePrefab, GameObject.FindObjectOfType<Canvas>().transform);
+        gore.GetComponent<RectTransform>().anchoredPosition = this.GetComponent<RectTransform>().anchoredPosition;
+        gore.SetActive(true);
+    }
     // Update is called once per frame
     protected virtual void Update ()
     {

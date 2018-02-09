@@ -9,8 +9,6 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     {
         Debug.Log("boot Done " + typeof(GlobalDataManager));
         ListStatus testStatus = Utility.ReadStatsFromJSON(1);
-        Debug.Log("Stamina : " + testStatus.statsList[0].Stamina);
-        Debug.Log("Stamina : " + testStatus.statsList[1].Stamina);
 
     }
 	
