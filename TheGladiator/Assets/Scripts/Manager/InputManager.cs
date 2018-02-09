@@ -14,4 +14,12 @@ public class InputManager : MonoBehaviour, IManager {
     void Update () {
 		
 	}
+
+    public bool GetKeyDown(KeyCode code)
+    {
+#if UNITY_XBOXONE
+                return false;
+#endif
+        return Input.GetKeyDown(code);  
+    }
 }
