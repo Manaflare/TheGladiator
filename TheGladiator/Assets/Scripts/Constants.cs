@@ -6,7 +6,12 @@ using UnityEngine;
 public static class Constants
 {
     //example
-
+    public enum MoveType
+    {
+        ATTACK = 0,
+        DODGE,
+        MISS
+    }
     public enum DayTimeType
     {
         MORNING = 0,
@@ -35,7 +40,14 @@ public static class Constants
         ARMOR,
     }
 
-    public static string playerName = "Hello Player";
+    public enum Name
+    {
+        PLAYER = 0,
+        ENEMY
+    }
+
+    public static string playerName = "Player";
+    public static string enemyName = "Enemy";
     public static int PlayerIndex = 0;
 
 

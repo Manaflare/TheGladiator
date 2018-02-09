@@ -10,6 +10,7 @@ public class ListStatus
 [System.Serializable]
 public class Stats
 {
+    public Constants.Name name;
     public int HP;
     public int MAXHP;
     public byte Strength;

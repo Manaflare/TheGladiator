@@ -2,7 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Move
+{
+    public Constants.MoveType type;
+
+    public Animator attackerAnimator;
+    public Animator attackeeAnimator;
+
+    public Stats attackerStats;
+    public Stats attackeeStats;
+
+    public Vector2 times;
+}
+
 public class AIManager : MonoBehaviour {
+    
+    public List<Move> moves;
+
 
     [Header("Player Settings")]
     public Stats p1;
@@ -25,13 +41,12 @@ public class AIManager : MonoBehaviour {
     float enemyTime;
 
     bool noOneDead = true;
-    bool timeIsRunning = true;
     // Use this for initialization
     void Start() {
         playerTime = 0.0f;
         enemyTime = 0.0f;
         agilityTest(p1, e);
-
+        moves = new List<Move>();
         playerDelayTime = calculateDelay(p1);
         enemyDelayTime = calculateDelay(e);
 
@@ -77,75 +92,69 @@ public class AIManager : MonoBehaviour {
         return result;
     }
 
-    void attack(Stats player, Stats enemy)
+    float a(Stats stats, Stats enemy, Animator playerAnimator, Animator enemyAnimator,  float time, float delayTime)
     {
-        timeIsRunning = false;
+        string name = Utility.getStringFromName(stats.name);
+        string enemyName = Utility.getStringFromName(enemy.name);
 
-        if (playerTime >= playerDelayTime)
+        if (time >= delayTime)
         {
-            bool hit = attackHits(player.Dexterity);
-            bool dodge = enemyDodges(enemy.Agility);
+            Move m = new Move();
+            m.times = new Vector2(time, delayTime);
+            m.attackerStats = stats;
+            m.attackeeStats = enemy;
+
+            m.attackerAnimator = playerAnimator;
+            m.attackeeAnimator = enemyAnimator;
+
+            bool hit = attackHits(stats.Dexterity);
+            bool dodge = enemyDodges(stats.Agility);
+
             if (hit && !dodge)
             {
-                enemy.HP -= player.Strength;
-                Debug.Log("Player Attack");
-                anim.SetBool("playerAttack", true);
+                m.type = Constants.MoveType.ATTACK;
+
+                enemy.HP -= stats.Strength;
+                Debug.Log(name + " Attack");
+                playerAnimator.SetBool("playerAttack", true);
             }
             else if (!hit && !dodge)
             {
-                Debug.Log("Player Missed");
+                m.type = Constants.MoveType.MISS;
+                Debug.Log(name + " Missed");
             }
             else if (dodge)
             {
-                //Enemy Dodge
-                anim2.SetBool("enemyDodge", true);
-                anim.SetBool("playerAttack", true);
-                Debug.Log("Enemy Dodged");
+                m.type = Constants.MoveType.DODGE;
+                Debug.Log(enemyName + " Dodged");
             }
-            playerTime = 0.0f;
+            moves.Add(m);
+            time = 0.0f;
         }
-        if (enemyTime >= enemyDelayTime)
+        if (stats.HP <= 0)
         {
-            bool hit = attackHits(enemy.Dexterity);
-            bool dodge = enemyDodges(player.Agility);
-            if (hit && !dodge)
-            {
-                anim.enabled = false;
-                player.HP -= enemy.Strength;
-                anim2.SetBool("enemyAttack", true);
-                Debug.Log("Enemy Attack");
-            }
-            else if (!hit && !dodge)
-            {
-                Debug.Log("Enemy Missed");
-            }
-            else if (dodge)
-            {
-                anim.SetBool("dodge", true);
-                anim2.SetBool("enemyAttack", true);
-                Debug.Log("Player Dodged");
-            }
-            enemyTime = 0.0f;
-
-        }
-
-        if (player.HP <= 0)
-        {
-            Debug.Log("Player Lost");
-            noOneDead = false;
-            
-        }
-        if (enemy.HP <= 0)
-        {
-            Debug.Log("Enemy Lost");
+            Debug.Log(name + "Lost");
             noOneDead = false;
         }
+        return time;
+        //animator.SetBool("playerAttack", false);
 
     }
+
+    void attack(Stats player, Stats enemy)
+    {
+        //while(player.HP > 0 && enemy.HP > 0)
+        //{
+            playerTime = a(player, enemy, anim, anim2, playerTime, playerDelayTime);
+            enemyTime = a(enemy, player, anim2, anim, enemyTime, enemyDelayTime);
+        //}
+    }
+
     void playGore()
     {
-        GameObject.FindGameObjectWithTag("player1").GetComponent<PlayerAttribute>().onDeath();
-        GameObject.FindGameObjectWithTag("player1").SetActive(false);
+        GameObject player1Object = GameObject.FindGameObjectWithTag("player1");
+        player1Object.GetComponent<PlayerAttribute>().onDeath();
+        player1Object.SetActive(false);
     }
     void playGoreEnemy()
     {
@@ -153,20 +162,15 @@ public class AIManager : MonoBehaviour {
         GameObject.FindGameObjectWithTag("player2").SetActive(false);
     }
     // Update is called once per frame
+    bool doOnce = true;
     void Update () {
-
-
         if (GameObject.FindGameObjectWithTag("player1") != null && GameObject.FindGameObjectWithTag("player1").activeSelf)
         {
             anim.SetBool("playerAttack", false);
-            anim.SetBool("dodge", false);
-
         }
         if (GameObject.FindGameObjectWithTag("player2") != null && GameObject.FindGameObjectWithTag("player2").activeSelf)
         {
-            anim2.SetBool("enemyDodge", false);
-            anim2.SetBool("enemyAttack", false);
-
+            anim2.SetBool("playerAttack", false);
         }
 
 
@@ -188,6 +192,25 @@ public class AIManager : MonoBehaviour {
             gore = false;
             Invoke("playGoreEnemy", 0.84f);
         }
+        //forLater
+        //if (!gore && !noOneDead && doOnce)
+        //{
+        //    Debug.ClearDeveloperConsole();
+        //    doOnce = false;
+        //    foreach(Move m in moves)
+        //    {
+        //        Debug.Log("Moves List: " + m.type);
+        //        if (m.type != Constants.MoveType.DODGE)
+        //        {
+        //            m.attackerAnimator.SetBool("playerAttack", true);
+        //            Debug.Log(Utility.getStringFromName(m.attackerStats.name) + " " + m.type);
+        //        }
+        //        else if(m.type == Constants.MoveType.DODGE)
+        //        {
+        //            Debug.Log(Utility.getStringFromName(m.attackeeStats.name) + " " + m.type);
+        //        }
+        //    }
+        //}
 
     }
 }
