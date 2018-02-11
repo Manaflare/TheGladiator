@@ -12,7 +12,18 @@ public class Move
     public Stats attackerStats;
     public Stats attackeeStats;
 
-    public Vector2 times;
+    public float delayTime;
+
+    public Move(Stats atkStat, Stats defStat, Animator attacker, Animator attackee, float delay)
+    {
+        attackerAnimator = attacker;
+        attackeeAnimator = attackee;
+
+        attackerStats = atkStat;
+        attackeeStats = defStat;
+
+        delayTime = delay;
+    }
 }
 
 public class AIManager : MonoBehaviour {
@@ -21,94 +32,85 @@ public class AIManager : MonoBehaviour {
 
 
     [Header("Player Settings")]
+    //The stats we provide
     public Stats p1;
     public Stats e;
+
+    //The information if a player is in an animation
     public Character p1c;
     public Character ec;
 
+    //The Animator controls
     public Animator anim;
     public Animator anim2;
 
-    bool gore = true;
+    [Header("Repeat/Replay Settings")]
+    public bool repeatMove;
+    [Range(0, 10)]
+    public int moveToRepeat;
+
 
     [Header("Delay Settings")]
-    [SerializeField]
+
     private float playerDelayTime;
-    [SerializeField]
     private float enemyDelayTime;
 
-    float playerTime;
-    float enemyTime;
+    float firstTime;
+    float secondTime;
+
+    int firstIndex;
+    int secondIndex;
+
+    int totalIndex;
 
     bool noOneDead = true;
-    // Use this for initialization
-    void Start() {
-        playerTime = 0.0f;
-        enemyTime = 0.0f;
-        agilityTest(p1, e);
+    bool animationPlayed = false;
+    bool gore = true;
+    bool doOnce = true;
+
+    void Start()
+    {
+        Reset();
+    }
+
+    private void Reset()
+    {
+        firstTime = 0.0f;
+        secondTime = 0.0f;
+
+        firstIndex = 0;
+        secondIndex = 1;
+
+        totalIndex = 0;
+
+        Calculations.agilityTest(p1, e);
         moves = new List<Move>();
-        playerDelayTime = calculateDelay(p1);
-        enemyDelayTime = calculateDelay(e);
 
-
-
-
-    }
-    void agilityTest(Stats player, Stats enemy)
-    {   
-        if (player.Agility == enemy.Agility && player.Agility != Constants.MAX_STAT_LEVEL)
-        {
-            player.Agility++;
-        }
-        else if (enemy.Agility == Constants.MAX_STAT_LEVEL)
-        {
-            enemy.Agility -= 5;
-        }
+        playerDelayTime = Calculations.calculateDelay(p1);
+        enemyDelayTime = Calculations.calculateDelay(e);
     }
 
-    float calculateDelay(Stats s)
-    {
-        
-        float agilityDifference = (Constants.MAX_STAT_LEVEL - s.Agility);
-        float maxPercentage = agilityDifference / Constants.MAX_STAT_LEVEL;
-        float timeWithoutMinimum = Constants.MODIFIABLE_TIME * maxPercentage;
-        float attackDelay = timeWithoutMinimum + Constants.MINIMUM_DELAY;
-
-        return attackDelay;
-    }
-
-    bool attackHits(int dex)
-    {
-        float accuracy = 100 * (Constants.MINIMUM_ACCURACY + (Constants.ACCURACY_STEP_AMOUNT * dex));
-        bool result = (Random.Range(0, 100) < accuracy) ? true : false; 
-
-        return result;
-    }
-    bool enemyDodges(int agi)
-    {
-        float dodge = 100 * (Constants.MINIMUM_DODGE + (Constants.DODGE_STEP_AMOUNT * agi));
-        bool result = (Random.Range(0, 100) < dodge) ? true : false;
-
-        return result;
-    }
-
-    float a(Stats stats, Stats enemy, Animator playerAnimator, Animator enemyAnimator,  float time, float delayTime)
+    void attack(Stats stats, Stats enemy, Animator playerAnimator, Animator enemyAnimator, float delayTime)
     {
         string name = Utility.getStringFromName(stats.name);
         string enemyName = Utility.getStringFromName(enemy.name);
 
-        if (time >= delayTime)
+        if (stats.HP <= 0)
         {
-            Move m = new Move();
-            m.times = new Vector2(time, delayTime);
-            m.attackerStats = stats;
-            m.attackeeStats = enemy;
+            Debug.Log(name + " Died");
+            Move m = new Move(stats, enemy, playerAnimator, enemyAnimator, 0.5f);
+            m.type = Constants.MoveType.DEATH;
+            moves.Add(m);
+            noOneDead = false;
+        }
 
-            m.attackerAnimator = playerAnimator;
-            m.attackeeAnimator = enemyAnimator;
+        if (noOneDead)
+        {
 
-            bool hit = attackHits(stats.Dexterity);
-            bool dodge = enemyDodges(stats.Agility);
+            Move m = new Move(stats, enemy, playerAnimator, enemyAnimator, delayTime);
+
+            bool hit = Calculations.attackHits(stats.Dexterity);
+            bool dodge = Calculations.enemyDodges(stats.Agility);
 
             if (hit && !dodge)
             {
@@ -116,7 +118,6 @@ public class AIManager : MonoBehaviour {
 
                 enemy.HP -= stats.Strength;
                 Debug.Log(name + " Attack");
-                playerAnimator.SetBool("playerAttack", true);
             }
             else if (!hit && !dodge)
             {
@@ -126,28 +127,84 @@ public class AIManager : MonoBehaviour {
             else if (dodge)
             {
                 m.type = Constants.MoveType.DODGE;
-                Debug.Log(enemyName + " Dodged");
+                Debug.Log(name + "attacked, " + enemyName + " Dodged");
             }
             moves.Add(m);
-            time = 0.0f;
         }
-        if (stats.HP <= 0)
-        {
-            Debug.Log(name + "Lost");
-            noOneDead = false;
-        }
-        return time;
-        //animator.SetBool("playerAttack", false);
-
     }
 
-    void attack(Stats player, Stats enemy)
+    void SimulateBattle(Stats player, Stats enemy)
     {
-        //while(player.HP > 0 && enemy.HP > 0)
-        //{
-            playerTime = a(player, enemy, anim, anim2, playerTime, playerDelayTime);
-            enemyTime = a(enemy, player, anim2, anim, enemyTime, enemyDelayTime);
-        //}
+       
+        while (noOneDead)
+        {
+            if (playerDelayTime < enemyDelayTime)
+            {
+                attack(player, enemy, anim, anim2, playerDelayTime);
+                attack(enemy, player, anim2, anim, enemyDelayTime);
+            }
+            else
+            {
+                attack(enemy, player, anim2, anim, enemyDelayTime);
+                attack(player, enemy, anim, anim2, playerDelayTime);
+            }
+        }     
+        foreach(Move m in moves)
+        {
+            Debug.Log(m.type);
+        }
+    }
+
+
+    void playMove(Move m)
+    {
+        switch (m.type)
+        {
+            case Constants.MoveType.ATTACK:
+                m.attackerAnimator.Play("Attack");
+                break;
+            case Constants.MoveType.DODGE:
+                m.attackerAnimator.Play("Attack");
+                m.attackeeAnimator.Play("dodge");
+                break;
+            case Constants.MoveType.MISS:
+                break;
+            case Constants.MoveType.DEATH:
+                animationPlayed = true;
+                break;
+        }
+    }
+
+    void playAnimation(int moveToPlay = 0, bool repeat = false)
+    {
+        if (!repeat)
+        {
+
+            if (!p1c.isAttacking && !ec.isAttacking)
+            {
+                firstTime += Time.deltaTime;
+                secondTime += Time.deltaTime;
+            }
+
+            if (firstIndex < moves.Count && firstTime >= moves[firstIndex].delayTime)
+            {
+                playMove(moves[firstIndex]);
+                firstIndex += 2;
+                totalIndex++;
+                firstTime = 0.0f;
+            }
+            if (secondIndex < moves.Count && secondTime >= moves[secondIndex].delayTime)
+            {
+                playMove(moves[secondIndex]);
+                secondIndex += 2;
+                totalIndex++;
+                secondTime = 0.0f;
+            }
+        }
+        else if (repeat)
+        {
+            playMove(moves[moveToPlay]);
+        }
     }
 
     void playGore()
@@ -156,61 +213,37 @@ public class AIManager : MonoBehaviour {
         player1Object.GetComponent<PlayerAttribute>().onDeath();
         player1Object.SetActive(false);
     }
+
     void playGoreEnemy()
     {
         GameObject.FindGameObjectWithTag("player2").GetComponent<EnemyAttribute>().onDeath();
         GameObject.FindGameObjectWithTag("player2").SetActive(false);
     }
-    // Update is called once per frame
-    bool doOnce = true;
-    void Update () {
-        if (GameObject.FindGameObjectWithTag("player1") != null && GameObject.FindGameObjectWithTag("player1").activeSelf)
-        {
-            anim.SetBool("playerAttack", false);
-        }
-        if (GameObject.FindGameObjectWithTag("player2") != null && GameObject.FindGameObjectWithTag("player2").activeSelf)
-        {
-            anim2.SetBool("playerAttack", false);
-        }
 
+    void Update () {
 
         //Debug.Log(p1c.isAttacking);
-        if (!p1c.isAttacking && !ec.isAttacking)
-        {    
-            playerTime += Time.deltaTime;
-            enemyTime += Time.deltaTime;
+        if (noOneDead)
+        {
+            SimulateBattle(p1, e);
         }
-        if (noOneDead) attack(p1, e);
 
-        if (gore && !p1c.isAttacking && !ec.isAttacking && p1.HP <= 0)
+        if (gore && !p1c.isAttacking && !ec.isAttacking && p1.HP <= 0 && animationPlayed)
         {
             gore = false;
             Invoke("playGore", 0.84f);
         }
-        if (gore && !p1c.isAttacking && !ec.isAttacking && e.HP <= 0)
+        if (gore && !p1c.isAttacking && !ec.isAttacking && e.HP <= 0 && animationPlayed)
         {
             gore = false;
             Invoke("playGoreEnemy", 0.84f);
         }
-        //forLater
-        //if (!gore && !noOneDead && doOnce)
-        //{
-        //    Debug.ClearDeveloperConsole();
-        //    doOnce = false;
-        //    foreach(Move m in moves)
-        //    {
-        //        Debug.Log("Moves List: " + m.type);
-        //        if (m.type != Constants.MoveType.DODGE)
-        //        {
-        //            m.attackerAnimator.SetBool("playerAttack", true);
-        //            Debug.Log(Utility.getStringFromName(m.attackerStats.name) + " " + m.type);
-        //        }
-        //        else if(m.type == Constants.MoveType.DODGE)
-        //        {
-        //            Debug.Log(Utility.getStringFromName(m.attackeeStats.name) + " " + m.type);
-        //        }
-        //    }
-        //}
 
+        if (!noOneDead && doOnce && totalIndex <= moves.Count)
+        {    
+            //Debug.Log("===========From the List===========");
+            //doOnce = false;
+            playAnimation(moveToRepeat, repeatMove);
+        }
     }
 }
