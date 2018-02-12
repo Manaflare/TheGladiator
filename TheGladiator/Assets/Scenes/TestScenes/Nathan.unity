@@ -784,24 +784,24 @@ MonoBehaviour:
     name: 0
     HP: 25
     MAXHP: 25
-    Strength: 25
-    Agility: 100
-    Dexterity: 255
+    Strength: 5
+    Agility: 20
+    Dexterity: 50
     Stamina: 10
   e:
     name: 1
     HP: 25
     MAXHP: 25
-    Strength: 25
-    Agility: 255
-    Dexterity: 255
+    Strength: 6
+    Agility: 25
+    Dexterity: 40
     Stamina: 10
   p1c: {fileID: 615698086}
   ec: {fileID: 1053256181}
   anim: {fileID: 615698084}
   anim2: {fileID: 1053256182}
-  playerDelayTime: 2
-  enemyDelayTime: 2
+  repeatMove: 0
+  moveToRepeat: 0
 --- !u!4 &1743952558
 Transform:
   m_ObjectHideFlags: 0

@@ -98,7 +98,7 @@ public class AIManager : MonoBehaviour {
         if (stats.HP <= 0)
         {
             Debug.Log(name + " Died");
-            Move m = new Move(stats, enemy, playerAnimator, enemyAnimator, 0.5f);
+            Move m = new Move(stats, enemy, playerAnimator, enemyAnimator, delayTime);
             m.type = Constants.MoveType.DEATH;
             moves.Add(m);
             noOneDead = false;
@@ -179,7 +179,6 @@ public class AIManager : MonoBehaviour {
     {
         if (!repeat)
         {
-
             if (!p1c.isAttacking && !ec.isAttacking)
             {
                 firstTime += Time.deltaTime;
