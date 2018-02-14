@@ -510,7 +510,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 196108033}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: RemoveAttributes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &196108033
@@ -649,7 +660,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1950537858}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -850,7 +861,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 227577133}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: RemoveAttributes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &227577133
@@ -974,7 +996,7 @@ GameObject:
   - component: {fileID: 282075844}
   - component: {fileID: 282075843}
   m_Layer: 5
-  m_Name: Random
+  m_Name: Reset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -992,11 +1014,11 @@ RectTransform:
   m_Children:
   - {fileID: 1161834691}
   m_Father: {fileID: 1950537858}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 15}
+  m_AnchoredPosition: {x: -100, y: 30}
   m_SizeDelta: {x: 144.8, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &282075843
@@ -1037,7 +1059,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 282075844}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: Reset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &282075844
@@ -1147,7 +1180,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 296604042}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: FaceHairArrowPressed
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &296604042
@@ -1336,14 +1380,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2109770653}
-        m_MethodName: bodyArrowPressed
+        m_MethodName: BodyArrowPressed
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: '"RIGHT"'
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -1457,6 +1501,128 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 547191376}
+--- !u!1 &566809382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 566809383}
+  - component: {fileID: 566809386}
+  - component: {fileID: 566809385}
+  - component: {fileID: 566809384}
+  m_Layer: 5
+  m_Name: Random
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &566809383
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 566809382}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1658867605}
+  m_Father: {fileID: 1950537858}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 100, y: 30}
+  m_SizeDelta: {x: 144.8, y: 30}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &566809384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 566809382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 566809385}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: Randomize
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &566809385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 566809382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: afe3e75037b2ff941973be5b5d62b086, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &566809386
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 566809382}
 --- !u!1 &626950507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1842,7 +2008,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 760248312}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: HairArrowPressed
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LEFT
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &760248312
@@ -1952,7 +2129,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 776528439}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: HairArrowPressed
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &776528439
@@ -2099,7 +2287,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 15, y: 15}
+  m_AnchoredPosition: {x: 50, y: 30}
   m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &870681499
@@ -2123,7 +2311,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2461,7 +2649,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 920215436}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: RemoveAttributes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &920215436
@@ -2571,7 +2770,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 959112183}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: AddAttributes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &959112183
@@ -2681,7 +2891,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1031646095}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: AddAttributes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1031646095
@@ -2987,7 +3208,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1130672363}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: RemoveAttributes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1130672363
@@ -3090,7 +3322,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Randomize
+  m_Text: Reset
 --- !u!222 &1161834693
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3486,7 +3718,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1311247998}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: FaceHairArrowPressed
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: LEFT
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1311247998
@@ -3673,7 +3916,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1344510921}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: AddAttributes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1344510921
@@ -4121,7 +4375,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1512037003}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: RemoveAttributes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1512037003
@@ -4426,7 +4691,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1624043906}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: AddAttributes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1624043906
@@ -4595,6 +4871,80 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1651846240}
+--- !u!1 &1658867604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1658867605}
+  - component: {fileID: 1658867607}
+  - component: {fileID: 1658867606}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1658867605
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1658867604}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 566809383}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1658867606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1658867604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 685872fe39d33604c9fa4ba9a50a4f73, type: 3}
+    m_FontSize: 35
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Randomize
+--- !u!222 &1658867607
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1658867604}
 --- !u!1 &1696520185
 GameObject:
   m_ObjectHideFlags: 0
@@ -4849,7 +5199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7205882, g: 0.7205882, b: 0.7205882, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -4944,7 +5294,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1875431247}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2109770653}
+        m_MethodName: AddAttributes
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1875431247
@@ -5197,6 +5558,7 @@ RectTransform:
   - {fileID: 1523467985}
   - {fileID: 1952216616}
   - {fileID: 870681498}
+  - {fileID: 566809383}
   - {fileID: 282075842}
   - {fileID: 214779038}
   m_Father: {fileID: 0}
@@ -5241,7 +5603,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -15, y: 15}
+  m_AnchoredPosition: {x: -50, y: 30}
   m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1952216617
@@ -5468,14 +5830,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2109770653}
-        m_MethodName: bodyArrowPressed
+        m_MethodName: BodyArrowPressed
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: '"LEFT"'
+          m_StringArgument: LEFT
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -5610,8 +5972,88 @@ MonoBehaviour:
   - {fileID: 21300194, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
   - {fileID: 21300280, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
   - {fileID: 21300282, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
-  HairList: []
-  FacialHairList: []
+  HairList:
+  - {fileID: 21300032, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300034, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300036, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300038, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300128, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300130, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300132, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300134, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300224, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300226, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300228, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300230, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300404, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300406, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300408, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300410, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300500, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300502, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300504, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300506, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300584, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300586, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300588, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300590, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300768, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300770, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300772, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300774, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300844, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300846, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300848, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300850, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300876, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300878, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300880, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300882, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300040, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300042, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300044, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300896, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300136, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300898, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300140, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300142, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300232, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300234, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300236, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300238, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300412, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300414, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300416, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300418, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300508, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300510, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300512, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300514, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300592, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300594, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300596, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300598, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  FacialHairList:
+  - {fileID: 21300312, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300314, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300316, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300318, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300320, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300322, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300324, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300326, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300676, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300678, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300680, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300682, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300684, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300686, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300688, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300690, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300888, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300890, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300892, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
+  - {fileID: 21300900, guid: e9f4c5d9f36b98145bd0e2ed1ff1896f, type: 3}
   LeftHandList: []
   RightHandList: []
   HelmetList: []
@@ -5641,8 +6083,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52291b8afda1405439721f703ebc6246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodySprite: {fileID: 1779868499}
+  bodyImage: {fileID: 1779868499}
   bodyText: {fileID: 1263271054}
+  hairImage: {fileID: 1501688240}
+  hairText: {fileID: 547191378}
+  faceHairImage: {fileID: 1855050360}
+  faceHairText: {fileID: 1127799812}
+  avaliableText: {fileID: 2140862087}
+  HPText: {fileID: 884168053}
+  StrText: {fileID: 811253800}
+  AgiText: {fileID: 105508480}
+  DexText: {fileID: 328327213}
+  StaText: {fileID: 1338789995}
+  startinAvaliablePoints: 25
+  HPMultiplyer: 5
+  BaseStats: 5
 --- !u!1 &2140862085
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,23 +4,88 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CreateCharacterManager : MonoBehaviour {
-
-    public Image bodySprite;
+    [Header("Sprites Settings")]
+    public Image bodyImage;
     public Text bodyText;
     private int bodyIndex;
 
+    public Image hairImage;
+    public Text hairText;
+    private int hairIndex;
 
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public Image faceHairImage;
+    public Text faceHairText;
+    private int faceHairIndex;
+
+    [Header("Atributes Visual")]
+    public Text avaliableText;
+    public Text HPText;
+    public Text StrText;
+    public Text AgiText;
+    public Text DexText;
+    public Text StaText;
+    [Header("Atributes")]
+    public int startinAvaliablePoints;
+    private int avaliablePoints;
+
+    public int HPMultiplyer;
+    public int BaseStats;
+
+    private int HPPoints;
+    private int StrPoints;
+    private int AgiPoints;
+    private int DexPoints;
+    private int StaPoints;
+
+
+    void Start () {
+        Reset();
+    }
+
+    public void Reset()
+    {
+        bodyIndex = 0;
         bodyText.text = bodyIndex.ToString();
+        bodyImage.sprite = SpriteManager.Instance.BodyList[bodyIndex];
+
+        hairIndex = 0;
+        hairText.text = hairIndex.ToString();
+        hairImage.color = new Color(0, 0, 0, 0);
+
+        faceHairIndex = 0;
+        faceHairText.text = faceHairIndex.ToString();
+        faceHairImage.color = new Color(0, 0, 0, 0);
+
+        avaliablePoints = startinAvaliablePoints;
+        HPPoints = StrPoints = AgiPoints = DexPoints = StaPoints = BaseStats;
+        UpdateStatusText();
+    }
+
+    // Update is called once per frame
+    void Update () {
 
     }
     
-    public void bodyArrowPressed(string direction)
+    public void Randomize()
+    {
+        Reset();
+
+        bodyIndex = Random.Range(0, SpriteManager.Instance.BodyList.Count - 1);
+        hairIndex = Random.Range(0, SpriteManager.Instance.HairList.Count - 1);
+        faceHairIndex = Random.Range(0, SpriteManager.Instance.FacialHairList.Count - 1);
+
+        BodyArrowPressed("");
+        HairArrowPressed("");
+        FaceHairArrowPressed("");
+
+        while(avaliablePoints > 0)
+        {
+            int index = Random.Range(0, 5);
+            AddAttributes(index);
+        }
+    }
+
+    public void BodyArrowPressed(string direction)
     {
         if(direction == "LEFT")
         {
@@ -38,7 +103,160 @@ public class CreateCharacterManager : MonoBehaviour {
                 bodyIndex = 0;
             }
         }
+        bodyText.text = bodyIndex.ToString();
+        bodyImage.sprite = SpriteManager.Instance.BodyList[bodyIndex];
+    }
 
-        bodySprite.sprite = SpriteManager.Instance.BodyList[bodyIndex];
+    public void HairArrowPressed(string direction)
+    {
+        if (direction == "LEFT")
+        {
+            hairIndex--;
+            if (hairIndex < 0)
+            {
+                hairIndex = SpriteManager.Instance.HairList.Count - 1;
+            }
+        }
+        else
+        {
+            hairIndex++;
+            if (hairIndex > SpriteManager.Instance.HairList.Count - 1)
+            {
+                hairIndex = 0;
+            }
+        }
+
+        if (hairIndex == 0)
+        {
+            hairImage.color = new Color(0, 0, 0, 0);
+        }
+        else
+        {
+            hairImage.color = new Color(1, 1, 1, 1);
+            hairImage.sprite = SpriteManager.Instance.HairList[hairIndex];
+        }
+
+        hairText.text = hairIndex.ToString();
+    }
+
+    public void FaceHairArrowPressed(string direction)
+    {
+        if (direction == "LEFT")
+        {
+            faceHairIndex--;
+            if (faceHairIndex < 0)
+            {
+                faceHairIndex = SpriteManager.Instance.FacialHairList.Count;
+            }
+        }
+        else
+        {
+            faceHairIndex++;
+            if (faceHairIndex > SpriteManager.Instance.FacialHairList.Count)
+            {
+                faceHairIndex = 0;
+            }
+        }
+       
+        faceHairText.text = faceHairIndex.ToString();
+        if (faceHairIndex == 0)
+        {
+            faceHairImage.color = new Color(0, 0, 0, 0);
+        }
+        else
+        {
+            faceHairImage.color = new Color(1, 1, 1, 1);
+            faceHairImage.sprite = SpriteManager.Instance.FacialHairList[faceHairIndex - 1];
+        }
+    }
+
+
+    /**
+     * 
+     * ATRIBUTES
+     * 
+     **/
+    public void AddAttributes(int attribute)
+    {
+
+        if(avaliablePoints <= 0)
+        {
+            return;
+        }
+        avaliablePoints--;
+        if (attribute == (int)Constants.AttributeTypes.HP)
+        {
+            HPPoints++;
+        }
+        else if (attribute == (int)Constants.AttributeTypes.STR)
+        {
+            StrPoints++;
+        }
+        else if (attribute == (int)Constants.AttributeTypes.AGI)
+        {
+            AgiPoints++;
+        }
+        else if (attribute == (int)Constants.AttributeTypes.DEX)
+        {
+            DexPoints++;
+        }
+        else if (attribute == (int)Constants.AttributeTypes.STA)
+        {
+            StaPoints++;
+        }
+        UpdateStatusText();
+    }
+    public void RemoveAttributes(int attribute)
+    {
+        if (attribute == (int)Constants.AttributeTypes.HP)
+        {
+            if(HPPoints > BaseStats)
+            {
+                HPPoints--;
+                avaliablePoints++;
+            }
+        }
+        else if (attribute == (int)Constants.AttributeTypes.STR)
+        {
+            if (StrPoints > BaseStats)
+            {
+                StrPoints--;
+                avaliablePoints++;
+            }
+        }
+        else if (attribute == (int)Constants.AttributeTypes.AGI)
+        {
+            if (AgiPoints > BaseStats)
+            {
+                AgiPoints--;
+                avaliablePoints++;
+            }
+        }
+        else if (attribute == (int)Constants.AttributeTypes.DEX)
+        {
+            if (DexPoints > BaseStats)
+            {
+                DexPoints--;
+                avaliablePoints++;
+            }
+        }
+        else if (attribute == (int)Constants.AttributeTypes.STA)
+        {
+            if (StaPoints > BaseStats)
+            {
+                StaPoints--;
+                avaliablePoints++;
+            }
+        }
+        UpdateStatusText();
+    }
+    void UpdateStatusText()
+    {
+        avaliableText.text = avaliablePoints.ToString();
+        HPText.text = (HPMultiplyer * HPPoints).ToString();
+        StrText.text = StrPoints.ToString();
+        AgiText.text = AgiPoints.ToString();
+        DexText.text = DexPoints.ToString();
+        StaText.text = StaPoints.ToString();
     }
 }
