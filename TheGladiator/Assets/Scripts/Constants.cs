@@ -48,7 +48,7 @@ public static class Constants
     }
 
     public static string playerName = "Player";
-    public static string enemyName = "Enemy";
+    public static string enemyName = "player2";
 
     public static string player1Tag = "player1";
     public static string enemyTag = "player2";

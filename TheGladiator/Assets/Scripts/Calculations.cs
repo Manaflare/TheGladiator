@@ -2,18 +2,20 @@
 
 static class Calculations
 {
+    // Provides the Player with an Advantage if Agility stat is equal
     public static void agilityTest(Stats player, Stats enemy)
     {
         if (player.Agility == enemy.Agility && player.Agility != Constants.MAX_STAT_LEVEL)
         {
-            player.Agility++;
+            player.Agility += 5;
         }
         else if (enemy.Agility == Constants.MAX_STAT_LEVEL)
         {
             enemy.Agility -= 5;
         }
     }
-
+    
+    // Calculates the time in between Attacks
     public static float calculateDelay(Stats s)
     {
 
@@ -24,11 +26,11 @@ static class Calculations
 
         return attackDelay;
     }
-    public static bool attackHits(int dex)
+
+    public static bool playerAttacks(int dex)
     {
         float accuracy = 100 * (Constants.MINIMUM_ACCURACY + (Constants.ACCURACY_STEP_AMOUNT * dex));
-        float r = Random.Range(0, 100);
-        bool result = (r < accuracy) ? true : false;
+        bool result = (Random.Range(0, 100) < accuracy) ? true : false;
 
         return result;
     }

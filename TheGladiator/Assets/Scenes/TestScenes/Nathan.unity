@@ -426,6 +426,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gorePrefab: {fileID: 1347842030012010, guid: 0a23d082c921700458b9be84a6d03598, type: 2}
+  STATS:
+    name: 0
+    HP: 10
+    MAXHP: 10
+    Strength: 100
+    Agility: 0
+    Dexterity: 0
+    Stamina: 0
 --- !u!114 &615698086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,6 +613,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gorePrefab: {fileID: 1347842030012010, guid: 0a23d082c921700458b9be84a6d03598, type: 2}
+  STATS:
+    name: 1
+    HP: 10
+    MAXHP: 10
+    Strength: 0
+    Agility: 0
+    Dexterity: 0
+    Stamina: 0
 --- !u!114 &1053256181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -780,26 +796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45cda3fbb19e1fb4199e80135c809151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p1:
-    name: 0
-    HP: 25
-    MAXHP: 25
-    Strength: 5
-    Agility: 20
-    Dexterity: 50
-    Stamina: 10
-  e:
-    name: 1
-    HP: 25
-    MAXHP: 25
-    Strength: 6
-    Agility: 25
-    Dexterity: 40
-    Stamina: 10
-  p1c: {fileID: 615698086}
-  ec: {fileID: 1053256181}
-  anim: {fileID: 615698084}
-  anim2: {fileID: 1053256182}
+  player1Object: {fileID: 615698080}
+  player2Object: {fileID: 1053256176}
   repeatMove: 0
   moveToRepeat: 0
 --- !u!4 &1743952558

@@ -9,6 +9,7 @@ public static class Utility
     {
         return (n == 0) ? Constants.playerName : Constants.enemyName;
     }
+
     //example
     static Dictionary<int, string> JsonFileList = new Dictionary<int, string>()
     {

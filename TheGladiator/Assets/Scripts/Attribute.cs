@@ -22,8 +22,22 @@ public class Stats
 public class Attribute : MonoBehaviour
 {
     public GameObject gorePrefab;
-    public Stats STATS { get; private set; }
+
+    [SerializeField]
+    private Stats STATS;
+
+    public Stats getSTATS()
+    {
+        return STATS;
+    }
+
+    public void setSTATS(Stats newStats)
+    {
+        STATS = newStats;
+    }
+
     public bool IsAlive { get; private set; }
+
     public bool IsDying { get; private set; }
 
     // Use this for initialization
