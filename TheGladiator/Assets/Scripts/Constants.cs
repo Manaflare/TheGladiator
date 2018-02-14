@@ -6,7 +6,21 @@ using UnityEngine;
 public static class Constants
 {
     //example
-
+    public enum MoveType : int
+    {
+        ATTACK = 0,
+        DODGE,
+        MISS,
+        DEATH
+    }
+    public enum AttributeTypes : int
+    {
+        HP = 0,
+        STR,
+        AGI,
+        DEX,
+        STA
+    }
     public enum DayTimeType
     {
         MORNING = 0,
@@ -35,7 +49,18 @@ public static class Constants
         ARMOR,
     }
 
-    public static string playerName = "Hello Player";
+    public enum Name
+    {
+        PLAYER = 0,
+        ENEMY
+    }
+
+    public static string playerName = "Player";
+    public static string enemyName = "Player 2";
+
+    public static string player1Tag = "player1";
+    public static string enemyTag = "player2";
+
     public static int PlayerIndex = 0;
 
 
@@ -55,6 +80,10 @@ public static class Constants
     public static float MINIMUM_ACCURACY = 0.5f;
     public static float MAXIMUM_ACCURACY = 0.95f;
     public static float ACCURACY_STEP_AMOUNT = (MAXIMUM_ACCURACY - MINIMUM_ACCURACY) / MAX_STAT_LEVEL;
+
+    public static float MINIMUM_DODGE = 0.0f; //Added for customizablity
+    public static float MAXIMUM_DODGE = 0.7F;
+    public static float DODGE_STEP_AMOUNT = (MAXIMUM_DODGE - MINIMUM_DODGE) / MAX_STAT_LEVEL;
 
 }
 

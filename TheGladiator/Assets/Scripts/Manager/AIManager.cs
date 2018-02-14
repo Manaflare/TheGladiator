@@ -2,154 +2,279 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Move
+{
+    public Constants.MoveType type;
+
+    public Animator attackerAnimator; //Attacker is who is attacking
+    public Animator attackeeAnimator; //Attackee is who is being attacked. Used for Dodge.
+
+    public Attribute attackerAttribute;
+
+    public Stats attackerStats;
+    public Stats attackeeStats;
+
+    public float delayTime;
+
+    public Move(Stats atkStat, Stats defStat, Attribute attrib, Animator attacker, Animator attackee, float delay)
+    {
+        attackerAnimator = attacker;
+        attackeeAnimator = attackee;
+
+        attackerAttribute = attrib;
+
+        attackerStats = atkStat;
+        attackeeStats = defStat;
+
+        delayTime = delay;
+    }
+}
+
 public class AIManager : MonoBehaviour {
 
+    #region Variables
+    public List<Move> moves;
+    
+
     [Header("Player Settings")]
-    public Stats p1;
-    public Stats e;
-    public Character p1c;
-    public Character ec;
+    public GameObject player1Object;
+    public GameObject player2Object;
 
-    public Animator anim;
-    public Animator anim2;
+    #region Sub Variables from GameObjects
+    Stats player1Stats;
+    Stats player2Stats;
 
-    bool gore = true;
+    Character player1Character;
+    Character player2Character;
 
-    [Header("Delay Settings")]
-    [SerializeField]
+    Animator player1Animator;
+    Animator player2Animator;
+    #endregion
+
+    [Header("Repeat/Replay Settings")]
+    public bool repeatMove;
+    [Range(0, 55)]
+    public int moveToRepeat;
+
+
+    #region DelayValues
     private float playerDelayTime;
-    [SerializeField]
     private float enemyDelayTime;
+    #endregion
 
-    float playerTime;
-    float enemyTime;
+    #region Timers
+    private float firstTime; // The player with the Higher Agility uses this timer
+    private float secondTime; // The lower uses this time
+    private float repeatTime; // If one action is being repeated than this is being played
+    #endregion
 
-    bool animationPlaying = false;
+    #region Playthrough Indexes
+    private int firstIndex; //for moving through the list
+    private int secondIndex;
+    private int totalIndex;
+    #endregion
 
-    bool noOneDead = true;
-    bool timeIsRunning = true;
-    // Use this for initialization
-    void Start() {
-        playerTime = 0.0f;
-        enemyTime = 0.0f;
+    #region Playthrough Conditions
+    bool playTheAnim = false;
+    private bool noOneDead = true;
+    #endregion
+   
+    #endregion
 
-        playerDelayTime = calculateDelay(p1);
-        enemyDelayTime = calculateDelay(e);
-
-        agilityTest(p1, e);
-
-
-
-    }
-    void agilityTest(Stats player, Stats enemy)
-    {   
-        if (player.Agility == enemy.Agility)
-        {
-            player.Agility++;
-        }
-    }
-
-    float calculateDelay(Stats s)
+    void Start()
     {
-        
-        float agilityDifference = (Constants.MAX_STAT_LEVEL - s.Agility);
-        float maxPercentage = agilityDifference / Constants.MAX_STAT_LEVEL;
-        float timeWithoutMinimum = Constants.MODIFIABLE_TIME * maxPercentage;
-        float attackDelay = timeWithoutMinimum + Constants.MINIMUM_DELAY;
-
-        return attackDelay;
+        directValues();
+        ResetValues();
+        SimulateBattle(player1Stats, player2Stats);
     }
 
-    bool attackHits(int dex)
+    // Points the Values from the Game Object to shorten Code
+    private void directValues()
     {
-        float accuracy = 100 * (Constants.MINIMUM_ACCURACY + (Constants.ACCURACY_STEP_AMOUNT * dex));
-        bool result = (Random.Range(0, 100) < accuracy) ? true : false; 
+        player1Stats = player1Object.GetComponent<Attribute>().getSTATS();
+        player2Stats = player2Object.GetComponent<Attribute>().getSTATS();
+        Attribute a = player1Object.GetComponent<Attribute>();
+        player1Character = player1Object.GetComponent<Character>();
+        player2Character = player1Object.GetComponent<Character>();
 
-        return result;
+        player1Animator = player1Object.GetComponent<Animator>();
+        player2Animator = player2Object.GetComponent<Animator>();
     }
 
-    void attack(Stats player, Stats enemy)
+    private void ResetValues()
     {
-        timeIsRunning = false;
+        player1Object.SetActive(true);
+        player2Object.SetActive(true);
 
-        if (playerTime >= playerDelayTime)
+        firstTime = 0.0f;
+        secondTime = 0.0f;
+        repeatTime = 0.0f;
+
+        firstIndex = 0;
+        secondIndex = 1;
+
+        totalIndex = 0;
+
+        if (moves == null)  moves = new List<Move>();
+
+        Calculations.agilityTest(player1Stats, player2Stats);
+
+        playerDelayTime = Calculations.calculateDelay(player1Stats);
+        enemyDelayTime = Calculations.calculateDelay(player2Stats);
+    }
+
+    void playMove(Move m)
+    {
+        switch (m.type)
         {
-            bool hit = attackHits(player.Dexterity);
-            if (hit)
-            {
-                enemy.HP -= player.Strength;
-                Debug.Log("Player Attack");
-                animationPlaying = true;
-                anim.SetBool("playerAttack", true);
-            }
-            else if (!hit)
-            {
-                Debug.Log("Player Missed");
-            }
-            playerTime = 0.0f;
+            case Constants.MoveType.ATTACK:
+                m.attackerAnimator.Play("Attack");
+                break;
+            case Constants.MoveType.DODGE:
+                m.attackerAnimator.Play("Attack");
+                m.attackeeAnimator.Play("Dodge");
+                break;
+            case Constants.MoveType.MISS:
+                m.attackerAnimator.Play("Miss");
+                break;
+            case Constants.MoveType.DEATH:
+                playTheAnim = false;
+                m.attackerAttribute.onDeath();
+                if (m.attackerStats.name == 0)
+                {
+                    player1Object.SetActive(false);
+                }
+                else
+                {
+                    player2Object.SetActive(false);
+                }
+                break;
         }
-        if (enemyTime >= enemyDelayTime && attackHits(enemy.Dexterity))
-        {
-            bool hit = attackHits(enemy.Dexterity);
-            if (hit)
-            {
-                player.HP -= enemy.Strength;
-                anim2.SetBool("enemyAttack", true);
-                Debug.Log("Enemy Attack");
-            }
-            else if (!hit)
-            {
-                Debug.Log("Enemy Missed");
-            }
-            enemyTime = 0.0f;
+    }//Called by Play Animation
 
-        }
+    void playAnimation(int moveToPlay = 0, bool repeat = false)
+    {
 
-        if (player.HP <= 0)
-        {
-            Debug.Log("Player Lost");
-            noOneDead = false;
+            if (!repeat)
+            {
+                if (!player1Character.isAttacking && !player2Character.isAttacking)
+                {
+                    firstTime += Time.deltaTime;
+                    secondTime += Time.deltaTime;
+                }
+
+                if (firstIndex < moves.Count && firstTime >= moves[firstIndex].delayTime)
+                {
+                    playMove(moves[firstIndex]);
+                    firstIndex += 2;
+                    totalIndex++;
+                    firstTime = 0.0f;
+                }
+                if (secondIndex < moves.Count && secondTime >= moves[secondIndex].delayTime)
+                {
+                    playMove(moves[secondIndex]);
+                    secondIndex += 2;
+                    totalIndex++;
+                    secondTime = 0.0f;
+                }
+            }
+            else if (repeat)
+            {
+                player1Object.SetActive(true);
+                player2Object.SetActive(true);
+
+
+
+                repeatTime += Time.deltaTime;
+                if (repeatTime >= moves[moveToPlay].delayTime)
+                {
+                    playMove(moves[moveToPlay]);
+                    repeatTime = 0.0f;
+
+                }
             
         }
-        if (enemy.HP <= 0)
+    }//Needs SimulateBattle to Have run
+
+    void attack(Stats player1Stats, Stats player2Stats, Attribute attrib, Animator player1Animator, Animator player2Animator, float delayTime)
+    {
+        string player1Name = Utility.getStringFromName(player1Stats.name);
+        string player2Name = Utility.getStringFromName(player2Stats.name);
+
+        if (player1Stats.HP <= 0)
         {
-            Debug.Log("Enemy Lost");
+            Debug.Log(player1Name + " Died");
+            Move m = new Move(player1Stats, player2Stats, attrib, player1Animator, player2Animator, delayTime);
+            m.type = Constants.MoveType.DEATH;
+            moves.Add(m);
             noOneDead = false;
         }
 
-    }
-    void playGore()
-    {
-        GameObject.FindGameObjectWithTag("player1").GetComponent<PlayerAttribute>().onDeath();
-        GameObject.FindGameObjectWithTag("player1").SetActive(false);
-    }
-    void playGoreEnemy()
-    {
-        GameObject.FindGameObjectWithTag("player2").GetComponent<EnemyAttribute>().onDeath();
-        GameObject.FindGameObjectWithTag("player2").SetActive(false);
-    }
-    // Update is called once per frame
-    void Update () {
-        anim.SetBool("playerAttack", false);
-        anim2.SetBool("enemyAttack", false);
-        //Debug.Log(p1c.isAttacking);
-        if (!p1c.isAttacking && !ec.isAttacking)
+        if (noOneDead)
         {
-           
-            playerTime += Time.deltaTime;
-            enemyTime += Time.deltaTime;
-        }
-        if (noOneDead) attack(p1, e);
 
-        if (gore && !p1c.isAttacking && !ec.isAttacking && p1.HP <= 0)
-        {
-            gore = false;
-            Invoke("playGore", 0.84f);
+            Move m = new Move(player1Stats, player2Stats, attrib, player1Animator, player2Animator, delayTime);
+
+            bool hit = Calculations.playerAttacks(player1Stats.Dexterity);
+            bool dodge = Calculations.enemyDodges(player1Stats.Agility);
+
+            if (hit && !dodge)
+            {
+                m.type = Constants.MoveType.ATTACK;
+
+                player2Stats.HP -= player1Stats.Strength;
+                Debug.Log(player1Name + " Attack");
+            }
+            else if (!hit && !dodge)
+            {
+                m.type = Constants.MoveType.MISS;
+                Debug.Log(player1Name + " Missed");
+            }
+            else if (dodge)
+            {
+                m.type = Constants.MoveType.DODGE;
+                Debug.Log(player1Name + "attacked, " + player2Name + " Dodged");
+            }
+            moves.Add(m);
         }
-        if (gore && !p1c.isAttacking && !ec.isAttacking && e.HP <= 0)
+    }//Called by Simulate Battle
+
+    void SimulateBattle(Stats player1, Stats player2)
+    {
+        int index = 0; //Prevents endless loop
+        moves.Clear(); //Ensures that the moves Only contain 1 battle;
+        while (noOneDead && index < 1000)
         {
-            gore = false;
-            Invoke("playGoreEnemy", 0.84f);
+            index++;
+            if (playerDelayTime < enemyDelayTime)
+            {
+                attack(player1, player2, player1Object.GetComponent<Attribute>(), player1Animator, player2Animator, playerDelayTime);
+                attack(player2, player1, player2Object.GetComponent<Attribute>(), player2Animator, player1Animator, enemyDelayTime);
+            }
+            else
+            {
+                attack(player2, player1, player2Object.GetComponent<Attribute>(), player2Animator, player1Animator, enemyDelayTime);
+                attack(player1, player2, player1Object.GetComponent<Attribute>(), player1Animator, player2Animator, playerDelayTime);
+            }
+
+        }     
+        foreach(Move m in moves)
+        {
+            Debug.Log(m.type);
+        }
+    }//
+
+    void Update ()
+    {
+        //Temporary Until we have a go to battle system.
+        if (Input.GetButton("Fire1")) 
+        {
+            playTheAnim = true;
+            ResetValues();
+        }
+        if (playTheAnim)
+        {
+            playAnimation();
         }
 
     }

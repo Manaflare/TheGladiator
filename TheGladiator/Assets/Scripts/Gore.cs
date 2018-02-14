@@ -11,7 +11,7 @@ public class Gore : MonoBehaviour {
     public Vector2 basePosition;
     Image[] imageChildren;
     float timeAlive;
-    float maxTime = 2.5f;
+    float maxTime = 3.5f;
     // Use this for initialization
     void OnEnable ()
     {
@@ -61,7 +61,6 @@ public class Gore : MonoBehaviour {
                 Sprite temp = o as Sprite;
                 imageChildren[index].sprite = temp;
                 Rect r = new Rect(index, 0, 2, 2);
-                //imageChildren[index].rectTransform.anchoredPosition = new Vector3(-368.75f + offset.x, -103.75f + offset.y,0);
                 imageChildren[index].rectTransform.anchoredPosition = new Vector3(startPos.x + offset.x, startPos.y + offset.y, 0);
                 offset.x += 12.5f;
                 index++;
@@ -71,7 +70,7 @@ public class Gore : MonoBehaviour {
 
     void Update()
     {
-        //timeAlive += Time.deltaTime;
+        timeAlive += Time.deltaTime;
         if (timeAlive < maxTime)
         {
             //Dimensions of Canvas Based off Gore offset position
@@ -80,10 +79,13 @@ public class Gore : MonoBehaviour {
 
             float MinBoundaryX = Mathf.Abs(canvas.GetComponent<RectTransform>().rect.width / 2 + this.GetComponent<RectTransform>().anchoredPosition.x) * -1;
             float MaxBoundaryX = canvas.GetComponent<RectTransform>().rect.width + MinBoundaryX;
-
+            /*
+                YOU WERE HERE @ Nathan
+             */
+            //Debug.Log(MinBoundaryY + Mathf.Abs(MinBoundaryY + (this.GetComponent<RectTransform>().anchoredPosition.y - (this.GetComponent<RectTransform>().rect.height /2))));
             //Offsets
             MinBoundaryX += 5.0f; //Where Player is
-            MinBoundaryY += 75.0f; //Added for a "Ground"-esque feel
+            MinBoundaryY += 0.0f; //Added for a "Ground"-esque feel
 
             MaxBoundaryX += -5.0f; //Where Enemy is
             MaxBoundaryY += 0;
@@ -107,7 +109,7 @@ public class Gore : MonoBehaviour {
 
                 if (i.GetComponent<RectTransform>().anchoredPosition.x <= MinBoundaryX)
                 {
-                    i.GetComponent<Rigidbody2D>().AddForce(new Vector2(2000.0f * -1, i.GetComponent<Rigidbody2D>().velocity.y));
+                    i.GetComponent<Rigidbody2D>().AddForce(new Vector2(5000.0f, i.GetComponent<Rigidbody2D>().velocity.y));
                     i.GetComponent<RectTransform>().anchoredPosition = new Vector2(MinBoundaryX, i.GetComponent<RectTransform>().anchoredPosition.y);
                     i.GetComponent<PointEffector2D>().enabled = false;
 
@@ -115,7 +117,7 @@ public class Gore : MonoBehaviour {
 
                 if (i.GetComponent<RectTransform>().anchoredPosition.x >= MaxBoundaryX)
                 {
-                    i.GetComponent<Rigidbody2D>().AddForce(new Vector2(-2000.0f, i.GetComponent<Rigidbody2D>().velocity.y));
+                    i.GetComponent<Rigidbody2D>().AddForce(new Vector2(-5000.0f, i.GetComponent<Rigidbody2D>().velocity.y));
                     i.GetComponent<RectTransform>().anchoredPosition = new Vector2(MaxBoundaryX, i.GetComponent<RectTransform>().anchoredPosition.y);
                     i.GetComponent<PointEffector2D>().enabled = false;
 

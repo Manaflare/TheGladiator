@@ -5,6 +5,11 @@ using UnityEngine;
 //this scripts is expected to be used for common function that we can have an access to this anywhere
 public static class Utility
 {
+    public static string getStringFromName(Constants.Name n)
+    {
+        return (n == 0) ? Constants.playerName : Constants.enemyName;
+    }
+
     //example
     static Dictionary<int, string> JsonFileList = new Dictionary<int, string>()
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(LoadSceneManager))]
 [RequireComponent(typeof(GlobalDataManager))]
 [RequireComponent(typeof(SoundManager))]
+[RequireComponent(typeof(SpriteManager))]
 [RequireComponent(typeof(InputManager))]
 public class MasterManager : MonoBehaviour {
 
@@ -13,6 +14,7 @@ public class MasterManager : MonoBehaviour {
     public static LoadSceneManager  ManagerLoadScene    { get; private set; }
     public static GlobalDataManager ManagerGlobalData   { get; private set; }
     public static SoundManager      ManagerSound        { get; private set; }
+    public static SpriteManager      ManagerSprite        { get; private set; }
 
     public static InputManager ManagerInput { get; private set; }
 
@@ -23,13 +25,13 @@ public class MasterManager : MonoBehaviour {
         ManagerGlobalData = GetComponent<GlobalDataManager>();
         ManagerSound = GetComponent<SoundManager>();
         ManagerInput = GetComponent<InputManager>();
-
+        ManagerSprite = GetComponent<SpriteManager>();
         //added all manager in the manager list
         managerList.Add(ManagerLoadScene);
         managerList.Add(ManagerGlobalData);
         managerList.Add(ManagerSound);
+        managerList.Add(ManagerSprite);
         managerList.Add(ManagerInput);
-
         StartCoroutine(IE_BootAllManager());
 
         //keep this gameobject the entire project
