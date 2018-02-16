@@ -49,10 +49,11 @@ public static class Constants
         ARMOR,
     }
 
-    public enum Name
+    public enum PlayerType
     {
         PLAYER = 0,
-        ENEMY
+        ENEMY,
+        BOSS
     }
 
     public static string playerName = "Player";
