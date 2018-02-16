@@ -428,7 +428,7 @@ MonoBehaviour:
   gorePrefab: {fileID: 1347842030012010, guid: 0a23d082c921700458b9be84a6d03598, type: 2}
   STATS:
     Name: 
-    playerType: 0
+    PlayerType: 0
     HP: 10
     MAXHP: 10
     Strength: 0
@@ -642,6 +642,10 @@ Prefab:
       propertyPath: m_Text
       value: 'AGI:'
       objectReference: {fileID: 0}
+    - target: {fileID: 1796197916717090, guid: 5ce6312552fde8043bf765f394d4f57f, type: 2}
+      propertyPath: m_Name
+      value: Agility
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ce6312552fde8043bf765f394d4f57f, type: 2}
   m_IsPrefabParent: 0
@@ -730,7 +734,7 @@ MonoBehaviour:
   gorePrefab: {fileID: 1347842030012010, guid: 0a23d082c921700458b9be84a6d03598, type: 2}
   STATS:
     Name: 
-    playerType: 1
+    PlayerType: 0
     HP: 10
     MAXHP: 10
     Strength: 100
