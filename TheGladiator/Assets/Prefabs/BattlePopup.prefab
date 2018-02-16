@@ -732,6 +732,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player1: {fileID: 0}
   Player2: {fileID: 0}
+  winnerSprite: {fileID: 114718185929786480}
+  loserSprite: {fileID: 114683035336008804}
+  winnerStats:
+  - {fileID: 114231863020555538}
+  - {fileID: 114717041170606436}
+  - {fileID: 114409459361134080}
+  - {fileID: 114010332276445976}
+  loserStats:
+  - {fileID: 114070711196803874}
+  - {fileID: 114974973367429152}
+  - {fileID: 114573275780738296}
+  - {fileID: 114912613773620646}
   WinnerName: {fileID: 114032025868553490}
   LoserName: {fileID: 114797800160384640}
 --- !u!114 &114364568151174552
