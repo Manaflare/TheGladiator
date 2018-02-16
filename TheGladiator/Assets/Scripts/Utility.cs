@@ -14,6 +14,7 @@ public static class Utility
     static Dictionary<int, string> JsonFileList = new Dictionary<int, string>()
     {
         {1, "/JSON/Data.json"},
+        {2, "/JSON/tier1Enemies.json"}
     };
 
 

@@ -30,21 +30,21 @@ public class battleResultScript : MonoBehaviour {
         Attribute player2Atrrib = Player2.GetComponent<Attribute>();
         if (player1Atrrib.getSTATS().HP > player2Atrrib.getSTATS().HP)
         {
-            WinnerName.text = Utility.getStringFromName(player1Atrrib.getSTATS().playerType);
+            WinnerName.text = Utility.getStringFromName(player1Atrrib.getSTATS().PlayerType);
             winnerSprite.sprite = Player1.GetComponent<Image>().sprite;
             loserSprite.sprite = Player2.GetComponent<Image>().sprite;
             setStatValues(winnerStats, player1Atrrib.getSTATS());
             setStatValues(loserStats, player2Atrrib.getSTATS());
-            LoserName.text = Utility.getStringFromName(player2Atrrib.getSTATS().playerType);
+            LoserName.text = Utility.getStringFromName(player2Atrrib.getSTATS().PlayerType);
         }
         else 
         {
-            WinnerName.text = Utility.getStringFromName(player2Atrrib.getSTATS().playerType);
+            WinnerName.text = Utility.getStringFromName(player2Atrrib.getSTATS().PlayerType);
             winnerSprite.sprite = Player2.GetComponent<Image>().sprite;
             loserSprite.sprite = Player1.GetComponent<Image>().sprite;
             setStatValues(winnerStats, player2Atrrib.getSTATS());
             setStatValues(loserStats, player1Atrrib.getSTATS());
-            LoserName.text = Utility.getStringFromName(player1Atrrib.getSTATS().playerType);
+            LoserName.text = Utility.getStringFromName(player1Atrrib.getSTATS().PlayerType);
 
         }
     }
