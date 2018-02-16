@@ -5,13 +5,27 @@ using UnityEngine;
 [System.Serializable]
 public class ListStatus
 {
+    public ListStatus()
+    {
+        statsList = new List<Stats>();
+    }
     public List<Stats> statsList;
 }
 [System.Serializable]
 public class Stats
 {
+    public Stats(string name, Constants.PlayerType playerType, int maxHp, byte str, byte agi, byte dex, short stamina)
+    {
+        Name = name;
+        PlayerType = playerType;
+        MAXHP = HP = maxHp;
+        Strength = str;
+        Agility = agi;
+        Dexterity = dex;
+        Stamina = stamina;
+    }
     public string Name;
-    public Constants.PlayerType playerType;
+    public Constants.PlayerType PlayerType;
     public int HP;
     public int MAXHP;
     public byte Strength;

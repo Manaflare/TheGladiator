@@ -32,21 +32,34 @@ public class CreateCharacterManager : MonoBehaviour {
     public int BaseStats;
 
     private int HPPoints;
-    private int StrPoints;
-    private int AgiPoints;
-    private int DexPoints;
-    private int StaPoints;
+    private byte StrPoints;
+    private byte AgiPoints;
+    private byte DexPoints;
+    private short StaPoints;
+
+    public Text NameText;
 
 
+    private ListStatus playerStatusList;
     private Stats playerStats;
 
     void Start () {
+        playerStatusList = new ListStatus();
         Reset();
+
     }
     public void StartGame()
     {
-
+        if(avaliablePoints > 0 || NameText.text == "")
+        {
+            //@TODO Show Error message
+            return;
+        }
+        playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
+        playerStatusList.statsList.Add(playerStats);
+        Utility.WriteStatsToJSON(1, ref playerStatusList);
     }
+
     public void Reset()
     {
         bodyIndex = 0;
@@ -62,7 +75,10 @@ public class CreateCharacterManager : MonoBehaviour {
         faceHairImage.color = new Color(0, 0, 0, 0);
 
         avaliablePoints = startinAvaliablePoints;
-        HPPoints = StrPoints = AgiPoints = DexPoints = StaPoints = BaseStats;
+        HPPoints = BaseStats;
+        StrPoints = AgiPoints = DexPoints = (byte)BaseStats;
+        StaPoints = (short)BaseStats;
+
         UpdateStatusText();
     }
 

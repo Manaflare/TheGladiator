@@ -144,7 +144,7 @@ public class AIManager : MonoBehaviour {
                 GameObject refferenceGameObjects = Instantiate(battleResult);
                 refferenceGameObjects.GetComponent<battleResultScript>().Player1 = player1Object;
                 refferenceGameObjects.GetComponent<battleResultScript>().Player2 = player2Object;
-                if (m.attackerStats.playerType == 0)
+                if (m.attackerStats.PlayerType == 0)
                 {
                     player1Object.SetActive(false);
                 }
@@ -202,8 +202,8 @@ public class AIManager : MonoBehaviour {
 
     void attack(Stats player1Stats, Stats player2Stats, Attribute attrib, Animator player1Animator, Animator player2Animator, float delayTime)
     {
-        string player1Name = Utility.getStringFromName(player1Stats.playerType);
-        string player2Name = Utility.getStringFromName(player2Stats.playerType);
+        string player1Name = Utility.getStringFromName(player1Stats.PlayerType);
+        string player2Name = Utility.getStringFromName(player2Stats.PlayerType);
 
         if (player1Stats.HP <= 0)
         {

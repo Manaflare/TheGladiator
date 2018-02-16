@@ -15,13 +15,13 @@ public class battleResultScript : MonoBehaviour {
         Attribute player2Atrrib = Player2.GetComponent<Attribute>();
         if (player1Atrrib.getSTATS().HP > player2Atrrib.getSTATS().HP)
         {
-            WinnerName.text = Utility.getStringFromName(player1Atrrib.getSTATS().playerType);
-            LoserName.text = Utility.getStringFromName(player2Atrrib.getSTATS().playerType);
+            WinnerName.text = Utility.getStringFromName(player1Atrrib.getSTATS().PlayerType);
+            LoserName.text = Utility.getStringFromName(player2Atrrib.getSTATS().PlayerType);
         }
         else 
         {
-            WinnerName.text = Utility.getStringFromName(player2Atrrib.getSTATS().playerType);
-            LoserName.text = Utility.getStringFromName(player1Atrrib.getSTATS().playerType);
+            WinnerName.text = Utility.getStringFromName(player2Atrrib.getSTATS().PlayerType);
+            LoserName.text = Utility.getStringFromName(player1Atrrib.getSTATS().PlayerType);
 
         }
     }
