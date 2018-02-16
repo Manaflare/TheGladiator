@@ -8,7 +8,6 @@ public class Move
 
     public Animator attackerAnimator; //Attacker is who is attacking
     public Animator attackeeAnimator; //Attackee is who is being attacked. Used for Dodge.
-
     public Attribute attackerAttribute;
 
     public Stats attackerStats;
@@ -39,6 +38,8 @@ public class AIManager : MonoBehaviour {
     [Header("Player Settings")]
     public GameObject player1Object;
     public GameObject player2Object;
+    [Header("Battle Result")]
+    public GameObject battleResult;
 
     #region Sub Variables from GameObjects
     Stats player1Stats;
@@ -140,7 +141,10 @@ public class AIManager : MonoBehaviour {
             case Constants.MoveType.DEATH:
                 playTheAnim = false;
                 m.attackerAttribute.onDeath();
-                if (m.attackerStats.name == 0)
+                GameObject refferenceGameObjects = Instantiate(battleResult);
+                refferenceGameObjects.GetComponent<battleResultScript>().Player1 = player1Object;
+                refferenceGameObjects.GetComponent<battleResultScript>().Player2 = player2Object;
+                if (m.attackerStats.PlayerType == 0)
                 {
                     player1Object.SetActive(false);
                 }
@@ -198,8 +202,8 @@ public class AIManager : MonoBehaviour {
 
     void attack(Stats player1Stats, Stats player2Stats, Attribute attrib, Animator player1Animator, Animator player2Animator, float delayTime)
     {
-        string player1Name = Utility.getStringFromName(player1Stats.name);
-        string player2Name = Utility.getStringFromName(player2Stats.name);
+        string player1Name = Utility.getStringFromName(player1Stats.PlayerType);
+        string player2Name = Utility.getStringFromName(player2Stats.PlayerType);
 
         if (player1Stats.HP <= 0)
         {

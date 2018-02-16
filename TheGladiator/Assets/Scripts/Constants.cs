@@ -13,6 +13,14 @@ public static class Constants
         MISS,
         DEATH
     }
+    public enum AttributeTypes : int
+    {
+        HP = 0,
+        STR,
+        AGI,
+        DEX,
+        STA
+    }
     public enum DayTimeType
     {
         MORNING = 0,
@@ -53,10 +61,11 @@ public static class Constants
         ARMOR,
     }
 
-    public enum Name
+    public enum PlayerType
     {
         PLAYER = 0,
-        ENEMY
+        ENEMY,
+        BOSS
     }
 
     public const float SECOND_FOR_DAY = 86400.0f;
@@ -66,7 +75,7 @@ public static class Constants
     public const float PER_TIME = 21600.0f;
 
     public static string playerName = "Player";
-    public static string enemyName = "player2";
+    public static string enemyName = "Player 2";
 
     public static string player1Tag = "player1";
     public static string enemyTag = "player2";

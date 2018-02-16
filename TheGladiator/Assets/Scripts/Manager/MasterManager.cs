@@ -25,7 +25,7 @@ public class MasterManager : MonoBehaviour {
         ManagerGlobalData = GetComponent<GlobalDataManager>();
         ManagerSound = GetComponent<SoundManager>();
         ManagerInput = GetComponent<InputManager>();
-
+        ManagerSprite = GetComponent<SpriteManager>();
         //added all manager in the manager list
         managerList.Add(ManagerLoadScene);
         managerList.Add(ManagerGlobalData);
