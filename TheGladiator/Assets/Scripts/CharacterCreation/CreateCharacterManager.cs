@@ -38,10 +38,15 @@ public class CreateCharacterManager : MonoBehaviour {
     private int StaPoints;
 
 
+    private Stats playerStats;
+
     void Start () {
         Reset();
     }
+    public void StartGame()
+    {
 
+    }
     public void Reset()
     {
         bodyIndex = 0;
