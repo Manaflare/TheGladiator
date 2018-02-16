@@ -29,4 +29,5 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         playerStatus = Utility.ReadStatsFromJSON(1);    
         
     }
+
 }

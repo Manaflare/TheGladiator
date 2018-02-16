@@ -19,6 +19,18 @@ public static class Constants
         AFTERNOON,
         NIGHT,
     }
+
+    public enum DayType
+    {
+        MONDAY = 0,
+        TUESDAY,
+        WEDNESDAY,
+        THURSDAY,
+        FRIDAY,
+        SATURDAY,
+        SUNDAY,
+    }
+
     public enum ArmorIndex
     {
         HELMET = 0,
@@ -46,6 +58,12 @@ public static class Constants
         PLAYER = 0,
         ENEMY
     }
+
+    public const float SECOND_FOR_DAY = 86400.0f;
+    public const float TIME_DAYTIME = 43200.0f;
+    public const float TIME_SUNSET = 64800.0f;
+    public const float TIME_DAWN = 21600.0f;
+    public const float PER_TIME = 21600.0f;
 
     public static string playerName = "Player";
     public static string enemyName = "player2";
