@@ -29,12 +29,14 @@ public class TownManager : MonoBehaviour {
     private int selectedIndex = 0;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		if(MasterManager.ManagerInput.GetKeyDown(KeyCode.UpArrow))
         {
             Objects[selectedIndex].GetComponent<GlowButton>().EndGlow();
@@ -52,7 +54,16 @@ public class TownManager : MonoBehaviour {
 
         if(MasterManager.ManagerInput.GetKeyDown(KeyCode.Return))
         {
-            Panels[selectedIndex].SetActive(true);
+            //for rest button
+            if(selectedIndex == Panels.Length)
+            {
+                Debug.Log(Constants.DayTimeType.MORNING.ToString());
+            }
+            else
+            {
+                Panels[selectedIndex].SetActive(true);
+            }
+
         }
     }
 }
