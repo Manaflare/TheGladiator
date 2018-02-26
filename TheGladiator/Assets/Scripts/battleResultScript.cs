@@ -15,6 +15,10 @@ public class battleResultScript : MonoBehaviour {
 
     public Text WinnerName;
     public Text LoserName;
+
+    [Range(0.0f, 5.0f)]
+    public float duration;
+    private float onScreenTime = 0.0f;
 	// Use this for initialization
 
     void setStatValues(Text[] arrayVals, Stats s)
@@ -48,9 +52,16 @@ public class battleResultScript : MonoBehaviour {
 
         }
     }
-	
+	void battleEnd()
+    {
+        Destroy(this.transform.root.gameObject);
+    }
 	// Update is called once per frame
 	void Update () {
-		
+        onScreenTime += Time.deltaTime;
+        if (onScreenTime >= duration)
+        {
+            battleEnd();
+        }
 	}
 }

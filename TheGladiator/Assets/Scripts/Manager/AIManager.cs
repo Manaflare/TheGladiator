@@ -59,7 +59,9 @@ public class AIManager : MonoBehaviour {
 
 
     #region DelayValues
+    [SerializeField]
     private float playerDelayTime;
+    [SerializeField]
     private float enemyDelayTime;
     #endregion
 
@@ -96,7 +98,7 @@ public class AIManager : MonoBehaviour {
         player2Stats = player2Object.GetComponent<Attribute>().getSTATS();
         Attribute a = player1Object.GetComponent<Attribute>();
         player1Character = player1Object.GetComponent<Character>();
-        player2Character = player1Object.GetComponent<Character>();
+        player2Character = player2Object.GetComponent<Character>();
 
         player1Animator = player1Object.GetComponent<Animator>();
         player2Animator = player2Object.GetComponent<Animator>();
@@ -122,6 +124,9 @@ public class AIManager : MonoBehaviour {
 
         playerDelayTime = Calculations.calculateDelay(player1Stats);
         enemyDelayTime = Calculations.calculateDelay(player2Stats);
+
+        GameObject battlePopup = GameObject.FindGameObjectWithTag("battlepopup");
+        if (battlePopup != null) Destroy(battlePopup);
     }
 
     void playMove(Move m)
@@ -141,6 +146,7 @@ public class AIManager : MonoBehaviour {
             case Constants.MoveType.DEATH:
                 playTheAnim = false;
                 m.attackerAttribute.onDeath();
+                StopCoroutine("playAnimation");
                 GameObject refferenceGameObjects = Instantiate(battleResult);
                 refferenceGameObjects.GetComponent<battleResultScript>().Player1 = player1Object;
                 refferenceGameObjects.GetComponent<battleResultScript>().Player2 = player2Object;
@@ -156,10 +162,11 @@ public class AIManager : MonoBehaviour {
         }
     }//Called by Play Animation
 
-    void playAnimation(int moveToPlay = 0, bool repeat = false)
+    IEnumerator playAnimation()
     {
-
-            if (!repeat)
+        while (true)
+        {
+            if (!repeatMove)
             {
                 if (!player1Character.isAttacking && !player2Character.isAttacking)
                 {
@@ -167,22 +174,22 @@ public class AIManager : MonoBehaviour {
                     secondTime += Time.deltaTime;
                 }
 
-                if (firstIndex < moves.Count && firstTime >= moves[firstIndex].delayTime)
+                if (!player2Character.isAttacking && firstIndex < moves.Count && firstTime >= moves[firstIndex].delayTime)
                 {
                     playMove(moves[firstIndex]);
                     firstIndex += 2;
                     totalIndex++;
                     firstTime = 0.0f;
                 }
-                if (secondIndex < moves.Count && secondTime >= moves[secondIndex].delayTime)
-                {
+                if (!player1Character.isAttacking && secondIndex < moves.Count && secondTime >= moves[secondIndex].delayTime)
+                { 
                     playMove(moves[secondIndex]);
                     secondIndex += 2;
                     totalIndex++;
                     secondTime = 0.0f;
                 }
             }
-            else if (repeat)
+            else if (repeatMove)
             {
                 player1Object.SetActive(true);
                 player2Object.SetActive(true);
@@ -190,13 +197,14 @@ public class AIManager : MonoBehaviour {
 
 
                 repeatTime += Time.deltaTime;
-                if (repeatTime >= moves[moveToPlay].delayTime)
+                if (repeatTime >= moves[moveToRepeat].delayTime)
                 {
-                    playMove(moves[moveToPlay]);
+                    playMove(moves[moveToRepeat]);
                     repeatTime = 0.0f;
 
                 }
-            
+            }
+            yield return new WaitForSeconds(0.1f);
         }
     }//Needs SimulateBattle to Have run
 
@@ -273,7 +281,7 @@ public class AIManager : MonoBehaviour {
         //Temporary Until we have a go to battle system.
         if (Input.GetButton("Fire1")) 
         {
-            playTheAnim = true;
+            StartCoroutine("playAnimation");
             ResetValues();
         }
         if (playTheAnim)
