@@ -32,6 +32,7 @@ public class battleResultScript : MonoBehaviour {
 
         Attribute player1Atrrib = Player1.GetComponent<Attribute>();
         Attribute player2Atrrib = Player2.GetComponent<Attribute>();
+
         if (player1Atrrib.getSTATS().HP > player2Atrrib.getSTATS().HP)
         {
             WinnerName.text = Utility.getStringFromName(player1Atrrib.getSTATS().PlayerType);
