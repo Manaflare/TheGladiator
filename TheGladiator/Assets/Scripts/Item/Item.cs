@@ -16,7 +16,8 @@ public abstract class Item : MonoBehaviour {
         DEX
     }
 
-    public Sprite sprite;
+    public int index;
+    public int spriteIndex;
     public string title;
     public string descripition;
 

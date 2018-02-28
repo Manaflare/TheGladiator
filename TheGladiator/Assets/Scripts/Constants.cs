@@ -27,6 +27,19 @@ public static class Constants
         AFTERNOON,
         NIGHT,
     }
+    public enum SpriteType
+    {
+        BODY = 0,
+        HAIR,
+        ARMOR,
+        FACIAL_HAIR,
+        HELMET,
+        RIGHT_HAND,
+        LEFT_HAND,
+        FOOT,
+        PANTS
+    }
+
 
     public enum DayType
     {

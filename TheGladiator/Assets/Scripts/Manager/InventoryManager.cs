@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    ListDataInfo playerData;
+
+    // Use this for initialization
+    void Start () {
+
+        playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {

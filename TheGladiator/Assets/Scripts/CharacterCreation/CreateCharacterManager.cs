@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MM = MasterManager;
 
 public class CreateCharacterManager : MonoBehaviour {
     [Header("Sprites Settings")]
@@ -54,9 +55,10 @@ public class CreateCharacterManager : MonoBehaviour {
             //@TODO Show Error message
             return;
         }
+
         Stats playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
         SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
-        MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo);
+        MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo,true);
     }
 
     public void Reset()
@@ -186,7 +188,7 @@ public class CreateCharacterManager : MonoBehaviour {
         else
         {
             faceHairImage.color = new Color(1, 1, 1, 1);
-            faceHairImage.sprite = SpriteManager.Instance.FacialHairList[faceHairIndex - 1];
+            faceHairImage.sprite = SpriteManager.Instance.FacialHairList[faceHairIndex];
         }
     }
 

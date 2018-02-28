@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemArmor : ItemEquipment {
 
     // Use this for initialization
-    public Constants.ArmorIndex index;
+    public Constants.ArmorIndex armorIndex;
     protected override void Start () {
 		
 	}
