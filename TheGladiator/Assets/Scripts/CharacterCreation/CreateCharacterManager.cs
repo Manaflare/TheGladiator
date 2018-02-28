@@ -56,8 +56,7 @@ public class CreateCharacterManager : MonoBehaviour {
             return;
         }
         playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
-        playerStatusList.statsList.Add(playerStats);
-        Utility.WriteStatsToJSON(1, ref playerStatusList);
+        MasterManager.ManagerGlobalData.SetPlayerStatus(playerStats);
     }
 
     public void Reset()
