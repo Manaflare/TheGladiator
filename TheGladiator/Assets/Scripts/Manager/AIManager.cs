@@ -170,19 +170,21 @@ public class AIManager : MonoBehaviour {
             {
                 if (!player1Character.isAttacking && !player2Character.isAttacking)
                 {
-                    firstTime += Time.deltaTime;
-                    secondTime += Time.deltaTime;
+                    firstTime += 0.01f;
+                    secondTime += 0.01f;
                 }
 
                 if (!player2Character.isAttacking && firstIndex < moves.Count && firstTime >= moves[firstIndex].delayTime)
                 {
+                    player1Character.isAttacking = true;
                     playMove(moves[firstIndex]);
                     firstIndex += 2;
                     totalIndex++;
                     firstTime = 0.0f;
                 }
                 if (!player1Character.isAttacking && secondIndex < moves.Count && secondTime >= moves[secondIndex].delayTime)
-                { 
+                {
+                    player2Character.isAttacking = true;
                     playMove(moves[secondIndex]);
                     secondIndex += 2;
                     totalIndex++;
@@ -204,7 +206,7 @@ public class AIManager : MonoBehaviour {
 
                 }
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f); //Fixed delay of 0.01 seconds between each loop allowing for more accuracy when dealing with similar values
         }
     }//Needs SimulateBattle to Have run
 
@@ -228,7 +230,7 @@ public class AIManager : MonoBehaviour {
             Move m = new Move(player1Stats, player2Stats, attrib, player1Animator, player2Animator, delayTime);
 
             bool hit = Calculations.playerAttacks(player1Stats.Dexterity);
-            bool dodge = Calculations.enemyDodges(player1Stats.Agility);
+            bool dodge = Calculations.enemyDodges(player2Stats.Agility);
 
             if (hit && !dodge)
             {

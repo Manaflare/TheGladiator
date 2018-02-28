@@ -3,14 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ListStatus
+public class ListDataInfo
 {
-    public ListStatus()
+    public ListDataInfo()
     {
         statsList = new List<Stats>();
+        spriteList = new List<SpriteInfo>();
     }
+
+    public void Clear()
+    {
+        statsList.Clear();
+        spriteList.Clear();
+    }
+
     public List<Stats> statsList;
+    public List<SpriteInfo> spriteList;
+    public int playerTier;
 }
+
+[System.Serializable]
+public class SpriteInfo
+{
+    public int FaceHairIndex;
+    public int HairIndex;
+    public int BodyIndex;
+
+    public SpriteInfo(int faceHair, int hair, int body)
+    {
+        FaceHairIndex = faceHair;
+        HairIndex = hair;
+        BodyIndex = body;
+    }
+}
+
+
 [System.Serializable]
 public class Stats
 {
