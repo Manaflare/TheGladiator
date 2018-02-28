@@ -6,6 +6,7 @@ public class SpriteManager : MonoBehaviour, IManager {
 
     public List<Sprite> BodyList;
     public List<Sprite> HairList;
+    public List<Sprite> ArmorList;
     public List<Sprite> FacialHairList;
     public List<Sprite> LeftHandList;
     public List<Sprite> RightHandList;

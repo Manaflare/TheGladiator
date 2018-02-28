@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MM = MasterManager;
 public class Move
 {
     public Constants.MoveType type;
@@ -33,7 +33,8 @@ public class AIManager : MonoBehaviour {
 
     #region Variables
     public List<Move> moves;
-    
+
+    MM master;
 
     [Header("Player Settings")]
     public GameObject player1Object;
@@ -86,6 +87,7 @@ public class AIManager : MonoBehaviour {
 
     void Start()
     {
+        master = GameObject.FindGameObjectWithTag("mastermanager").GetComponent<MasterManager>();
         directValues();
         ResetValues();
         SimulateBattle(player1Stats, player2Stats);
@@ -147,9 +149,9 @@ public class AIManager : MonoBehaviour {
                 playTheAnim = false;
                 m.attackerAttribute.onDeath();
                 StopCoroutine("playAnimation");
-                GameObject refferenceGameObjects = Instantiate(battleResult);
-                refferenceGameObjects.GetComponent<battleResultScript>().Player1 = player1Object;
-                refferenceGameObjects.GetComponent<battleResultScript>().Player2 = player2Object;
+                GameObject refferenceGameObject = Instantiate(battleResult);
+                refferenceGameObject.GetComponent<battleResultScript>().Player1 = player1Object;
+                refferenceGameObject.GetComponent<battleResultScript>().Player2 = player2Object;
                 if (m.attackerStats.PlayerType == 0)
                 {
                     player1Object.SetActive(false);
