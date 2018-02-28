@@ -40,11 +40,10 @@ public class CreateCharacterManager : MonoBehaviour {
     public Text NameText;
 
 
-    private ListStatus playerStatusList;
-    private Stats playerStats;
+    private ListDataInfo playerStatusList;
 
     void Start () {
-        playerStatusList = new ListStatus();
+        playerStatusList = new ListDataInfo();
         Reset();
 
     }
@@ -55,8 +54,9 @@ public class CreateCharacterManager : MonoBehaviour {
             //@TODO Show Error message
             return;
         }
-        playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
-        MasterManager.ManagerGlobalData.SetPlayerStatus(playerStats);
+        Stats playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
+        SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
+        MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo);
     }
 
     public void Reset()

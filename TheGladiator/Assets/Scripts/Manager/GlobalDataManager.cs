@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class GlobalDataManager : MonoBehaviour, IManager {
 
-    private ListStatus playerStatus;
-    private List<ListStatus> enemiesStatus;
+    private ListDataInfo playerStatus;
+    private List<ListDataInfo> enemiesStatus;
 
     public void Initialize()
     {
+        enemiesStatus = new List<ListDataInfo>();
         LoadallData();
         Debug.Log("boot Done " + typeof(GlobalDataManager));
 
@@ -23,31 +24,39 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     public void SaveAllData()
     {
         //get data from player attribute and save it to json File
-        Utility.WriteStatsToJSON(Constants.JSONIndex.DATA_PLAYER, ref playerStatus);
+        Utility.WriteDataInfoToJSON(Constants.JSONIndex.DATA_PLAYER, ref playerStatus);
         for (int i = (int)Constants.JSONIndex.DATA_ENEMY_TIER_1; i < (int)Constants.JSONIndex.DATA_ENEMY_TIER_MAX; ++i)
         {
-            ListStatus enemyStatus = enemiesStatus[i];
-            Utility.WriteStatsToJSON((Constants.JSONIndex)(i), ref enemyStatus);
+            ListDataInfo enemyStatus = enemiesStatus[i];
+            Utility.WriteDataInfoToJSON((Constants.JSONIndex)(i), ref enemyStatus);
         }
 
     }
 
     public void LoadallData()
     {
-        playerStatus = Utility.ReadStatsFromJSON(Constants.JSONIndex.DATA_PLAYER);
+        playerStatus = Utility.ReadDataInfoFromJSON(Constants.JSONIndex.DATA_PLAYER);
 
         for (int i = (int)Constants.JSONIndex.DATA_ENEMY_TIER_1; i < (int)Constants.JSONIndex.DATA_ENEMY_TIER_MAX; ++i)
         {
-            ListStatus enemyStatus = new ListStatus();
-            enemyStatus = Utility.ReadStatsFromJSON((Constants.JSONIndex)i);
+          
+            ListDataInfo enemyStatus = new ListDataInfo();
+            enemyStatus = Utility.ReadDataInfoFromJSON((Constants.JSONIndex)i);
             enemiesStatus.Add(enemyStatus);
         }
+
+        Debug.Log(playerStatus.spriteList[0].FaceHairIndex);
+        Debug.Log(enemiesStatus[0].statsList[0].Agility);
     }
 
-    public void SetPlayerStatus(Stats stat)
+    public void SetPlayerDataInfo(Stats stat, SpriteInfo spriteInfo)
     {
+        playerStatus.Clear();
         playerStatus.statsList.Add(stat);
-        Utility.WriteStatsToJSON(Constants.JSONIndex.DATA_PLAYER, ref playerStatus);
+        playerStatus.spriteList.Add(spriteInfo);
+
+        Debug.Log(playerStatus.spriteList[0].FaceHairIndex);
+        Utility.WriteDataInfoToJSON(Constants.JSONIndex.DATA_PLAYER, ref playerStatus);
     }
 
 }
