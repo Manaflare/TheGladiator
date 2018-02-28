@@ -74,6 +74,16 @@ public static class Constants
     public const float TIME_DAWN = 21600.0f;
     public const float PER_TIME = 21600.0f;
 
+
+    public enum JSONIndex
+    {
+        DATA_PLAYER = 1,
+        DATA_ENEMY_TIER_1,
+        DATA_ENEMY_TIER_2,
+        DATA_ENEMY_TIER_3,
+        DATA_ENEMY_TIER_MAX,
+    }
+
     public static string playerName = "Player";
     public static string enemyName = "Player 2";
 
