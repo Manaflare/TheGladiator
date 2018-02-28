@@ -19,6 +19,7 @@ public class ListDataInfo
 
     public List<Stats> statsList;
     public List<SpriteInfo> spriteList;
+    public int playerTier;
 }
 
 [System.Serializable]
