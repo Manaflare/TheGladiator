@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class DisplayScript : MonoBehaviour {
     Image body;
     Image hair;
+    Image armor;
     Image facialHair;
     Image leftHand;
     Image rightHand;
@@ -28,16 +29,17 @@ public class DisplayScript : MonoBehaviour {
         
         body       = bodyParts[0];
         hair       = bodyParts[1];
-        facialHair = bodyParts[2];
-        leftHand   = bodyParts[3];
-        rightHand  = bodyParts[4];
-        helmet     = bodyParts[5];
-        pants      = bodyParts[6];
-        shoes      = bodyParts[7];
+        armor      = bodyParts[2];
+        facialHair = bodyParts[3];
+        leftHand   = bodyParts[4];
+        rightHand  = bodyParts[5];
+        helmet     = bodyParts[6];
+        pants      = bodyParts[7];
+        shoes      = bodyParts[8];
 
         Color t = bodyParts[0].color;
         t.a = 0;
-
+        armor.color = t;
         leftHand.color = t;
         rightHand.color = t;
         helmet.color = t;
