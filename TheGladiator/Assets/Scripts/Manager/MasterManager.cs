@@ -14,8 +14,9 @@ public class MasterManager : MonoBehaviour {
     public static LoadSceneManager  ManagerLoadScene    { get; private set; }
     public static GlobalDataManager ManagerGlobalData   { get; private set; }
     public static SoundManager      ManagerSound        { get; private set; }
-    public static SpriteManager      ManagerSprite        { get; private set; }
+    public static SpriteManager      ManagerSprite      { get; private set; }
 
+    public static PopupManager       ManagerPopup       { get; private set; }
     public static InputManager ManagerInput { get; private set; }
 
 
@@ -26,12 +27,14 @@ public class MasterManager : MonoBehaviour {
         ManagerSound = GetComponent<SoundManager>();
         ManagerInput = GetComponent<InputManager>();
         ManagerSprite = GetComponent<SpriteManager>();
+        ManagerPopup = GetComponent<PopupManager>();
         //added all manager in the manager list
         managerList.Add(ManagerLoadScene);
         managerList.Add(ManagerGlobalData);
         managerList.Add(ManagerSound);
         managerList.Add(ManagerSprite);
         managerList.Add(ManagerInput);
+        managerList.Add(ManagerPopup);
         StartCoroutine(IE_BootAllManager());
 
         //keep this gameobject the entire project
