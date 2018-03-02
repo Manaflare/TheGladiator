@@ -4,14 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class RankUpScript : MonoBehaviour {
+
     public Text currentTier;
 
     public Button continueButton;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         Button btn = continueButton.GetComponent<Button>();
         btn.onClick.AddListener(DestroyOnClick);
+
         ListDataInfo playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         currentTier.text = playerData.playerTier.ToString();
     }
