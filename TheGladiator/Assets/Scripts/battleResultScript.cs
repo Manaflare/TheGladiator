@@ -9,8 +9,8 @@ public class BattleResultScript : MonoBehaviour {
     [HideInInspector]
     public GameObject Player2;
 
-    public Image winnerSprite;
-    public Image loserSprite;
+    //public Image winnerSprite;
+    //public Image loserSprite;
 
     public Text[] winnerStats;
     public Text[] loserStats;
