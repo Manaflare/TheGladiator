@@ -150,8 +150,8 @@ public class AIManager : MonoBehaviour {
                 m.attackerAttribute.onDeath();
                 StopCoroutine("playAnimation");
                 GameObject refferenceGameObject = Instantiate(battleResult);
-                refferenceGameObject.GetComponent<battleResultScript>().Player1 = player1Object;
-                refferenceGameObject.GetComponent<battleResultScript>().Player2 = player2Object;
+                refferenceGameObject.GetComponent<BattleResultScript>().Player1 = player1Object;
+                refferenceGameObject.GetComponent<BattleResultScript>().Player2 = player2Object;
                 if (m.attackerStats.PlayerType == 0)
                 {
                     player1Object.SetActive(false);

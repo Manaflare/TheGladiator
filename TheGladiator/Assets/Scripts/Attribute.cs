@@ -75,6 +75,8 @@ public class Attribute : MonoBehaviour
     [SerializeField]
     private Stats STATS;
 
+    [SerializeField]
+
     public Stats getSTATS()
     {
         return STATS;

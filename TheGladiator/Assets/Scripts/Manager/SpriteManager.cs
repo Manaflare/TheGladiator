@@ -10,11 +10,11 @@ public class SpriteManager : MonoBehaviour, IManager
 
     [HideInInspector]
     public List<Sprite> BodyList;
-    //[HideInInspector]
+    [HideInInspector]
     public List<Sprite> HairList;
     [HideInInspector]
     public List<Sprite> ArmorList;
-    //[HideInInspector]
+    [HideInInspector]
     public List<Sprite> FacialHairList;
     [HideInInspector]
     public List<Sprite> LeftHandList;
@@ -48,7 +48,7 @@ public class SpriteManager : MonoBehaviour, IManager
 
     private void Awake()
     {
-        Sprite empty = new Sprite();
+        Sprite empty = new Sprite(); //Here so that there is an option for no hair
         HairList.Add(empty);
         FacialHairList.Add(empty);
 

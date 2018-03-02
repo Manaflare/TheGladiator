@@ -5,11 +5,11 @@ using UnityEngine;
 public class GlobalDataManager : MonoBehaviour, IManager {
 
     private ListDataInfo playerDataInfo;
-    private List<ListDataInfo> enimiesDataInfo;
+    private List<ListDataInfo> enemiesDataInfo;
 
     public void Initialize()
     {
-        enimiesDataInfo = new List<ListDataInfo>();
+        enemiesDataInfo = new List<ListDataInfo>();
         LoadallData();
         Debug.Log("boot Done " + typeof(GlobalDataManager));
 
@@ -27,7 +27,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         Utility.WriteDataInfoToJSON(Constants.JSONIndex.DATA_PLAYER, ref playerDataInfo);
         for (int i = (int)Constants.JSONIndex.DATA_ENEMY_TIER_1; i < (int)Constants.JSONIndex.DATA_ENEMY_TIER_MAX; ++i)
         {
-            ListDataInfo enemyStatus = enimiesDataInfo[i];
+            ListDataInfo enemyStatus = enemiesDataInfo[i];
             Utility.WriteDataInfoToJSON((Constants.JSONIndex)(i), ref enemyStatus);
         }
 
@@ -42,7 +42,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
 
             ListDataInfo enemyStatus = new ListDataInfo();
             enemyStatus = Utility.ReadDataInfoFromJSON((Constants.JSONIndex)i);
-            enimiesDataInfo.Add(enemyStatus);
+            enemiesDataInfo.Add(enemyStatus);
         }
 
         //Debug.Log(playerStatus.spriteList[0].FaceHairIndex);
@@ -67,6 +67,11 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     public ListDataInfo GetPlayerDataInfo()
     {
         return playerDataInfo;
+    }
+
+    public List<ListDataInfo> GetEnemyDataInfo()
+    {
+        return enemiesDataInfo;
     }
 
 }
