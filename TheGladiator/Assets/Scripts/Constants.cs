@@ -88,13 +88,20 @@ public static class Constants
     public const float PER_TIME = 21600.0f;
 
 
-    public enum JSONIndex
+    public enum JSONIndex : int 
     {
         DATA_PLAYER = 1,
         DATA_ENEMY_TIER_1,
         DATA_ENEMY_TIER_2,
         DATA_ENEMY_TIER_3,
         DATA_ENEMY_TIER_MAX,
+    }
+
+    public enum ENEMYTierIndex
+    {
+        TIER_1 = 0,
+        TIER_2,
+        TIER_3,
     }
 
     public static string playerName = "Player";

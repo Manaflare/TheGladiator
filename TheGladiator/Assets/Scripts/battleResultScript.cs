@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class battleResultScript : MonoBehaviour {
+public class BattleResultScript : MonoBehaviour {
+    [HideInInspector]
     public GameObject Player1;
+    [HideInInspector]
     public GameObject Player2;
 
     public Image winnerSprite;
@@ -15,6 +17,10 @@ public class battleResultScript : MonoBehaviour {
 
     public Text WinnerName;
     public Text LoserName;
+    [HideInInspector]
+    public Attribute Winner;
+    [HideInInspector]
+    public Attribute Loser;
 
     [Range(0.0f, 5.0f)]
     public float duration;
@@ -35,18 +41,18 @@ public class battleResultScript : MonoBehaviour {
 
         if (player1Atrrib.getSTATS().HP > player2Atrrib.getSTATS().HP)
         {
+            Winner = player1Atrrib;
+            Loser = player2Atrrib;
             WinnerName.text = Utility.getStringFromName(player1Atrrib.getSTATS().PlayerType);
-            winnerSprite.sprite = Player1.GetComponent<Image>().sprite;
-            loserSprite.sprite = Player2.GetComponent<Image>().sprite;
             setStatValues(winnerStats, player1Atrrib.getSTATS());
             setStatValues(loserStats, player2Atrrib.getSTATS());
             LoserName.text = Utility.getStringFromName(player2Atrrib.getSTATS().PlayerType);
         }
         else 
         {
+            Winner = player2Atrrib;
+            Loser = player1Atrrib;
             WinnerName.text = Utility.getStringFromName(player2Atrrib.getSTATS().PlayerType);
-            winnerSprite.sprite = Player2.GetComponent<Image>().sprite;
-            loserSprite.sprite = Player1.GetComponent<Image>().sprite;
             setStatValues(winnerStats, player2Atrrib.getSTATS());
             setStatValues(loserStats, player1Atrrib.getSTATS());
             LoserName.text = Utility.getStringFromName(player1Atrrib.getSTATS().PlayerType);
