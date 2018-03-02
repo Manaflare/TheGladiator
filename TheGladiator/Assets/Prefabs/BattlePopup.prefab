@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 224568333366479984}
   - component: {fileID: 222644841927422448}
   m_Layer: 5
-  m_Name: Winner Sprite
+  m_Name: Winner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -420,7 +420,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224311467634432524}
-  - component: {fileID: 114887197861257162}
+  - component: {fileID: 114960113214142102}
   m_Layer: 5
   m_Name: Display
   m_TagString: Untagged
@@ -774,7 +774,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224518410006644222}
-  - component: {fileID: 114572043290292190}
+  - component: {fileID: 114337522665792044}
   m_Layer: 5
   m_Name: Display
   m_TagString: Untagged
@@ -1212,6 +1212,26 @@ MonoBehaviour:
   m_Text: '0
 
 '
+--- !u!114 &114337522665792044
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1935159562805668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e6c17bf37984844b0c83ab84b77f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 114619143771084932}
+  hair: {fileID: 114818712462417976}
+  facehair: {fileID: 114761242243086160}
+  armor: {fileID: 114533691063855034}
+  helmet: {fileID: 114404917080115698}
+  rightHand: {fileID: 114207322041044320}
+  leftHand: {fileID: 114204146747728846}
+  foot: {fileID: 114718404012703108}
+  pants: {fileID: 114836201360899288}
 --- !u!114 &114353130512227582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1259,7 +1279,7 @@ MonoBehaviour:
   Player1: {fileID: 1128409481863240}
   Player2: {fileID: 1442352983819606}
   winnerSprite: {fileID: 0}
-  loserSprite: {fileID: 114683035336008804}
+  loserSprite: {fileID: 0}
   winnerStats:
   - {fileID: 114231863020555538}
   - {fileID: 114717041170606436}
@@ -1272,6 +1292,8 @@ MonoBehaviour:
   - {fileID: 114912613773620646}
   WinnerName: {fileID: 114032025868553490}
   LoserName: {fileID: 114797800160384640}
+  Winner: {fileID: 0}
+  Loser: {fileID: 0}
   duration: 5
 --- !u!114 &114364568151174552
 MonoBehaviour:
@@ -1500,20 +1522,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 'HP:'
---- !u!114 &114572043290292190
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1935159562805668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0626e2152ada0c446bafe7f2e64ef035, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bodyValue: 0
-  hairValue: 0
-  facialHairValue: 0
 --- !u!114 &114573275780738296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2081,20 +2089,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114887197861257162
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1507489658578574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0626e2152ada0c446bafe7f2e64ef035, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bodyValue: 0
-  hairValue: 0
-  facialHairValue: 0
 --- !u!114 &114912613773620646
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2130,6 +2124,26 @@ MonoBehaviour:
   m_Text: '0
 
 '
+--- !u!114 &114960113214142102
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1507489658578574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e6c17bf37984844b0c83ab84b77f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 114172931658352534}
+  hair: {fileID: 114636453859808122}
+  facehair: {fileID: 114021740134945484}
+  armor: {fileID: 114805648026548370}
+  helmet: {fileID: 114005548570796110}
+  rightHand: {fileID: 114770437250560318}
+  leftHand: {fileID: 114183542886213532}
+  foot: {fileID: 114003215197846162}
+  pants: {fileID: 114623959293990678}
 --- !u!114 &114974973367429152
 MonoBehaviour:
   m_ObjectHideFlags: 1
