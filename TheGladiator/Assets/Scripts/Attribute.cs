@@ -19,6 +19,7 @@ public class ListDataInfo
 
     public List<Stats> statsList;
     public List<SpriteInfo> spriteList;
+    public List<ItemInfo> itemList;
     public int playerTier;
 }
 
@@ -37,6 +38,12 @@ public class SpriteInfo
     }
 }
 
+[System.Serializable]
+public class ItemInfo
+{
+    public int index;
+    public bool isEquiped;
+}
 
 [System.Serializable]
 public class Stats
@@ -67,6 +74,8 @@ public class Attribute : MonoBehaviour
 
     [SerializeField]
     private Stats STATS;
+
+    [SerializeField]
 
     public Stats getSTATS()
     {

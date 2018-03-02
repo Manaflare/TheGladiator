@@ -27,6 +27,19 @@ public static class Constants
         AFTERNOON,
         NIGHT,
     }
+    public enum SpriteType
+    {
+        BODY = 0,
+        HAIR,
+        ARMOR,
+        FACIAL_HAIR,
+        HELMET,
+        RIGHT_HAND,
+        LEFT_HAND,
+        FOOT,
+        PANTS
+    }
+
 
     public enum DayType
     {
@@ -75,7 +88,7 @@ public static class Constants
     public const float PER_TIME = 21600.0f;
 
 
-    public enum JSONIndex
+    public enum JSONIndex : int 
     {
         DATA_PLAYER = 1,
         DATA_ENEMY_TIER_1,
@@ -92,6 +105,13 @@ public static class Constants
         POPUP_SYSTEM,
         POPUP_YES,
         POPUP_NO
+
+    public enum ENEMYTierIndex
+    {
+        TIER_1 = 0,
+        TIER_2,
+        TIER_3,
+
     }
 
     public static string playerName = "Player";
