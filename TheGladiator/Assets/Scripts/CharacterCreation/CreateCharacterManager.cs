@@ -8,15 +8,15 @@ public class CreateCharacterManager : MonoBehaviour {
     [Header("Sprites Settings")]
     public Image bodyImage;
     public Text bodyText;
-    private int bodyIndex;
+    protected int bodyIndex;
 
     public Image hairImage;
     public Text hairText;
-    private int hairIndex;
+    protected int hairIndex;
 
     public Image faceHairImage;
     public Text faceHairText;
-    private int faceHairIndex;
+    protected int faceHairIndex;
 
     [Header("Atributes Visual")]
     public Text avaliableText;
@@ -32,23 +32,23 @@ public class CreateCharacterManager : MonoBehaviour {
     public int HPMultiplyer;
     public int BaseStats;
 
-    private int HPPoints;
-    private byte StrPoints;
-    private byte AgiPoints;
-    private byte DexPoints;
-    private short StaPoints;
+    protected int HPPoints;
+    protected byte StrPoints;
+    protected byte AgiPoints;
+    protected byte DexPoints;
+    protected short StaPoints;
 
     public Text NameText;
 
 
-    private ListDataInfo playerStatusList;
+    protected ListDataInfo playerStatusList;
 
     void Start () {
         playerStatusList = new ListDataInfo();
         Reset();
 
     }
-    public void StartGame()
+    public virtual void StartGame()
     {
         if(avaliablePoints > 0 || NameText.text == "")
         {

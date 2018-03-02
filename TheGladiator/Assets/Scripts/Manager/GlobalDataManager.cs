@@ -59,6 +59,11 @@ public class GlobalDataManager : MonoBehaviour, IManager {
             Utility.WriteDataInfoToJSON(Constants.JSONIndex.DATA_PLAYER, ref playerDataInfo);
     }
 
+    public void SetEnemyDataInfo()
+    {
+
+    }
+
     public void SetPlayerTier(int tier)
     {
         playerDataInfo.playerTier = tier;
