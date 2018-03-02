@@ -97,11 +97,21 @@ public static class Constants
         DATA_ENEMY_TIER_MAX,
     }
 
+    public delegate void CallbackFunction();
+    public delegate void CallbackFunctionWithArg1<T>(T arg);
+
+    public enum PopupType
+    {
+        POPUP_SYSTEM,
+        POPUP_YES,
+        POPUP_NO,
+    }
     public enum ENEMYTierIndex
     {
         TIER_1 = 0,
         TIER_2,
         TIER_3,
+
     }
 
     public static string playerName = "Player";
