@@ -104,8 +104,8 @@ public static class Constants
     {
         POPUP_SYSTEM,
         POPUP_YES,
-        POPUP_NO
-
+        POPUP_NO,
+    }
     public enum ENEMYTierIndex
     {
         TIER_1 = 0,
