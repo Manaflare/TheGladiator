@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 149362526}
   - component: {fileID: 149362525}
   - component: {fileID: 149362524}
+  - component: {fileID: 149362530}
   - component: {fileID: 149362523}
   m_Layer: 0
   m_Name: MasterManager
@@ -365,6 +366,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b93a30b571553c4c809581788048505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &149362530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 149362522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41577be3c924f24cbfda3e6e6052977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popupPrefabs: {fileID: 1591415738364900, guid: a48e4e2654c71724a9b83b5aaaf6c7bb,
+    type: 2}
 --- !u!1 &154817214 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1781367009563118, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,
@@ -1838,7 +1852,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -3.5, y: 3.5}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1028161068 stripped

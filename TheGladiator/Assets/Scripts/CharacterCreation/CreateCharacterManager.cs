@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MM = MasterManager;
 
 public class CreateCharacterManager : MonoBehaviour {
     [Header("Sprites Settings")]
     public Image bodyImage;
     public Text bodyText;
-    private int bodyIndex;
+    protected int bodyIndex;
 
     public Image hairImage;
     public Text hairText;
-    private int hairIndex;
+    protected int hairIndex;
 
     public Image faceHairImage;
     public Text faceHairText;
-    private int faceHairIndex;
+    protected int faceHairIndex;
 
     [Header("Atributes Visual")]
     public Text avaliableText;
@@ -31,33 +32,33 @@ public class CreateCharacterManager : MonoBehaviour {
     public int HPMultiplyer;
     public int BaseStats;
 
-    private int HPPoints;
-    private byte StrPoints;
-    private byte AgiPoints;
-    private byte DexPoints;
-    private short StaPoints;
+    protected int HPPoints;
+    protected byte StrPoints;
+    protected byte AgiPoints;
+    protected byte DexPoints;
+    protected short StaPoints;
 
     public Text NameText;
 
 
-    private ListStatus playerStatusList;
-    private Stats playerStats;
+    protected ListDataInfo playerStatusList;
 
     void Start () {
-        playerStatusList = new ListStatus();
+        playerStatusList = new ListDataInfo();
         Reset();
 
     }
-    public void StartGame()
+    public virtual void StartGame()
     {
         if(avaliablePoints > 0 || NameText.text == "")
         {
             //@TODO Show Error message
             return;
         }
-        playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
-        playerStatusList.statsList.Add(playerStats);
-        Utility.WriteStatsToJSON(1, ref playerStatusList);
+
+        Stats playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
+        SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
+        MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo,true);
     }
 
     public void Reset()
@@ -187,7 +188,7 @@ public class CreateCharacterManager : MonoBehaviour {
         else
         {
             faceHairImage.color = new Color(1, 1, 1, 1);
-            faceHairImage.sprite = SpriteManager.Instance.FacialHairList[faceHairIndex - 1];
+            faceHairImage.sprite = SpriteManager.Instance.FacialHairList[faceHairIndex];
         }
     }
 

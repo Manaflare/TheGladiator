@@ -11,20 +11,22 @@ public static class Utility
     }
 
     //example
-    static Dictionary<int, string> JsonFileList = new Dictionary<int, string>()
+    static Dictionary<Constants.JSONIndex, string> JsonFileList = new Dictionary<Constants.JSONIndex, string>()
     {
-        {1, "/JSON/Data.json"},
-        {2, "/JSON/tier1Enemies.json"}
+        {Constants.JSONIndex.DATA_PLAYER,       "/JSON/playerData.json"},
+        {Constants.JSONIndex.DATA_ENEMY_TIER_1, "/JSON/tier1Enemies.json"},
+        {Constants.JSONIndex.DATA_ENEMY_TIER_2, "/JSON/tier2Enemies.json"},
+        {Constants.JSONIndex.DATA_ENEMY_TIER_3, "/JSON/tier3Enemies.json"},
     };
 
 
-    public static ListStatus ReadStatsFromJSON(int fileNumber)
+    public static ListDataInfo ReadDataInfoFromJSON(Constants.JSONIndex fileIndex)
     {
         string fileName;
-        if(JsonFileList.TryGetValue(fileNumber, out fileName) == true)
+        if(JsonFileList.TryGetValue(fileIndex, out fileName) == true)
         {
             string jsonString = System.IO.File.ReadAllText(Application.dataPath + fileName);
-            return JsonUtility.FromJson<ListStatus>(jsonString);
+            return JsonUtility.FromJson<ListDataInfo>(jsonString);
         }
         else
         {
@@ -34,10 +36,10 @@ public static class Utility
        
     }
 
-    public static void WriteStatsToJSON(int fileNumber, ref ListStatus status)
+    public static void WriteDataInfoToJSON(Constants.JSONIndex fileIndex, ref ListDataInfo status)
     {
         string fileName;
-        if (JsonFileList.TryGetValue(fileNumber, out fileName) == true)
+        if (JsonFileList.TryGetValue(fileIndex, out fileName) == true)
         {
             string jsonString = JsonUtility.ToJson(status);
             System.IO.File.WriteAllText(Application.dataPath + fileName, jsonString);

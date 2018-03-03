@@ -67,14 +67,12 @@ public class DayNightCycleManager : MonoBehaviour {
         time += Time.smoothDeltaTime * speed;
         if(time > Constants.SECOND_FOR_DAY)
         {
-            days++;
-            time = 0;
+            StartNextDay();
         }
 
         if((int)days > (int)Constants.DayType.SUNDAY)
         {
-            weeks++;
-            days = 0;
+            StartNextWeek();
         }
 
         currentTime = TimeSpan.FromSeconds(time);
@@ -129,5 +127,26 @@ public class DayNightCycleManager : MonoBehaviour {
         return ((int)days == (int)Constants.DayType.SUNDAY);
     }
 
+
+    void StartNextDay()
+    {
+        days++;
+        time = 0;
+
+        if(IsDayForBattle())
+        {
+            MasterManager.ManagerPopup.ShowMessageBox("System", "Time to Fight", Constants.PopupType.POPUP_SYSTEM);
+        }
+    }
+
+
+    void StartNextWeek()
+    {
+        weeks++;
+        days = 0;
+
+        //popup message and
+        MasterManager.ManagerPopup.ShowMessageBox("System", "Next Week Started", Constants.PopupType.POPUP_SYSTEM);
+    }
 
 }
