@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyCreatorManager : CreateCharacterManager {
-
+    [Header("Enemies")]
     List<ListDataInfo> enemyList;
     public Dropdown enemyDropDown;
     private int tier = 1;
@@ -33,10 +33,11 @@ public class EnemyCreatorManager : CreateCharacterManager {
             Debug.LogError("You spend more then what it is avaliable, please rebalance it");
             return;
         }
-        /*
         Stats playerStats = new Stats(NameText.text, Constants.PlayerType.ENEMY, HPPoints, StrPoints, AgiPoints, DexPoints, StaPoints);
         SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
-        MasterManager.ManagerGlobalData.SetEnemyDataInfo();*/
+        ListDataInfo enemy = new ListDataInfo(playerStats,playerSpriteInfo);
+        enemyList.Add(enemy);
+        MasterManager.ManagerGlobalData.SetEnemyDataInfo(enemyList);
     }
     public void ChangeTier(int value)
     {
