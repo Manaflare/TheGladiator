@@ -10,7 +10,14 @@ public class ListDataInfo
         statsList = new List<Stats>();
         spriteList = new List<SpriteInfo>();
     }
+    public ListDataInfo(Stats stats, SpriteInfo sprites)
+    {
+        statsList = new List<Stats>();
+        spriteList = new List<SpriteInfo>();
 
+        statsList.Add(stats);
+        spriteList.Add(sprites);
+    }
     public void Clear()
     {
         statsList.Clear();

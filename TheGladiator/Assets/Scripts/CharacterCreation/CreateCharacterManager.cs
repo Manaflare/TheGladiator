@@ -38,8 +38,8 @@ public class CreateCharacterManager : MonoBehaviour {
     protected byte DexPoints;
     protected short StaPoints;
 
+    [Header("Name")]
     public InputField NameText;
-
     protected ListDataInfo playerStatusList;
 
     void Start () {
@@ -52,6 +52,7 @@ public class CreateCharacterManager : MonoBehaviour {
         if(avaliablePoints > 0 || NameText.text == "")
         {
             //@TODO Show Error message
+            Debug.LogError("Missing Information");
             return;
         }
 
@@ -60,7 +61,7 @@ public class CreateCharacterManager : MonoBehaviour {
         MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo,true);
     }
 
-    public void Reset()
+    public void Reset(bool clearName = true)
     {
         bodyIndex = 0;
         bodyText.text = bodyIndex.ToString();
@@ -79,7 +80,10 @@ public class CreateCharacterManager : MonoBehaviour {
         StrPoints = AgiPoints = DexPoints = (byte)BaseStats;
         StaPoints = (short)BaseStats;
 
-        NameText.text = "";
+        if (clearName)
+        {
+            NameText.text = "";
+        }
 
         UpdateStatusText();
     }
@@ -91,7 +95,7 @@ public class CreateCharacterManager : MonoBehaviour {
     
     public void Randomize()
     {
-        Reset();
+        Reset(false);
 
         bodyIndex = Random.Range(0, SpriteManager.Instance.BodyList.Count - 1);
         hairIndex = Random.Range(0, SpriteManager.Instance.HairList.Count - 1);
