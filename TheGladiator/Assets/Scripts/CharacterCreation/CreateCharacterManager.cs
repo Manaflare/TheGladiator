@@ -27,7 +27,7 @@ public class CreateCharacterManager : MonoBehaviour {
     public Text StaText;
     [Header("Atributes")]
     public int startinAvaliablePoints;
-    private int avaliablePoints;
+    protected int avaliablePoints;
 
     public int HPMultiplyer;
     public int BaseStats;
@@ -38,8 +38,7 @@ public class CreateCharacterManager : MonoBehaviour {
     protected byte DexPoints;
     protected short StaPoints;
 
-    public Text NameText;
-
+    public InputField NameText;
 
     protected ListDataInfo playerStatusList;
 
@@ -80,6 +79,8 @@ public class CreateCharacterManager : MonoBehaviour {
         StrPoints = AgiPoints = DexPoints = (byte)BaseStats;
         StaPoints = (short)BaseStats;
 
+        NameText.text = "";
+
         UpdateStatusText();
     }
 
@@ -96,9 +97,9 @@ public class CreateCharacterManager : MonoBehaviour {
         hairIndex = Random.Range(0, SpriteManager.Instance.HairList.Count - 1);
         faceHairIndex = Random.Range(0, SpriteManager.Instance.FacialHairList.Count - 1);
 
-        BodyArrowPressed("");
-        HairArrowPressed("");
-        FaceHairArrowPressed("");
+        BodyArrowPressed("NONE");
+        HairArrowPressed("NONE");
+        FaceHairArrowPressed("NONE");
 
         while(avaliablePoints > 0)
         {
@@ -116,6 +117,10 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 bodyIndex = SpriteManager.Instance.BodyList.Count - 1;
             }
+        }
+        else if (direction == "NONE")
+        {
+
         }
         else
         {
@@ -139,7 +144,10 @@ public class CreateCharacterManager : MonoBehaviour {
                 hairIndex = SpriteManager.Instance.HairList.Count - 1;
             }
         }
-        else
+        else if (direction == "NONE")
+        {
+
+        }else
         {
             hairIndex++;
             if (hairIndex > SpriteManager.Instance.HairList.Count - 1)
@@ -170,6 +178,10 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 faceHairIndex = SpriteManager.Instance.FacialHairList.Count;
             }
+        }
+        else if (direction == "NONE")
+        {
+
         }
         else
         {
@@ -272,7 +284,7 @@ public class CreateCharacterManager : MonoBehaviour {
         }
         UpdateStatusText();
     }
-    void UpdateStatusText()
+    protected void UpdateStatusText()
     {
         avaliableText.text = avaliablePoints.ToString();
         HPText.text = (HPMultiplyer * HPPoints).ToString();

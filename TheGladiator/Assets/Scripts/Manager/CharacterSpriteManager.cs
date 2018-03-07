@@ -25,11 +25,31 @@ public class CharacterSpriteManager : MonoBehaviour {
     // Use this for initialization
     protected virtual void Start ()
     {
-        spriteInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo().spriteList[0];
+        Attribute temp = this.GetComponent<Attribute>();
+        if (temp == null && index == 0)
+        {
+            temp = GetComponentInParent<BattleResultScript>().Winner.GetComponent<Attribute>();
+            index++;
+        }
+        if (temp.getSTATS().PlayerType == Constants.PlayerType.ENEMY)
+        {
+            List<ListDataInfo> e = MasterManager.ManagerGlobalData.GetEnemyDataInfo();
+            spriteInfo = e[(int)Constants.ENEMYTierIndex.TIER_1].spriteList[0];
 
+        }
+        if (temp == null && index == 1)
+        {
+            index = 0;
+            temp = GetComponentInParent<BattleResultScript>().Loser.GetComponent<Attribute>();
+
+        }
+        else
+        {
+            spriteInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo().spriteList[0];
+        }
         applySettings();
     }
-    protected virtual void applySettings()
+    void applySettings()
     {
         GetSpriteFromManager(body, spriteInfo.BodyIndex, Constants.SpriteType.BODY);
         GetSpriteFromManager(hair, spriteInfo.HairIndex, Constants.SpriteType.HAIR);
