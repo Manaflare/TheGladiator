@@ -45,7 +45,7 @@ public class BattleResultScript : MonoBehaviour {
             LoserName.text = Utility.getStringFromName(player2Atrrib.getSTATS().PlayerType);
 
             popUp[0].SetSprite(MasterManager.ManagerGlobalData.GetPlayerDataInfo().spriteList[0]);
-            popUp[1].SetSprite(MasterManager.ManagerGlobalData.GetEnemyDataInfo()[0].spriteList[0]);
+            popUp[1].SetSprite(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[0].spriteList[0]);
         }
         else 
         {
@@ -54,7 +54,7 @@ public class BattleResultScript : MonoBehaviour {
             setStatValues(loserStats, player1Atrrib.getSTATS());
             LoserName.text = Utility.getStringFromName(player1Atrrib.getSTATS().PlayerType);
 
-            popUp[0].SetSprite(MasterManager.ManagerGlobalData.GetEnemyDataInfo()[0].spriteList[0]);
+            popUp[0].SetSprite(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[0].spriteList[0]);
             popUp[1].SetSprite(MasterManager.ManagerGlobalData.GetPlayerDataInfo().spriteList[0]);
 
 
