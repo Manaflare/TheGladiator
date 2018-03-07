@@ -34,7 +34,7 @@ public class CharacterSpriteManager : MonoBehaviour {
         spriteInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo().spriteList[0];
         applySettings();
     }
-    void loadImages()
+    public void loadImages()
     {
         body      = Instantiate(prefabPart, this.transform).GetComponent<Image>();
         hair      = Instantiate(prefabPart, this.transform).GetComponent<Image>();
@@ -56,19 +56,11 @@ public class CharacterSpriteManager : MonoBehaviour {
         foot.gameObject.name = "Foot";
         pants.gameObject.name = "Pants";
     }
-    void applySettings()
+    public void applySettings()
     {
         GetSpriteFromManager(body, spriteInfo.BodyIndex, Constants.SpriteType.BODY);
         GetSpriteFromManager(hair, spriteInfo.HairIndex, Constants.SpriteType.HAIR);
         GetSpriteFromManager(facehair, spriteInfo.FaceHairIndex, Constants.SpriteType.FACIAL_HAIR);
-
-        armor.color = hideColor;
-        helmet.color = hideColor;
-        rightHand.color = hideColor;
-        leftHand.color = hideColor;
-        rightHand.color = hideColor;
-        foot.color = hideColor;
-        pants.color = hideColor;
     }
     void UpdateSprites()
     {
