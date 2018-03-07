@@ -414,12 +414,13 @@ MonoBehaviour:
   STATS:
     Name: 
     PlayerType: 0
-    HP: 10
-    MAXHP: 10
-    Strength: 0
-    Agility: 0
-    Dexterity: 0
-    Stamina: 0
+    HP: 160
+    MAXHP: 160
+    Strength: 29
+    Agility: 34
+    Dexterity: 31
+    Stamina: 24
+    MaxStamina: 24
 --- !u!114 &615698086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -587,12 +588,13 @@ MonoBehaviour:
   STATS:
     Name: 
     PlayerType: 1
-    HP: 10
-    MAXHP: 10
-    Strength: 100
-    Agility: 0
-    Dexterity: 0
-    Stamina: 0
+    HP: 125
+    MAXHP: 125
+    Strength: 27
+    Agility: 25
+    Dexterity: 37
+    Stamina: 26
+    MaxStamina: 26
 --- !u!95 &1053256182
 Animator:
   serializedVersion: 3
@@ -838,6 +840,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1787027793309568, guid: 5ce6312552fde8043bf765f394d4f57f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ce6312552fde8043bf765f394d4f57f, type: 2}
   m_IsPrefabParent: 0
@@ -1001,8 +1007,6 @@ MonoBehaviour:
   player2Object: {fileID: 1053256176}
   battleResult: {fileID: 1787027793309568, guid: 5ce6312552fde8043bf765f394d4f57f,
     type: 2}
-  repeatMove: 0
-  moveToRepeat: 0
   playerDelayTime: 0
   enemyDelayTime: 0
 --- !u!4 &1743952558

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MM = MasterManager;
 public class Move
 {
     public Constants.MoveType type;
@@ -33,9 +32,6 @@ public class AIManager : MonoBehaviour {
 
     #region Variables
     public List<Move> moves;
-
-    MM master;
-
     [Header("Player Settings")]
     public GameObject player1Object;
     public GameObject player2Object;
@@ -52,12 +48,6 @@ public class AIManager : MonoBehaviour {
     Animator player1Animator;
     Animator player2Animator;
     #endregion
-
-    [Header("Repeat/Replay Settings")]
-    public bool repeatMove;
-    [Range(0, 55)]
-    public int moveToRepeat;
-
 
     #region DelayValues
     [SerializeField]
@@ -79,7 +69,6 @@ public class AIManager : MonoBehaviour {
     #endregion
 
     #region Playthrough Conditions
-    bool playTheAnim = false;
     private bool noOneDead = true;
     #endregion
    
@@ -87,10 +76,10 @@ public class AIManager : MonoBehaviour {
 
     void Start()
     {
-        master = GameObject.FindGameObjectWithTag("mastermanager").GetComponent<MasterManager>();
         directValues();
         ResetValues();
         SimulateBattle(player1Stats, player2Stats);
+        
     }
 
     // Points the Values from the Game Object to shorten Code
@@ -98,7 +87,7 @@ public class AIManager : MonoBehaviour {
     {
         player1Stats = player1Object.GetComponent<Attribute>().getSTATS();
         player2Stats = player2Object.GetComponent<Attribute>().getSTATS();
-        Attribute a = player1Object.GetComponent<Attribute>();
+
         player1Character = player1Object.GetComponent<Character>();
         player2Character = player2Object.GetComponent<Character>();
 
@@ -108,6 +97,7 @@ public class AIManager : MonoBehaviour {
 
     private void ResetValues()
     {
+        Random.InitState(100);
         player1Object.SetActive(true);
         player2Object.SetActive(true);
 
@@ -146,7 +136,6 @@ public class AIManager : MonoBehaviour {
                 m.attackerAnimator.Play("Miss");
                 break;
             case Constants.MoveType.DEATH:
-                playTheAnim = false;
                 m.attackerAttribute.onDeath();
                 StopCoroutine("playAnimation");
                 GameObject refferenceGameObject = Instantiate(battleResult);
@@ -166,47 +155,33 @@ public class AIManager : MonoBehaviour {
 
     IEnumerator playAnimation()
     {
+        float Move1 = moves[firstIndex].delayTime;
+        float Move2 = moves[secondIndex].delayTime;
         while (true)
         {
-            if (!repeatMove)
+            if (!player1Character.isAttacking && !player2Character.isAttacking)
             {
-                if (!player1Character.isAttacking && !player2Character.isAttacking)
-                {
-                    firstTime += 0.01f;
-                    secondTime += 0.01f;
-                }
-
-                if (!player2Character.isAttacking && firstIndex < moves.Count && firstTime >= moves[firstIndex].delayTime)
-                {
-                    player1Character.isAttacking = true;
-                    playMove(moves[firstIndex]);
-                    firstIndex += 2;
-                    totalIndex++;
-                    firstTime = 0.0f;
-                }
-                if (!player1Character.isAttacking && secondIndex < moves.Count && secondTime >= moves[secondIndex].delayTime)
-                {
-                    player2Character.isAttacking = true;
-                    playMove(moves[secondIndex]);
-                    secondIndex += 2;
-                    totalIndex++;
-                    secondTime = 0.0f;
-                }
+                firstTime += 0.01f;
+                secondTime += 0.01f;
             }
-            else if (repeatMove)
+
+            if (!player2Character.isAttacking && firstIndex < moves.Count && firstTime >= Move1)
             {
-                player1Object.SetActive(true);
-                player2Object.SetActive(true);
-
-
-
-                repeatTime += Time.deltaTime;
-                if (repeatTime >= moves[moveToRepeat].delayTime)
-                {
-                    playMove(moves[moveToRepeat]);
-                    repeatTime = 0.0f;
-
-                }
+                player1Character.isAttacking = true;
+                playMove(moves[firstIndex]);
+                firstIndex += 2;
+                totalIndex++;
+                firstTime = 0.0f;
+                Move1 = moves[firstIndex].delayTime;
+            }
+            if (!player1Character.isAttacking && secondIndex < moves.Count && secondTime >= Move2)
+            {
+                player2Character.isAttacking = true;
+                playMove(moves[secondIndex]);
+                secondIndex += 2;
+                totalIndex++;
+                secondTime = 0.0f;
+                Move2 = moves[secondIndex].delayTime;
             }
             yield return new WaitForSeconds(0.01f); //Fixed delay of 0.01 seconds between each loop allowing for more accuracy when dealing with similar values
         }
@@ -230,14 +205,14 @@ public class AIManager : MonoBehaviour {
         {
 
             Move m = new Move(player1Stats, player2Stats, attrib, player1Animator, player2Animator, delayTime);
-
+            //Random.InitState(100);
             bool hit = Calculations.playerAttacks(player1Stats.Dexterity);
             bool dodge = Calculations.enemyDodges(player2Stats.Agility);
 
             if (hit && !dodge)
             {
                 m.type = Constants.MoveType.ATTACK;
-
+                
                 player2Stats.HP -= player1Stats.Strength;
                 Debug.Log(player1Name + " Attack");
             }
@@ -288,10 +263,5 @@ public class AIManager : MonoBehaviour {
             StartCoroutine("playAnimation");
             ResetValues();
         }
-        if (playTheAnim)
-        {
-            playAnimation();
-        }
-
     }
 }

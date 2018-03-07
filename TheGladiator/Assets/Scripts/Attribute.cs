@@ -64,6 +64,7 @@ public class Stats
         Agility = agi;
         Dexterity = dex;
         Stamina = stamina;
+        MaxStamina = stamina;
     }
     public string Name;
     public Constants.PlayerType PlayerType;
@@ -73,6 +74,7 @@ public class Stats
     public byte Agility;
     public byte Dexterity;
     public short Stamina;
+    public short MaxStamina;
 }
 
 public class Attribute : MonoBehaviour
