@@ -54,8 +54,7 @@ public class TownManager : MonoBehaviour {
 
         if(MasterManager.ManagerInput.GetKeyDown(KeyCode.Return))
         {
-            //for rest button
-            if(selectedIndex == Panels.Length)
+            if (selectedIndex == Panels.Length)
             {
                 Debug.Log(Constants.DayTimeType.MORNING.ToString());
             }
@@ -64,6 +63,12 @@ public class TownManager : MonoBehaviour {
                 Panels[selectedIndex].SetActive(true);
             }
 
+        }
+
+        if(MasterManager.ManagerInput.GetKeyDown(KeyCode.E))
+        {
+            MasterManager.ManagerPopup.ShowMessageBox("TEST", "This is a test", Constants.PopupType.POPUP_NO);
+            //for rest button
         }
     }
 }
