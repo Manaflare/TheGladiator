@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public class ListEnemiesInfo
+{
+    public List<ListDataInfo> enemyData;
+}
+
+[System.Serializable]
 public class ListDataInfo
 {
     public ListDataInfo()

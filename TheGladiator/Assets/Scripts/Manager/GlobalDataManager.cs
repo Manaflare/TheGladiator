@@ -5,11 +5,10 @@ using UnityEngine;
 public class GlobalDataManager : MonoBehaviour, IManager {
 
     private ListDataInfo playerDataInfo;
-    private List<ListDataInfo> enemiesDataInfo;
+    private ListEnemiesInfo enemiesDataInfo;
 
     public void Initialize()
     {
-        enemiesDataInfo = new List<ListDataInfo>();
         LoadallData();
         Debug.Log("boot Done " + typeof(GlobalDataManager));
 
@@ -24,26 +23,14 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     public void SaveAllData()
     {
         //get data from player attribute and save it to json File
-        Utility.WriteDataInfoToJSON(Constants.JSONIndex.DATA_PLAYER, ref playerDataInfo);
-        for (int i = (int)Constants.JSONIndex.DATA_ENEMY_TIER_1; i < (int)Constants.JSONIndex.DATA_ENEMY_TIER_MAX; ++i)
-        {
-            ListDataInfo enemyStatus = enemiesDataInfo[i];
-            Utility.WriteDataInfoToJSON((Constants.JSONIndex)(i), ref enemyStatus);
-        }
-
+        Utility.WriteDataToJSON<ListDataInfo>(Constants.JSONIndex.DATA_PLAYER, ref playerDataInfo);
+        Utility.WriteDataToJSON<ListEnemiesInfo>(Constants.JSONIndex.DATA_ENEMY, ref enemiesDataInfo);
     }
 
     public void LoadallData()
     {
-        playerDataInfo = Utility.ReadDataInfoFromJSON(Constants.JSONIndex.DATA_PLAYER);
-
-        for (int i = (int)Constants.JSONIndex.DATA_ENEMY_TIER_1; i < (int)Constants.JSONIndex.DATA_ENEMY_TIER_MAX; ++i)
-        {
-
-            ListDataInfo enemyStatus = new ListDataInfo();
-            enemyStatus = Utility.ReadDataInfoFromJSON((Constants.JSONIndex)i);
-            enemiesDataInfo.Add(enemyStatus);
-        }
+        playerDataInfo = Utility.ReadDataFromJSON<ListDataInfo>(Constants.JSONIndex.DATA_PLAYER);
+        enemiesDataInfo = Utility.ReadDataFromJSON<ListEnemiesInfo>(Constants.JSONIndex.DATA_ENEMY);
 
         //Debug.Log(playerStatus.spriteList[0].FaceHairIndex);
         //Debug.Log(enemiesStatus[0].statsList[0].Agility);
@@ -56,12 +43,15 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         playerDataInfo.spriteList.Add(spriteInfo);
 
         if(ForceSave)
-            Utility.WriteDataInfoToJSON(Constants.JSONIndex.DATA_PLAYER, ref playerDataInfo);
+            Utility.WriteDataToJSON<ListDataInfo>(Constants.JSONIndex.DATA_PLAYER, ref playerDataInfo);
     }
 
-    public void SetEnemyDataInfo(List<ListDataInfo> enemyList)
+    public void SetEnemyDataInfo(ListEnemiesInfo enemyList, bool ForceSave = false)
     {
-        List<ListDataInfo> enemiesDataInfo = enemyList;
+        enemiesDataInfo = enemyList;
+
+        if (ForceSave)
+            Utility.WriteDataToJSON<ListEnemiesInfo>(Constants.JSONIndex.DATA_ENEMY, ref enemiesDataInfo);
     }
 
     public void SetPlayerTier(int tier)
@@ -73,8 +63,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     {
         return playerDataInfo;
     }
-
-    public List<ListDataInfo> GetEnemyDataInfo()
+    public ListEnemiesInfo GetEnemyDataInfo()
     {
         return enemiesDataInfo;
     }

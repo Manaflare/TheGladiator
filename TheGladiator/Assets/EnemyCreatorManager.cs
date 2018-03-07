@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyCreatorManager : CreateCharacterManager {
     [Header("Enemies")]
-    List<ListDataInfo> enemyList;
+    ListEnemiesInfo enemyList;
     public Dropdown enemyDropDown;
     private int tier = 1;
     public Text tierText;
@@ -18,9 +18,9 @@ public class EnemyCreatorManager : CreateCharacterManager {
 
         List<string> data = new List<string>();
 
-        for (int i = 0; i < enemyList.Count; i++)
+        for (int i = 0; i < enemyList.enemyData.Count; i++)
         {
-            data.Add(enemyList[i].statsList[0].Name + "_" + enemyList[i].playerTier);
+            data.Add(enemyList.enemyData[i].statsList[0].Name + "_" + enemyList.enemyData[i].playerTier);
         }
         enemyDropDown.AddOptions(data);
         Reset();
@@ -36,8 +36,9 @@ public class EnemyCreatorManager : CreateCharacterManager {
         Stats playerStats = new Stats(NameText.text, Constants.PlayerType.ENEMY, HPPoints, StrPoints, AgiPoints, DexPoints, StaPoints);
         SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
         ListDataInfo enemy = new ListDataInfo(playerStats,playerSpriteInfo);
-        enemyList.Add(enemy);
-        MasterManager.ManagerGlobalData.SetEnemyDataInfo(enemyList);
+        enemy.playerTier = tier;
+        enemyList.enemyData[enemyDropDown.value] = enemy;
+        MasterManager.ManagerGlobalData.SetEnemyDataInfo(enemyList, true);
     }
     public void ChangeTier(int value)
     {
@@ -57,16 +58,28 @@ public class EnemyCreatorManager : CreateCharacterManager {
     public void LoadEnemy()
     {
         ListDataInfo selectedEnemy = new ListDataInfo();
-        for (int i = 0; i < enemyList.Count; i++)
+        for (int i = 0; i < enemyList.enemyData.Count; i++)
         {
             string enemyName = enemyDropDown.options[enemyDropDown.value].text;
-            if(enemyList[i].statsList[0].Name == enemyName.Substring(0, enemyName.IndexOf('_')))
+            if(enemyList.enemyData[i].statsList[0].Name == enemyName.Substring(0, enemyName.IndexOf('_')))
             {
-                selectedEnemy = enemyList[i];
+                selectedEnemy = enemyList.enemyData[i];
                 break;
             }
         }
         Populate(selectedEnemy);
+    }
+
+    public void NewPage()
+    {
+        ListDataInfo newEnemy = new ListDataInfo();
+        Stats newEnemyStat = new Stats("New Enemy", Constants.PlayerType.ENEMY, 0, 0, 0, 0, 0);
+        SpriteInfo newEnemySprite = new SpriteInfo(0, 0, 0);
+        newEnemy.statsList.Add(newEnemyStat);
+        newEnemy.spriteList.Add(newEnemySprite);
+        enemyList.enemyData.Add(newEnemy);
+        Start();
+        enemyDropDown.value = enemyDropDown.options.Count - 1;
     }
 
     void Populate(ListDataInfo playerData)

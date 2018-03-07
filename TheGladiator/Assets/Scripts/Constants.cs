@@ -91,10 +91,7 @@ public static class Constants
     public enum JSONIndex : int 
     {
         DATA_PLAYER = 1,
-        DATA_ENEMY_TIER_1,
-        DATA_ENEMY_TIER_2,
-        DATA_ENEMY_TIER_3,
-        DATA_ENEMY_TIER_MAX,
+        DATA_ENEMY,
     }
 
     public delegate void CallbackFunction();
