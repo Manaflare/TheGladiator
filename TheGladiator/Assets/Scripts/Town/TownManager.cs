@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -77,11 +78,21 @@ public class TownManager : MonoBehaviour {
 
         if(MasterManager.ManagerInput.GetKeyDown(KeyCode.E))
         {
-            MasterManager.ManagerPopup.ShowMessageBox("TEST", "This is a test", Constants.PopupType.POPUP_NO);
+            object[] test = { 1, true, "ASD", 4, 5.7f };
+            MasterManager.ManagerPopup.ShowMessageBox("TEST", "This is a test", Constants.PopupType.POPUP_NO, TEST, test);
             //for rest button
         }
     }
 
+    //exmaple code
+    private void TEST(object[] asd)
+    {
+        foreach(object v in asd)
+        {
+            Debug.Log("Elements : " + v);
+        }
+            
+    }
 
     void DecideSelectedObject(int increment)
     {
