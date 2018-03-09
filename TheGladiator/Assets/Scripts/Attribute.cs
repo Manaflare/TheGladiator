@@ -61,17 +61,23 @@ public class ItemInfo
 [System.Serializable]
 public class Stats
 {
-    public Stats(string name, Constants.PlayerType playerType, int maxHp, byte str, byte agi, byte dex, short stamina)
+    public Stats(string name, Constants.PlayerType playerType, int maxHp, byte str, byte agi, byte dex, short stamina, int hp = int.MinValue)
     {
         Name = name;
         PlayerType = playerType;
         MAXHP = HP = maxHp;
+        if (hp != int.MinValue)
+        {
+            HP = hp;
+        }
         Strength = str;
         Agility = agi;
         Dexterity = dex;
         Stamina = stamina;
         MaxStamina = stamina;
     }
+
+
     public string Name;
     public Constants.PlayerType PlayerType;
     public int HP;

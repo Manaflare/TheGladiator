@@ -21,8 +21,9 @@ public class Move
 
         attackerAttribute = attrib;
 
-        attackerStats = atkStat;
-        attackeeStats = defStat;
+        attackerStats = new Stats(atkStat.Name, atkStat.PlayerType, atkStat.MAXHP, atkStat.Strength, atkStat.Agility, atkStat.Dexterity, atkStat.Stamina, atkStat.HP);
+        attackeeStats = new Stats(defStat.Name, defStat.PlayerType, defStat.MAXHP, defStat.Strength, defStat.Agility, defStat.Dexterity, defStat.Stamina, defStat.HP);
+        //attackeeStats = defStat;
 
         delayTime = delay;
     }
@@ -32,9 +33,11 @@ public class AIManager : MonoBehaviour {
 
     #region Variables
     public List<Move> moves;
+
     [Header("Player Settings")]
     public GameObject player1Object;
     public GameObject player2Object;
+
     [Header("Battle Result")]
     public GameObject battleResult;
 
@@ -97,7 +100,7 @@ public class AIManager : MonoBehaviour {
 
     private void ResetValues()
     {
-        Random.InitState(100);
+        Random.InitState(1);
         player1Object.SetActive(true);
         player2Object.SetActive(true);
 
@@ -120,7 +123,6 @@ public class AIManager : MonoBehaviour {
         GameObject battlePopup = GameObject.FindGameObjectWithTag("battlepopup");
         if (battlePopup != null) Destroy(battlePopup);
     }
-
     void playMove(Move m)
     {
         switch (m.type)
@@ -152,11 +154,27 @@ public class AIManager : MonoBehaviour {
                 break;
         }
     }//Called by Play Animation
-
+    float getDelayTimeWithStamina(Move m)
+    {
+        float res = 0;
+        if ((float)m.attackerStats.Stamina / (float)m.attackerStats.MaxStamina >= 0.8f)
+        {
+            res = m.delayTime;
+        }
+        else if ((float)m.attackerStats.Stamina / (float)m.attackerStats.MaxStamina >= 0.4f)
+        {
+            res = m.delayTime * 1.2f;
+        }
+        else if ((float)m.attackerStats.Stamina / (float)m.attackerStats.MaxStamina  >= 0.2f)
+        {
+            res = m.delayTime * 1.4f;
+        }
+        return res;
+    }
     IEnumerator playAnimation()
     {
-        float Move1 = moves[firstIndex].delayTime;
-        float Move2 = moves[secondIndex].delayTime;
+        float Move1 = getDelayTimeWithStamina(moves[firstIndex]);
+        float Move2 = getDelayTimeWithStamina(moves[secondIndex]);
         while (true)
         {
             if (!player1Character.isAttacking && !player2Character.isAttacking)
@@ -172,7 +190,8 @@ public class AIManager : MonoBehaviour {
                 firstIndex += 2;
                 totalIndex++;
                 firstTime = 0.0f;
-                Move1 = moves[firstIndex].delayTime;
+                Move1 = getDelayTimeWithStamina(moves[firstIndex]);
+                Debug.Log(Move1);
             }
             if (!player1Character.isAttacking && secondIndex < moves.Count && secondTime >= Move2)
             {
@@ -181,21 +200,22 @@ public class AIManager : MonoBehaviour {
                 secondIndex += 2;
                 totalIndex++;
                 secondTime = 0.0f;
-                Move2 = moves[secondIndex].delayTime;
+                Move2 = getDelayTimeWithStamina(moves[secondIndex]);
+                Debug.Log(Move2);
             }
             yield return new WaitForSeconds(0.01f); //Fixed delay of 0.01 seconds between each loop allowing for more accuracy when dealing with similar values
         }
     }//Needs SimulateBattle to Have run
 
-    void attack(Stats player1Stats, Stats player2Stats, Attribute attrib, Animator player1Animator, Animator player2Animator, float delayTime)
+    void attack(Stats p1Stats, Stats p2Stats, Attribute attrib, Animator player1Animator, Animator player2Animator, float delayTime)
     {
-        string player1Name = Utility.getStringFromName(player1Stats.PlayerType);
-        string player2Name = Utility.getStringFromName(player2Stats.PlayerType);
+        string player1Name = Utility.getStringFromName(p1Stats.PlayerType);
+        string player2Name = Utility.getStringFromName(p2Stats.PlayerType);
 
-        if (player1Stats.HP <= 0)
+        if (moves.Count != 0 && moves[moves.Count - 1].attackerStats.HP <= 0)
         {
             Debug.Log(player1Name + " Died");
-            Move m = new Move(player1Stats, player2Stats, attrib, player1Animator, player2Animator, delayTime);
+            Move m = new Move(p1Stats, p2Stats, attrib, player1Animator, player2Animator, delayTime);
             m.type = Constants.MoveType.DEATH;
             moves.Add(m);
             noOneDead = false;
@@ -203,27 +223,45 @@ public class AIManager : MonoBehaviour {
 
         if (noOneDead)
         {
-
-            Move m = new Move(player1Stats, player2Stats, attrib, player1Animator, player2Animator, delayTime);
-            //Random.InitState(100);
-            bool hit = Calculations.playerAttacks(player1Stats.Dexterity);
-            bool dodge = Calculations.enemyDodges(player2Stats.Agility);
+            Move m = null;
+            if (moves.Count == 0)
+                m = new Move(p1Stats, p2Stats, attrib, player1Animator, player2Animator, delayTime);
+            else
+            {
+                Move tmpMove = moves[moves.Count - 1];
+                m = new Move(tmpMove.attackerStats, tmpMove.attackeeStats, tmpMove.attackerAttribute, tmpMove.attackerAnimator, tmpMove.attackeeAnimator, tmpMove.delayTime);
+                Stats t = m.attackeeStats;
+                m.attackeeStats = m.attackerStats;
+                m.attackerStats = t;
+            }
+            bool hit = Calculations.playerAttacks(p1Stats.Dexterity);
+            bool dodge = Calculations.enemyDodges(p2Stats.Agility);
 
             if (hit && !dodge)
             {
                 m.type = Constants.MoveType.ATTACK;
-                
-                player2Stats.HP -= player1Stats.Strength;
+                m.attackerStats.Stamina -= 4;
+                if (m.attackerStats.Stamina < 0) m.attackerStats.Stamina = 0;
+                m.attackeeStats.HP -= m.attackerStats.Strength;
+                //if (m.attackerStats.PlayerType == Constants.PlayerType.PLAYER)
+                //{
+                //    player1Stats = m.attackerStats;
+                //    player2Stats = m.attackeeStats;
+                //}
                 Debug.Log(player1Name + " Attack");
             }
             else if (!hit && !dodge)
             {
                 m.type = Constants.MoveType.MISS;
+                m.attackerStats.Stamina -= 5;
+                if (m.attackerStats.Stamina < 0) m.attackerStats.Stamina = 0;
                 Debug.Log(player1Name + " Missed");
             }
             else if (dodge)
             {
                 m.type = Constants.MoveType.DODGE;
+                m.attackerStats.Stamina -= 2;
+                if (m.attackerStats.Stamina < 0) m.attackerStats.Stamina = 0;
                 Debug.Log(player1Name + "attacked, " + player2Name + " Dodged");
             }
             moves.Add(m);

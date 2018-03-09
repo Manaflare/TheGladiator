@@ -27,10 +27,8 @@ public class BattleResultScript : MonoBehaviour {
         arrayVals[2].text = s.Agility.ToString();
         arrayVals[3].text = s.HP.ToString();
     }
-    private void Awake()
+    void Start ()
     {
-    }
-    void Start () {
         
         Attribute player1Atrrib = Player1.GetComponent<Attribute>();
         Attribute player2Atrrib = Player2.GetComponent<Attribute>();
@@ -39,7 +37,7 @@ public class BattleResultScript : MonoBehaviour {
 
         if (player1Atrrib.getSTATS().HP > player2Atrrib.getSTATS().HP)
         {
-            WinnerName.text = Utility.getStringFromName(player1Atrrib.getSTATS().PlayerType);
+            WinnerName.text = player1Atrrib.getSTATS().Name;
             setStatValues(winnerStats, player1Atrrib.getSTATS());
             setStatValues(loserStats, player2Atrrib.getSTATS());
             LoserName.text = Utility.getStringFromName(player2Atrrib.getSTATS().PlayerType);
@@ -49,7 +47,7 @@ public class BattleResultScript : MonoBehaviour {
         }
         else 
         {
-            WinnerName.text = Utility.getStringFromName(player2Atrrib.getSTATS().PlayerType);
+            WinnerName.text = player2Atrrib.getSTATS().Name;
             setStatValues(winnerStats, player2Atrrib.getSTATS());
             setStatValues(loserStats, player1Atrrib.getSTATS());
             LoserName.text = Utility.getStringFromName(player1Atrrib.getSTATS().PlayerType);
