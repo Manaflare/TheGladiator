@@ -288,7 +288,7 @@ public class CreateCharacterManager : MonoBehaviour {
         }
         UpdateStatusText();
     }
-    protected void UpdateStatusText()
+    protected virtual void UpdateStatusText()
     {
         avaliableText.text = avaliablePoints.ToString();
         HPText.text = (HPMultiplyer * HPPoints).ToString();
