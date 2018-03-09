@@ -11,7 +11,8 @@ public class PopUp : MonoBehaviour {
     public Text text_content;
 
     private Constants.CallbackFunction handler;
-    private Constants.CallbackFunctionWithArg1<int> handlerInt;
+    private Constants.CallbackFunctionWithArg1<object[]> handler_int;
+    private object[] argue_listInt;
 
     // Use this for initialization
     void Start () {
@@ -36,11 +37,13 @@ public class PopUp : MonoBehaviour {
         handler = func;
     }
 
-    public void ShowMessageBox(string title, string content, Constants.PopupType type, Constants.CallbackFunctionWithArg1<int> func)
+    public void ShowMessageBox(string title, string content, Constants.PopupType type, Constants.CallbackFunctionWithArg1<object[]> func, object[] argues)
     {
         SetUpData(title, content, type);
-        handlerInt = func;
+        handler_int = func;
+        argue_listInt = argues;
     }
+
 
     public void CloseShowMessageBox()
     {
@@ -48,7 +51,12 @@ public class PopUp : MonoBehaviour {
         {
             handler();
         }
-     
+
+        if(handler_int != null)
+        {
+            handler_int(argue_listInt);
+        }
+
         Destroy(gameObject);
     }
 }
