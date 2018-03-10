@@ -37,7 +37,6 @@ static class Calculations
 
     public static bool enemyDodges(int agi)
     {
-        //Random.InitState(100);
         float dodge = 100 * (Constants.MINIMUM_DODGE + (Constants.DODGE_STEP_AMOUNT * agi));
         bool result = (Random.Range(0, 100) < dodge) ? true : false;
 

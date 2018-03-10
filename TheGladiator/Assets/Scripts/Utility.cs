@@ -14,19 +14,17 @@ public static class Utility
     static Dictionary<Constants.JSONIndex, string> JsonFileList = new Dictionary<Constants.JSONIndex, string>()
     {
         {Constants.JSONIndex.DATA_PLAYER,       "/JSON/playerData.json"},
-        {Constants.JSONIndex.DATA_ENEMY_TIER_1, "/JSON/tier1Enemies.json"},
-        {Constants.JSONIndex.DATA_ENEMY_TIER_2, "/JSON/tier2Enemies.json"},
-        {Constants.JSONIndex.DATA_ENEMY_TIER_3, "/JSON/tier3Enemies.json"},
+        {Constants.JSONIndex.DATA_ENEMY,        "/JSON/EnemyData.json" },
     };
 
 
-    public static ListDataInfo ReadDataInfoFromJSON(Constants.JSONIndex fileIndex)
+    public static T ReadDataFromJSON<T>(Constants.JSONIndex fileIndex)
     {
         string fileName;
         if(JsonFileList.TryGetValue(fileIndex, out fileName) == true)
         {
             string jsonString = System.IO.File.ReadAllText(Application.dataPath + fileName);
-            return JsonUtility.FromJson<ListDataInfo>(jsonString);
+            return JsonUtility.FromJson<T>(jsonString);
         }
         else
         {
@@ -36,7 +34,7 @@ public static class Utility
        
     }
 
-    public static void WriteDataInfoToJSON(Constants.JSONIndex fileIndex, ref ListDataInfo status)
+    public static void WriteDataToJSON<T>(Constants.JSONIndex fileIndex, ref T status)
     {
         string fileName;
         if (JsonFileList.TryGetValue(fileIndex, out fileName) == true)

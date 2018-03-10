@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public class ListEnemiesInfo
+{
+    public List<ListDataInfo> enemyData;
+}
+
+[System.Serializable]
 public class ListDataInfo
 {
     public ListDataInfo()
@@ -10,7 +16,14 @@ public class ListDataInfo
         statsList = new List<Stats>();
         spriteList = new List<SpriteInfo>();
     }
+    public ListDataInfo(Stats stats, SpriteInfo sprites)
+    {
+        statsList = new List<Stats>();
+        spriteList = new List<SpriteInfo>();
 
+        statsList.Add(stats);
+        spriteList.Add(sprites);
+    }
     public void Clear()
     {
         statsList.Clear();
@@ -48,16 +61,23 @@ public class ItemInfo
 [System.Serializable]
 public class Stats
 {
-    public Stats(string name, Constants.PlayerType playerType, int maxHp, byte str, byte agi, byte dex, short stamina)
+    public Stats(string name, Constants.PlayerType playerType, int maxHp, byte str, byte agi, byte dex, short stamina, int hp = int.MinValue)
     {
         Name = name;
         PlayerType = playerType;
         MAXHP = HP = maxHp;
+        if (hp != int.MinValue)
+        {
+            HP = hp;
+        }
         Strength = str;
         Agility = agi;
         Dexterity = dex;
         Stamina = stamina;
+        MaxStamina = stamina;
     }
+
+
     public string Name;
     public Constants.PlayerType PlayerType;
     public int HP;
@@ -66,6 +86,7 @@ public class Stats
     public byte Agility;
     public byte Dexterity;
     public short Stamina;
+    public short MaxStamina;
 }
 
 public class Attribute : MonoBehaviour

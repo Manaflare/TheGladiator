@@ -26,6 +26,12 @@ public class PopupManager : MonoBehaviour, IManager {
         popupWindow.GetComponent<PopUp>().ShowMessageBox(title, content, type, func);
     }
 
+    public void ShowMessageBox(string title, string content, Constants.PopupType type, Constants.CallbackFunctionWithArg1<object[]> func, object[] argues)
+    {
+        popupWindow = Instantiate(popupPrefabs);
+        popupWindow.GetComponent<PopUp>().ShowMessageBox(title, content, type, func, argues);
+    }
+
     public void CloseMessageBox()
     {
         popupWindow.GetComponent<PopUp>().CloseShowMessageBox();
