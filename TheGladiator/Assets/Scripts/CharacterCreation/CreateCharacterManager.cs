@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using MM = MasterManager;
 
@@ -59,6 +60,7 @@ public class CreateCharacterManager : MonoBehaviour {
         Stats playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
         SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
         MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo,true);
+        SceneManager.LoadScene("Town", LoadSceneMode.Single);
     }
 
     public void Reset(bool clearName = true)
@@ -93,6 +95,11 @@ public class CreateCharacterManager : MonoBehaviour {
 
     }
     
+    public void Back()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
+
     public void Randomize()
     {
         Reset(false);
