@@ -70,8 +70,12 @@ public static class Constants
 
     public enum ItemIndex
     {
-        WEAPON =0,
+        RIGHT_HAND = 0,
         ARMOR,
+        LEFT_HAND,
+        HELMET,
+        PANTS,
+        SHOES,
     }
 
     public enum PlayerType
@@ -110,6 +114,15 @@ public static class Constants
         TIER_3,
 
     }
+
+
+
+    public static string RIGHT_HAND = "right hand";
+    public static string ARMOR = "armor";
+    public static string LEFT_HAND = "left hand";
+    public static string HELMET = "helmet";
+    public static string PANTS = "pants";
+    public static string SHOES = "shoes";
 
     public static string playerName = "Player";
     public static string enemyName = "Player 2";
