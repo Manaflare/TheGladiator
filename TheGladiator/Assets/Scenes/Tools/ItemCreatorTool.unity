@@ -7949,6 +7949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ac: []
+  masterMixer: {fileID: 0}
   musicSource: {fileID: 0}
   sfxSource: {fileID: 0}
   lowPitch: 0.95
@@ -8003,7 +8004,7 @@ MonoBehaviour:
   DexText: {fileID: 328327213}
   StaText: {fileID: 1338789995}
   startinAvaliablePoints: 5
-  HPMultiplyer: 1
+  HPMultiplyer: 5
   BaseStats: 0
   NameText: {fileID: 1651846242}
   ItemDropDown: {fileID: 292374362}
