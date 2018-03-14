@@ -36,6 +36,11 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         //Debug.Log(enemiesStatus[0].statsList[0].Agility);
     }
 
+    public void SavePlayerData()
+    {
+        Utility.WriteDataToJSON<ListDataInfo>(Constants.JSONIndex.DATA_PLAYER, ref playerDataInfo);
+    }
+
     public void SetPlayerDataInfo(Stats stat, SpriteInfo spriteInfo, bool ForceSave = false)
     {
         playerDataInfo.Clear();

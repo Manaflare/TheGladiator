@@ -54,6 +54,8 @@ public class DayNightCycleManager : MonoBehaviour {
     private bool speedUp = false;
     [SerializeField]
     private float expectingTime = 0.0f;
+    private int expectingWeek = 0;
+    private Constants.DayType expectingdDay;
     void Start ()
     {
         //get time data from json
@@ -73,8 +75,7 @@ public class DayNightCycleManager : MonoBehaviour {
         time += Time.smoothDeltaTime * speed;
         if (speedUp)
         {
-            float curTime = time * (int)days * weeks;
-            if (curTime >= expectingTime)
+            if (time >= expectingTime && days == expectingdDay && weeks == expectingWeek)
             {
                 speedUp = false;
                 speed = 10;
@@ -169,7 +170,18 @@ public class DayNightCycleManager : MonoBehaviour {
     {
         speed *= speedMutiplier;
         speedUp = true;
-        expectingTime = (time + (Constants.HOUR_SPENT * 3600f)) * (int)days * weeks;
+        expectingTime = time + (Constants.HOUR_SPENT * 3600f);
+        if (expectingTime >= Constants.SECOND_FOR_DAY)
+        {
+            expectingTime -= Constants.SECOND_FOR_DAY;
+            expectingdDay = days + 1;
+            if(expectingdDay > Constants.DayType.SUNDAY)
+            {
+                expectingdDay = 0;
+                expectingWeek = weeks + 1;
+            }
+        }
+            
     }
 
 }

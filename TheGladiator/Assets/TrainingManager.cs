@@ -90,6 +90,14 @@ public class TrainingManager : MonoBehaviour
         int newStat = oldStat + ((Random.Range(1, 4) * multiplier));
 
         newText.text = newStat.ToString();
+        ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+        playerDataInfo.statsList[0].Agility = byte.Parse(NewAgility.text);
+        playerDataInfo.statsList[0].Dexterity = byte.Parse(NewDexterity.text);
+        playerDataInfo.statsList[0].Stamina = short.Parse(NewStam.text);
+        playerDataInfo.statsList[0].Strength = byte.Parse(NewStr.text);
+        playerDataInfo.statsList[0].MAXHP = byte.Parse(NewMaxHP.text) / HpMultiplier;
+
+        MasterManager.ManagerGlobalData.SavePlayerData();
     }
 
 
@@ -109,7 +117,7 @@ public class TrainingManager : MonoBehaviour
         MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP += ammountAdd;
         ShowTrainingCompletion();
         
-        TrainStat(text_MaxHp, NewMaxHP, 5);
+        TrainStat(text_MaxHp, NewMaxHP, HpMultiplier);
        
 
     }

@@ -86,6 +86,7 @@ public class TownManager : MonoBehaviour {
 
     public void CloseCurrentWindow()
     {
+        MasterManager.ManagerGlobalData.SavePlayerData();
         Panels[selectedIndex].SetActive(false);
         DayNightCycleManager.Instance.SpendTime();
     }
