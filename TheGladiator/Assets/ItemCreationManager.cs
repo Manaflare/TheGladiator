@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
@@ -14,6 +15,7 @@ public class ItemCreationManager : MonoBehaviour {
     public Text AgiText;
     public Text DexText;
     public Text StaText;
+
     [Header("Atributes")]
     public int startinAvaliablePoints;
     protected int avaliablePoints;
@@ -30,8 +32,20 @@ public class ItemCreationManager : MonoBehaviour {
     [Header("Name")]
     public InputField NameText;
 
+    [Header("Dropdown")]
     public Dropdown ItemDropDown;
     public Dropdown TypeDropDown;
+
+    [Header("Tier")]
+    public int tier = 0;
+    public Text tierText;
+    public int skillPointsPerTier;
+
+    [Header("Popup")]
+    public GameObject PopUp;
+    public GameObject BlockHolder;
+    public GameObject ItemBlock;
+    public Image SelectedSprite;
 
     private List<Sprite> Armors;
     private List<Sprite> Helmets;
@@ -39,10 +53,6 @@ public class ItemCreationManager : MonoBehaviour {
     private List<Sprite> RightHand;
     private List<Sprite> Pants;
     private List<Sprite> Shoes;
-
-    public int tier = 0;
-    public Text tierText;
-    public int skillPointsPerTier;
 
     // Use this for initialization
     void Start () {
@@ -74,6 +84,79 @@ public class ItemCreationManager : MonoBehaviour {
         Reset();
     }
 
+    public void ShowPopUp()
+    {
+        PopUp.SetActive(true);
+        List<Sprite> spriteList = new List<Sprite>();
+        switch (TypeDropDown.value)
+        {
+            case 0:
+                spriteList = Armors;
+                break;
+            case 1:
+                spriteList = Helmets;
+                break;
+            case 2:
+                spriteList = RightHand;
+                break;
+            case 3:
+                spriteList = LeftHand;
+                break;
+            case 4:
+                spriteList = Pants;
+                break;
+            case 5:
+                spriteList = Shoes;
+                break;
+        }
+
+        for (int i = 0; i < spriteList.Count; i++)
+        {
+            GameObject go = Instantiate(ItemBlock);
+
+            go.AddComponent(typeof(EventTrigger));
+            EventTrigger trigger = go.GetComponent<EventTrigger>();
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerClick;
+            entry.callback.AddListener((eventData) => {
+                SelectedSprite.sprite = (eventData as PointerEventData).pointerPress.GetComponentsInChildren<Image>()[1].sprite;
+                HidePopUp();
+            });
+            trigger.triggers.Add(entry);
+
+
+            go.GetComponentsInChildren<Image>()[1].sprite = spriteList[i];
+            go.transform.SetParent(BlockHolder.transform,false);
+        }
+    }
+    
+    
+
+    public void HidePopUp()
+    {
+        foreach (Transform child in BlockHolder.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        PopUp.SetActive(false);
+
+    }
+
+    public void ChangeType()
+    {
+        SelectedSprite.sprite = null;
+    }
+
+    public void Randomize()
+    {
+        Reset(false);
+
+        while (avaliablePoints > 0)
+        {
+            int index = Random.Range(0, 5);
+            AddAttributes(index);
+        }
+    }
     public void Reset(bool clearName = true)
     {
         avaliablePoints = startinAvaliablePoints;
