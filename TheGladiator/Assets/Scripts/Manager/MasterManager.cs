@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(SoundManager))]
 [RequireComponent(typeof(SpriteManager))]
 [RequireComponent(typeof(InputManager))]
+[RequireComponent(typeof(PopupManager))]
 public class MasterManager : MonoBehaviour {
 
     private List<IManager> managerList = new List<IManager>();

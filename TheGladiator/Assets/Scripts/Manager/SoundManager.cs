@@ -25,12 +25,13 @@ public class SoundManager : MonoBehaviour, IManager {
             mapAudioFiles.Add(audio.name, audio);
         }
 
-       // ApplyToSettings();
+        //PlayBackgroundMusic(ac[0]);
+        ApplyToSettings();
     }
 
     // Update is called once per frame
     void Update () {
-		
+
 	}
 
     public void PlayBackgroundMusic(AudioClip backgroundMusic)
@@ -97,8 +98,12 @@ public class SoundManager : MonoBehaviour, IManager {
 
     public void ApplyToSettings()
     {
-        masterMixer.SetFloat("MasterVol", PlayerPrefs.GetFloat("MasterVolume", 1.0f));
-        masterMixer.SetFloat("BGMVol", PlayerPrefs.GetFloat("BGMVolume", 1.0f));
-        masterMixer.SetFloat("SFXVol", PlayerPrefs.GetFloat("SFXVolume", 1.0f));
+        if(masterMixer != null)
+        {
+            masterMixer.SetFloat("MasterVol", PlayerPrefs.GetFloat("MasterVolume", 1.0f));
+            masterMixer.SetFloat("BGMVol", PlayerPrefs.GetFloat("BGMVolume", 1.0f));
+            masterMixer.SetFloat("SFXVol", PlayerPrefs.GetFloat("SFXVolume", 1.0f));
+        }
+        
     }
 }
