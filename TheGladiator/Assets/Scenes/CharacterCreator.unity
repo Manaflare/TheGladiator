@@ -77,15 +77,18 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFiltering: 0
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousColorSigma: 1
-    m_PVRFilteringAtrousNormalSigma: 1
-    m_PVRFilteringAtrousPositionSigma: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -107,6 +110,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    debug:
+      m_Flags: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &22922098
 GameObject:
@@ -506,7 +511,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: RemoveAttributes
         m_Mode: 3
         m_Arguments:
@@ -552,6 +557,62 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 196108030}
+--- !u!1 &202670158
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 202670160}
+  - component: {fileID: 202670159}
+  m_Layer: 0
+  m_Name: CCManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &202670159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 202670158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52291b8afda1405439721f703ebc6246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyImage: {fileID: 1779868499}
+  bodyText: {fileID: 1263271054}
+  hairImage: {fileID: 1501688240}
+  hairText: {fileID: 547191378}
+  faceHairImage: {fileID: 1855050360}
+  faceHairText: {fileID: 1127799812}
+  avaliableText: {fileID: 2140862087}
+  HPText: {fileID: 884168053}
+  StrText: {fileID: 811253800}
+  AgiText: {fileID: 105508480}
+  DexText: {fileID: 328327213}
+  StaText: {fileID: 1338789995}
+  startinAvaliablePoints: 25
+  HPMultiplyer: 5
+  BaseStats: 5
+  NameText: {fileID: 1651846242}
+--- !u!4 &202670160
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 202670158}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 547.0119, y: 371.21017, z: 15.125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &212374697
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +918,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: RemoveAttributes
         m_Mode: 3
         m_Arguments:
@@ -1055,9 +1116,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: Reset
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1176,7 +1237,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: FaceHairArrowPressed
         m_Mode: 5
         m_Arguments:
@@ -1374,7 +1435,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: BodyArrowPressed
         m_Mode: 5
         m_Arguments:
@@ -1572,7 +1633,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: Randomize
         m_Mode: 1
         m_Arguments:
@@ -2004,7 +2065,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: HairArrowPressed
         m_Mode: 5
         m_Arguments:
@@ -2125,7 +2186,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: HairArrowPressed
         m_Mode: 5
         m_Arguments:
@@ -2323,7 +2384,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 870681500}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 202670159}
+        m_MethodName: Back
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &870681500
@@ -2645,7 +2717,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: RemoveAttributes
         m_Mode: 3
         m_Arguments:
@@ -2766,7 +2838,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: AddAttributes
         m_Mode: 3
         m_Arguments:
@@ -2887,7 +2959,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: AddAttributes
         m_Mode: 3
         m_Arguments:
@@ -3204,7 +3276,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: RemoveAttributes
         m_Mode: 3
         m_Arguments:
@@ -3471,11 +3543,11 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!4 &1199837839
 Transform:
   m_ObjectHideFlags: 0
@@ -3487,7 +3559,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1263271052
 GameObject:
@@ -3714,8 +3786,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
-        m_MethodName: FaceHairArrowPressed
+      - m_Target: {fileID: 202670159}
+        m_MethodName: HairArrowPressed
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3912,7 +3984,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: AddAttributes
         m_Mode: 3
         m_Arguments:
@@ -4078,7 +4150,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1414214015
 GameObject:
@@ -4371,7 +4443,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: RemoveAttributes
         m_Mode: 3
         m_Arguments:
@@ -4687,7 +4759,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: AddAttributes
         m_Mode: 3
         m_Arguments:
@@ -5130,20 +5202,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -5159,7 +5217,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1855050358
 GameObject:
@@ -5304,7 +5362,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: AddAttributes
         m_Mode: 3
         m_Arguments:
@@ -5571,7 +5629,7 @@ RectTransform:
   - {fileID: 282075842}
   - {fileID: 214779038}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5654,7 +5712,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
@@ -5849,7 +5907,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2109770653}
+      - m_Target: {fileID: 202670159}
         m_MethodName: BodyArrowPressed
         m_Mode: 5
         m_Arguments:
@@ -5963,7 +6021,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2109770652}
-  - component: {fileID: 2109770653}
   - component: {fileID: 2109770651}
   - component: {fileID: 2109770658}
   - component: {fileID: 2109770657}
@@ -5972,7 +6029,7 @@ GameObject:
   - component: {fileID: 2109770659}
   - component: {fileID: 2109770654}
   m_Layer: 0
-  m_Name: Manager
+  m_Name: MasterManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6000,35 +6057,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2109770653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2109770650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52291b8afda1405439721f703ebc6246, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bodyImage: {fileID: 1779868499}
-  bodyText: {fileID: 1263271054}
-  hairImage: {fileID: 1501688240}
-  hairText: {fileID: 547191378}
-  faceHairImage: {fileID: 1855050360}
-  faceHairText: {fileID: 1127799812}
-  avaliableText: {fileID: 2140862087}
-  HPText: {fileID: 884168053}
-  StrText: {fileID: 811253800}
-  AgiText: {fileID: 105508480}
-  DexText: {fileID: 328327213}
-  StaText: {fileID: 1338789995}
-  startinAvaliablePoints: 25
-  HPMultiplyer: 5
-  BaseStats: 5
-  NameText: {fileID: 191462176}
 --- !u!114 &2109770654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6063,6 +6093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ac: []
+  masterMixer: {fileID: 0}
   musicSource: {fileID: 0}
   sfxSource: {fileID: 0}
   lowPitch: 0.95

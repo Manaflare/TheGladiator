@@ -13,7 +13,7 @@ public class TrainingManager : MonoBehaviour
     public Text text_dex;
 
     public Text NameText;
-
+    public int HpMultiplier = 5;
     protected int HPPoints;
     protected byte StrPoints;
     protected byte AgiPoints;
@@ -66,7 +66,7 @@ public class TrainingManager : MonoBehaviour
          int dex = playerDataInfo.statsList[0].Dexterity;
          text_dex.text = dex.ToString();
 
-         int MaxHp = playerDataInfo.statsList[0].MAXHP;
+         int MaxHp = playerDataInfo.statsList[0].MAXHP * HpMultiplier;
          text_MaxHp.text = MaxHp.ToString();     
 
         //Stats playerStats = new Stats(NameText.text, Constants.PlayerType.PLAYER, HPPoints, StrPoints, AgiPoints, DexPoints, StaPoints);
