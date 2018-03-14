@@ -30,7 +30,9 @@ public class DayNightCycleManager : MonoBehaviour {
     private Constants.DayType days;
     private int weeks;
     [SerializeField]
-    private int speed = 2;
+    private int speed = 10;
+    [SerializeField]
+    private int speedMutiplier = 3000;
     private TimeSpan currentTime;
 
 
@@ -48,6 +50,10 @@ public class DayNightCycleManager : MonoBehaviour {
 
     private Color colourSource;
     private Color ColourDest;
+
+    private bool speedUp = false;
+    [SerializeField]
+    private float expectingTime = 0.0f;
     void Start ()
     {
         //get time data from json
@@ -65,6 +71,16 @@ public class DayNightCycleManager : MonoBehaviour {
     private void UpdateTime()
     {
         time += Time.smoothDeltaTime * speed;
+        if (speedUp)
+        {
+            float curTime = time * (int)days * weeks;
+            if (curTime >= expectingTime)
+            {
+                speedUp = false;
+                speed = 10;
+            }
+        }
+        
         if(time > Constants.SECOND_FOR_DAY)
         {
             StartNextDay();
@@ -147,6 +163,13 @@ public class DayNightCycleManager : MonoBehaviour {
 
         //popup message and
         MasterManager.ManagerPopup.ShowMessageBox("System", "Next Week Started", Constants.PopupType.POPUP_SYSTEM);
+    }
+
+    public void SpendTime()
+    {
+        speed *= speedMutiplier;
+        speedUp = true;
+        expectingTime = (time + (Constants.HOUR_SPENT * 3600f)) * (int)days * weeks;
     }
 
 }

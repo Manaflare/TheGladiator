@@ -67,8 +67,9 @@ public class TrainingManager : MonoBehaviour
          text_dex.text = dex.ToString();
 
          int MaxHp = playerDataInfo.statsList[0].MAXHP;
-         text_MaxHp.text = MaxHp.ToString();     
+         text_MaxHp.text = MaxHp.ToString();
 
+        TrainingCompletionPrefab.SetActive(false);
         //Stats playerStats = new Stats(NameText.text, Constants.PlayerType.PLAYER, HPPoints, StrPoints, AgiPoints, DexPoints, StaPoints);
         //SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
         //MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo, true);
@@ -146,11 +147,6 @@ public class TrainingManager : MonoBehaviour
     void ShowTrainingCompletion()
     {
         TrainingCompletionPrefab.SetActive(true);
-    }
-
-    public void Close()
-    {
-        gameObject.SetActive(false);
     }
 
     // Update is called once per frame

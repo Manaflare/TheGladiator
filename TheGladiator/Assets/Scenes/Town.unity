@@ -1895,8 +1895,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2070065793}
-        m_MethodName: Close
+      - m_Target: {fileID: 630718355}
+        m_MethodName: CloseCurrentWindow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4232,7 +4232,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0
-  speed: 2000
+  speed: 10
+  speedMutiplier: 3000
   TownImage: {fileID: 1313924335}
   fogDay: {r: 1, g: 1, b: 1, a: 1}
   fogSunset: {r: 1, g: 0.5019608, b: 0.5019608, a: 1}
@@ -4265,6 +4266,7 @@ MonoBehaviour:
   uiText_Week: {fileID: 2110605716}
   uiText_Day: {fileID: 861097271}
   uiText_RemainDays: {fileID: 1433478932}
+  expectingTime: 0
 --- !u!4 &1732899525
 Transform:
   m_ObjectHideFlags: 0
@@ -5861,11 +5863,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2070065793}
+      objectReference: {fileID: 630718355}
     - target: {fileID: 114952924083383562, guid: 51af3ba1a56e08c47a7636e5c0dad453,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Close
+      value: CloseCurrentWindow
       objectReference: {fileID: 0}
     - target: {fileID: 114952924083383562, guid: 51af3ba1a56e08c47a7636e5c0dad453,
         type: 2}

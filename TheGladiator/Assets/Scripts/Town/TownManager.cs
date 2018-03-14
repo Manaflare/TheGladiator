@@ -84,6 +84,12 @@ public class TownManager : MonoBehaviour {
         }
     }
 
+    public void CloseCurrentWindow()
+    {
+        Panels[selectedIndex].SetActive(false);
+        DayNightCycleManager.Instance.SpendTime();
+    }
+
     //exmaple code
     private void TEST(object[] asd)
     {

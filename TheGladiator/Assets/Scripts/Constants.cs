@@ -115,7 +115,7 @@ public static class Constants
 
     }
 
-
+    public static float HOUR_SPENT = 8.0f;
 
     public static string RIGHT_HAND = "right hand";
     public static string ARMOR = "armor";
