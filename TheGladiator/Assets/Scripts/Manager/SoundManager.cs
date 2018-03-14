@@ -25,7 +25,7 @@ public class SoundManager : MonoBehaviour, IManager {
             mapAudioFiles.Add(audio.name, audio);
         }
 
-        ApplyToSettings();
+       // ApplyToSettings();
     }
 
     // Update is called once per frame

@@ -50,7 +50,7 @@ public class TrainingManager : MonoBehaviour
     public GameObject TrainingCompletionPrefab;
 
     // Use this for initialization
-    void Start()
+    void OnEnable()
     {
          ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
          int agil = playerDataInfo.statsList[0].Agility;
@@ -67,12 +67,7 @@ public class TrainingManager : MonoBehaviour
          text_dex.text = dex.ToString();
 
          int MaxHp = playerDataInfo.statsList[0].MAXHP;
-         text_MaxHp.text = MaxHp.ToString();
-
-        hairIndex = playerDataInfo.spriteList[0].HairIndex;
-        hairImage.sprite = SpriteManager.Instance.HairList[hairIndex];
-       
-
+         text_MaxHp.text = MaxHp.ToString();     
 
         //Stats playerStats = new Stats(NameText.text, Constants.PlayerType.PLAYER, HPPoints, StrPoints, AgiPoints, DexPoints, StaPoints);
         //SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
@@ -151,6 +146,11 @@ public class TrainingManager : MonoBehaviour
     void ShowTrainingCompletion()
     {
         TrainingCompletionPrefab.SetActive(true);
+    }
+
+    public void Close()
+    {
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
