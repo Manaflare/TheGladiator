@@ -3,6 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public class ListItemsInfo
+{
+    public List<ItemDataInfo> itemData;
+}
+
+[System.Serializable]
+public class ItemDataInfo
+{
+    public Stats Stats;
+    public Constants.ItemIndex Item_type;
+    public int Sprite_index;
+    public int Tier;
+}
+
+[System.Serializable]
 public class ListEnemiesInfo
 {
     public List<ListDataInfo> enemyData;

@@ -96,6 +96,7 @@ public static class Constants
     {
         DATA_PLAYER = 1,
         DATA_ENEMY,
+        DATA_ITEM,
     }
 
     public delegate void CallbackFunction();

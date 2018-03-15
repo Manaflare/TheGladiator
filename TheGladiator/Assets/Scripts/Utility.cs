@@ -15,6 +15,7 @@ public static class Utility
     {
         {Constants.JSONIndex.DATA_PLAYER,       "/JSON/playerData.json"},
         {Constants.JSONIndex.DATA_ENEMY,        "/JSON/EnemyData.json" },
+        {Constants.JSONIndex.DATA_ITEM,        "/JSON/ItemData.json" },
     };
 
 
@@ -34,12 +35,12 @@ public static class Utility
        
     }
 
-    public static void WriteDataToJSON<T>(Constants.JSONIndex fileIndex, ref T status)
+    public static void WriteDataToJSON<T>(Constants.JSONIndex fileIndex, ref T jsonData)
     {
         string fileName;
         if (JsonFileList.TryGetValue(fileIndex, out fileName) == true)
         {
-            string jsonString = JsonUtility.ToJson(status);
+            string jsonString = JsonUtility.ToJson(jsonData);
             System.IO.File.WriteAllText(Application.dataPath + fileName, jsonString);
         }
         else

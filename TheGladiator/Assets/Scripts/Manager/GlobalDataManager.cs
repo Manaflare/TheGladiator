@@ -6,6 +6,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
 
     private ListDataInfo playerDataInfo;
     private ListEnemiesInfo enemiesDataInfo;
+    private ListItemsInfo itemDataInfo;
 
     public void Initialize()
     {
@@ -25,13 +26,14 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         //get data from player attribute and save it to json File
         Utility.WriteDataToJSON<ListDataInfo>(Constants.JSONIndex.DATA_PLAYER, ref playerDataInfo);
         Utility.WriteDataToJSON<ListEnemiesInfo>(Constants.JSONIndex.DATA_ENEMY, ref enemiesDataInfo);
+        Utility.WriteDataToJSON<ListItemsInfo>(Constants.JSONIndex.DATA_ITEM, ref itemDataInfo);
     }
 
     public void LoadallData()
     {
         playerDataInfo = Utility.ReadDataFromJSON<ListDataInfo>(Constants.JSONIndex.DATA_PLAYER);
         enemiesDataInfo = Utility.ReadDataFromJSON<ListEnemiesInfo>(Constants.JSONIndex.DATA_ENEMY);
-
+        itemDataInfo = Utility.ReadDataFromJSON<ListItemsInfo>(Constants.JSONIndex.DATA_ITEM);
         //Debug.Log(playerStatus.spriteList[0].FaceHairIndex);
         //Debug.Log(enemiesStatus[0].statsList[0].Agility);
     }
@@ -59,6 +61,14 @@ public class GlobalDataManager : MonoBehaviour, IManager {
             Utility.WriteDataToJSON<ListEnemiesInfo>(Constants.JSONIndex.DATA_ENEMY, ref enemiesDataInfo);
     }
 
+    public void SetItemDataInfo(ListItemsInfo itemList, bool ForceSave = false)
+    {
+        itemDataInfo = itemList;
+
+        if (ForceSave)
+            Utility.WriteDataToJSON<ListItemsInfo>(Constants.JSONIndex.DATA_ITEM, ref itemDataInfo);
+    }
+
     public void SetPlayerTier(int tier)
     {
         playerDataInfo.playerTier = tier;
@@ -71,6 +81,10 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     public ListEnemiesInfo GetEnemyDataInfo()
     {
         return enemiesDataInfo;
+    }
+    public ListItemsInfo GetItemDataInfo()
+    {
+        return itemDataInfo;
     }
 
 }
