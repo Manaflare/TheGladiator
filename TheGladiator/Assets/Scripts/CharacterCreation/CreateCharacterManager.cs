@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using MM = MasterManager;
 
@@ -38,8 +39,8 @@ public class CreateCharacterManager : MonoBehaviour {
     protected byte DexPoints;
     protected short StaPoints;
 
+    [Header("Name")]
     public InputField NameText;
-
     protected ListDataInfo playerStatusList;
 
     void Start () {
@@ -52,15 +53,17 @@ public class CreateCharacterManager : MonoBehaviour {
         if(avaliablePoints > 0 || NameText.text == "")
         {
             //@TODO Show Error message
+            Debug.LogError("Missing Information");
             return;
         }
 
         Stats playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
         SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
         MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo,true);
+        SceneManager.LoadScene("Town", LoadSceneMode.Single);
     }
 
-    public void Reset()
+    public void Reset(bool clearName = true)
     {
         bodyIndex = 0;
         bodyText.text = bodyIndex.ToString();
@@ -79,7 +82,10 @@ public class CreateCharacterManager : MonoBehaviour {
         StrPoints = AgiPoints = DexPoints = (byte)BaseStats;
         StaPoints = (short)BaseStats;
 
-        NameText.text = "";
+        if (clearName)
+        {
+            NameText.text = "";
+        }
 
         UpdateStatusText();
     }
@@ -89,9 +95,14 @@ public class CreateCharacterManager : MonoBehaviour {
 
     }
     
+    public void Back()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
+
     public void Randomize()
     {
-        Reset();
+        Reset(false);
 
         bodyIndex = Random.Range(0, SpriteManager.Instance.BodyList.Count - 1);
         hairIndex = Random.Range(0, SpriteManager.Instance.HairList.Count - 1);
@@ -284,7 +295,7 @@ public class CreateCharacterManager : MonoBehaviour {
         }
         UpdateStatusText();
     }
-    protected void UpdateStatusText()
+    protected virtual void UpdateStatusText()
     {
         avaliableText.text = avaliablePoints.ToString();
         HPText.text = (HPMultiplyer * HPPoints).ToString();

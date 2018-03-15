@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyCreatorManager : CreateCharacterManager {
-
-    List<ListDataInfo> enemyList;
+public class EnemyCreatorManager : CreateCharacterManager
+{
+    [Header("Enemies")]
+    ListEnemiesInfo enemyList;
     public Dropdown enemyDropDown;
     private int tier = 1;
     public Text tierText;
+    public int skillPointsPerTier;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         tierText.text = tier.ToString();
-
+        this.startinAvaliablePoints = (this.BaseStats * skillPointsPerTier) * tier;
         enemyDropDown.ClearOptions();
         enemyList = MasterManager.ManagerGlobalData.GetEnemyDataInfo();
 
         List<string> data = new List<string>();
 
-        for (int i = 0; i < enemyList.Count; i++)
+        for (int i = 0; i < enemyList.enemyData.Count; i++)
         {
-            data.Add(enemyList[i].statsList[0].Name + "_" + enemyList[i].playerTier);
+            data.Add(enemyList.enemyData[i].statsList[0].Name);
         }
         enemyDropDown.AddOptions(data);
         Reset();
@@ -28,15 +31,17 @@ public class EnemyCreatorManager : CreateCharacterManager {
 
     public override void StartGame()
     {
-        if(this.avaliablePoints < 0)
+        if (this.avaliablePoints < 0 || this.avaliablePoints > 0)
         {
-            Debug.LogError("You spend more then what it is avaliable, please rebalance it");
+            Debug.LogWarning("You spend more of skills it is avaliable, please rebalance it");
             return;
         }
-        /*
         Stats playerStats = new Stats(NameText.text, Constants.PlayerType.ENEMY, HPPoints, StrPoints, AgiPoints, DexPoints, StaPoints);
         SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
-        MasterManager.ManagerGlobalData.SetEnemyDataInfo();*/
+        ListDataInfo enemy = new ListDataInfo(playerStats, playerSpriteInfo);
+        enemy.playerTier = tier;
+        enemyList.enemyData[enemyDropDown.value] = enemy;
+        MasterManager.ManagerGlobalData.SetEnemyDataInfo(enemyList, true);
     }
     public void ChangeTier(int value)
     {
@@ -46,26 +51,39 @@ public class EnemyCreatorManager : CreateCharacterManager {
         }
 
         tier += value;
-        this.startinAvaliablePoints = (this.BaseStats * 5) * tier;
+        this.startinAvaliablePoints = (this.BaseStats * skillPointsPerTier) * tier;
 
         int spentPoints = this.HPPoints + this.StrPoints + this.AgiPoints + this.DexPoints + this.StaPoints;
         this.avaliablePoints = startinAvaliablePoints + (BaseStats * 5) - spentPoints;
-        tierText.text = tier.ToString();
+       
         UpdateStatusText();
     }
     public void LoadEnemy()
     {
         ListDataInfo selectedEnemy = new ListDataInfo();
-        for (int i = 0; i < enemyList.Count; i++)
+        for (int i = 0; i < enemyList.enemyData.Count; i++)
         {
             string enemyName = enemyDropDown.options[enemyDropDown.value].text;
-            if(enemyList[i].statsList[0].Name == enemyName.Substring(0, enemyName.IndexOf('_')))
+            if (enemyList.enemyData[i].statsList[0].Name == enemyName)
             {
-                selectedEnemy = enemyList[i];
+                selectedEnemy = enemyList.enemyData[i];
                 break;
             }
         }
         Populate(selectedEnemy);
+    }
+
+    public void NewPage()
+    {
+        ListDataInfo newEnemy = new ListDataInfo();
+        Stats newEnemyStat = new Stats("New Enemy", Constants.PlayerType.ENEMY, 0, 0, 0, 0, 0);
+        SpriteInfo newEnemySprite = new SpriteInfo(0, 0, 0);
+        newEnemy.statsList.Add(newEnemyStat);
+        newEnemy.spriteList.Add(newEnemySprite);
+        enemyList.enemyData.Add(newEnemy);
+        newEnemy.playerTier = 1;
+        Start();
+        enemyDropDown.value = enemyDropDown.options.Count - 1;
     }
 
     void Populate(ListDataInfo playerData)
@@ -85,9 +103,16 @@ public class EnemyCreatorManager : CreateCharacterManager {
         this.DexPoints = playerData.statsList[0].Dexterity;
         this.StaPoints = playerData.statsList[0].Stamina;
 
+        this.tier = playerData.playerTier;
+        this.startinAvaliablePoints = (this.BaseStats * skillPointsPerTier) * tier;
         int spentPoints = this.HPPoints + this.StrPoints + this.AgiPoints + this.DexPoints + this.StaPoints;
         this.avaliablePoints = startinAvaliablePoints + (BaseStats * 5) - spentPoints;
-
         UpdateStatusText();
+    }
+
+    protected override void UpdateStatusText()
+    {
+        base.UpdateStatusText();
+        tierText.text = tier.ToString();
     }
 }

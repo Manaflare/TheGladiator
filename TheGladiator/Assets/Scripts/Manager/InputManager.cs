@@ -19,6 +19,8 @@ public class InputManager : MonoBehaviour, IManager {
     {
 #if UNITY_XBOXONE
                 return false;
+#elif UNITY_ANDROID
+                return false;
 #endif
         return Input.GetKeyDown(code);  
     }

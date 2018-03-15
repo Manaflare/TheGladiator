@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,22 +38,32 @@ public class TownManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		if(MasterManager.ManagerInput.GetKeyDown(KeyCode.UpArrow))
+        Objects[selectedIndex].GetComponent<GlowButton>().EndGlow();
+
+        if (MasterManager.ManagerInput.GetKeyDown(KeyCode.LeftArrow))
         {
-            Objects[selectedIndex].GetComponent<GlowButton>().EndGlow();
-            ++selectedIndex;
-            selectedIndex = Mathf.Min(selectedIndex, Objects.Length - 1);
-            Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
+            DecideSelectedObject(-1);
+        }
+        else if (MasterManager.ManagerInput.GetKeyDown(KeyCode.RightArrow))
+        {
+            DecideSelectedObject(1);
+
+        }
+        else if (MasterManager.ManagerInput.GetKeyDown(KeyCode.UpArrow))
+        {
+            DecideSelectedObject(-3);
+
+
         }
         else if (MasterManager.ManagerInput.GetKeyDown(KeyCode.DownArrow))
         {
-            Objects[selectedIndex].GetComponent<GlowButton>().EndGlow();
-            --selectedIndex;
-            selectedIndex = Mathf.Max(0, selectedIndex);
-            Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
+            DecideSelectedObject(3);
         }
 
-        if(MasterManager.ManagerInput.GetKeyDown(KeyCode.Return))
+
+        Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
+
+        if (MasterManager.ManagerInput.GetKeyDown(KeyCode.Return))
         {
             if (selectedIndex == Panels.Length)
             {
@@ -67,8 +78,57 @@ public class TownManager : MonoBehaviour {
 
         if(MasterManager.ManagerInput.GetKeyDown(KeyCode.E))
         {
-            MasterManager.ManagerPopup.ShowMessageBox("TEST", "This is a test", Constants.PopupType.POPUP_NO);
+            object[] test = { 1, true, "ASD", 4, 5.7f };
+            MasterManager.ManagerPopup.ShowMessageBox("TEST", "This is a test", Constants.PopupType.POPUP_NO, TEST, test);
             //for rest button
         }
+    }
+
+    public void CloseCurrentWindow()
+    {
+        MasterManager.ManagerGlobalData.SavePlayerData();
+        Panels[selectedIndex].SetActive(false);
+        DayNightCycleManager.Instance.SpendTime();
+    }
+
+    //exmaple code
+    private void TEST(object[] asd)
+    {
+        foreach(object v in asd)
+        {
+            Debug.Log("Elements : " + v);
+        }
+            
+    }
+
+    void DecideSelectedObject(int increment)
+    {
+        /*
+            0, 0, 0,
+            0, 0, 0,
+            0, 0, 0,   
+            
+            Array of buildings.
+            index of the array should be increased by 1 or 3 depends one what keyboard is pressed
+            i.e) uparrow or down arrow +- 3  left or right arrow +- 1
+         
+         */
+        int oldIndex = selectedIndex;
+
+        do
+        {
+            selectedIndex += increment;
+            //check if it is out of index
+            if (selectedIndex < 0 || selectedIndex > Objects.Length - 1)
+            {
+                selectedIndex = oldIndex;
+                break;
+            }
+        }
+        while (Objects[selectedIndex] == null);
+
+        //check if it's still null
+        if (Objects[selectedIndex] == null)
+            selectedIndex = oldIndex;
     }
 }

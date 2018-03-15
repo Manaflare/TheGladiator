@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Audio;
 public class SoundManager : MonoBehaviour, IManager {
 
     public AudioClip[] ac;
+    public AudioMixer masterMixer;
     public AudioSource musicSource;
     public AudioSource sfxSource;
 
@@ -23,11 +24,14 @@ public class SoundManager : MonoBehaviour, IManager {
         {
             mapAudioFiles.Add(audio.name, audio);
         }
+
+        //PlayBackgroundMusic(ac[0]);
+        ApplyToSettings();
     }
 
     // Update is called once per frame
     void Update () {
-		
+
 	}
 
     public void PlayBackgroundMusic(AudioClip backgroundMusic)
@@ -84,9 +88,22 @@ public class SoundManager : MonoBehaviour, IManager {
 
     public void PlayRandomSound(params AudioClip[] clips)
     {
-        sfxSource.pitch = UnityEngine.Random.Range(lowPitch, HighPitch);
+        float randPitch = UnityEngine.Random.Range(lowPitch, HighPitch);
+        sfxSource.pitch = randPitch;
+        masterMixer.SetFloat("SFXPitch", randPitch);
         int randomIdx = UnityEngine.Random.Range(0, clips.Length);
 
         sfxSource.PlayOneShot(clips[randomIdx]);
+    }
+
+    public void ApplyToSettings()
+    {
+        if(masterMixer != null)
+        {
+            masterMixer.SetFloat("MasterVol", PlayerPrefs.GetFloat("MasterVolume", 1.0f));
+            masterMixer.SetFloat("BGMVol", PlayerPrefs.GetFloat("BGMVolume", 1.0f));
+            masterMixer.SetFloat("SFXVol", PlayerPrefs.GetFloat("SFXVolume", 1.0f));
+        }
+        
     }
 }

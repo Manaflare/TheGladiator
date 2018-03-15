@@ -70,8 +70,12 @@ public static class Constants
 
     public enum ItemIndex
     {
-        WEAPON =0,
+        RIGHT_HAND = 0,
         ARMOR,
+        LEFT_HAND,
+        HELMET,
+        PANTS,
+        SHOES,
     }
 
     public enum PlayerType
@@ -91,10 +95,8 @@ public static class Constants
     public enum JSONIndex : int 
     {
         DATA_PLAYER = 1,
-        DATA_ENEMY_TIER_1,
-        DATA_ENEMY_TIER_2,
-        DATA_ENEMY_TIER_3,
-        DATA_ENEMY_TIER_MAX,
+        DATA_ENEMY,
+        DATA_ITEM,
     }
 
     public delegate void CallbackFunction();
@@ -113,6 +115,15 @@ public static class Constants
         TIER_3,
 
     }
+
+    public static float HOUR_SPENT = 8.0f;
+
+    public static string RIGHT_HAND = "right hand";
+    public static string ARMOR = "armor";
+    public static string LEFT_HAND = "left hand";
+    public static string HELMET = "helmet";
+    public static string PANTS = "pants";
+    public static string SHOES = "shoes";
 
     public static string playerName = "Player";
     public static string enemyName = "Player 2";
