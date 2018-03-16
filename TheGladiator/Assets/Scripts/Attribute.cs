@@ -5,6 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class ListItemsInfo
 {
+    public ListItemsInfo()
+    {
+        itemData = new List<ItemDataInfo>();
+    }
     public List<ItemDataInfo> itemData;
 }
 
@@ -15,6 +19,7 @@ public class ItemDataInfo
     public Constants.ItemIndex Item_type;
     public int Sprite_index;
     public int Tier;
+    public int id;
 }
 
 [System.Serializable]
@@ -91,8 +96,20 @@ public class Stats
         Stamina = stamina;
         MaxStamina = stamina;
     }
-
-
+    public Stats(string name, int maxHp, byte str, byte agi, byte dex, short stamina, int hp = int.MinValue)
+    {
+        Name = name;
+        MAXHP = HP = maxHp;
+        if (hp != int.MinValue)
+        {
+            HP = hp;
+        }
+        Strength = str;
+        Agility = agi;
+        Dexterity = dex;
+        Stamina = stamina;
+        MaxStamina = stamina;
+    }
     public string Name;
     public Constants.PlayerType PlayerType;
     public int HP;
