@@ -780,7 +780,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1787027793309568, guid: 5ce6312552fde8043bf765f394d4f57f, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114354099519951744, guid: 5ce6312552fde8043bf765f394d4f57f,
         type: 2}
@@ -846,6 +846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ac: []
+  masterMixer: {fileID: 0}
   musicSource: {fileID: 0}
   sfxSource: {fileID: 0}
   lowPitch: 0.95
