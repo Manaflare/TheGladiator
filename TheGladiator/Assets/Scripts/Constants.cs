@@ -85,6 +85,13 @@ public static class Constants
         BOSS
     }
 
+    public enum BuildingPanel_Type
+    {
+        NOT_IMPLEMENTED =0,
+        WINDOW,
+        SCENE,
+    }
+
     public const float SECOND_FOR_DAY = 86400.0f;
     public const float TIME_DAYTIME = 43200.0f;
     public const float TIME_SUNSET = 64800.0f;
@@ -97,6 +104,7 @@ public static class Constants
         DATA_PLAYER = 1,
         DATA_ENEMY,
         DATA_ITEM,
+        DATA_ENVIRONMENT,
     }
 
     public delegate void CallbackFunction();

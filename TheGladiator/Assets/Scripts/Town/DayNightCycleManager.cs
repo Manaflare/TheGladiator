@@ -4,6 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class EnvironmentData
+{
+    public long gold;
+    public Constants.DayType days;
+    public byte weeks;
+    public float times;
+}
+
 public class DayNightCycleManager : MonoBehaviour {
 
     private static DayNightCycleManager instance;
@@ -26,9 +35,7 @@ public class DayNightCycleManager : MonoBehaviour {
     }
 
     [SerializeField]
-    private float time;
-    private Constants.DayType days;
-    private int weeks;
+    private EnvironmentData envData;
     [SerializeField]
     private int speed = 10;
     [SerializeField]
@@ -59,7 +66,9 @@ public class DayNightCycleManager : MonoBehaviour {
     void Start ()
     {
         //get time data from json
+        //money, current time
         //set current data to UI
+        envData = MasterManager.ManagerGlobalData.GetEnvData();
     }
 	
 	// Update is called once per frame
@@ -72,52 +81,52 @@ public class DayNightCycleManager : MonoBehaviour {
 
     private void UpdateTime()
     {
-        time += Time.smoothDeltaTime * speed;
+        envData.times += Time.smoothDeltaTime * speed;
         if (speedUp)
         {
-            if (time >= expectingTime && days == expectingdDay && weeks == expectingWeek)
+            if (envData.times >= expectingTime && envData.days == expectingdDay && envData.weeks == expectingWeek)
             {
                 speedUp = false;
                 speed = 10;
             }
         }
         
-        if(time > Constants.SECOND_FOR_DAY)
+        if (envData.times > Constants.SECOND_FOR_DAY)
         {
             StartNextDay();
         }
 
-        if((int)days > (int)Constants.DayType.SUNDAY)
+        if((int)envData.days > (int)Constants.DayType.SUNDAY)
         {
             StartNextWeek();
         }
 
-        currentTime = TimeSpan.FromSeconds(time);
+        currentTime = TimeSpan.FromSeconds(envData.times);
 
         
-        if (time < Constants.TIME_DAWN)       // dawn
+        if (envData.times < Constants.TIME_DAWN)       // dawn
         {
             colourSource = fogNight;
             ColourDest = fogNight;
             intensity = 1;
         }
-        else if(time >= Constants.TIME_DAWN && time < Constants.TIME_DAYTIME) //dawn to daytime
+        else if (envData.times >= Constants.TIME_DAWN && envData.times < Constants.TIME_DAYTIME) //dawn to daytime
         {
             colourSource = fogNight;
             ColourDest = fogDay;
-            intensity =  (time - Constants.TIME_DAWN) / Constants.PER_TIME;
+            intensity = (envData.times - Constants.TIME_DAWN) / Constants.PER_TIME;
         }
-        else if (time >= 43200 && time < Constants.TIME_SUNSET) // daytime to sunset
+        else if (envData.times >= 43200 && envData.times < Constants.TIME_SUNSET) // daytime to sunset
         {
             colourSource = fogDay;
             ColourDest = fogSunset;
-            intensity = (time - Constants.TIME_DAYTIME) / Constants.PER_TIME;
+            intensity = (envData.times - Constants.TIME_DAYTIME) / Constants.PER_TIME;
         }
         else  //sunset to dawn
         {
             colourSource = fogSunset;
             ColourDest = fogNight;
-            intensity = (time - Constants.TIME_SUNSET) / Constants.PER_TIME;
+            intensity = (envData.times - Constants.TIME_SUNSET) / Constants.PER_TIME;
         }
             
         //intensity = 1 - ((43200 - time) / 43200 * -1);
@@ -128,27 +137,27 @@ public class DayNightCycleManager : MonoBehaviour {
 
     private void UpdateUI()
     {
-        uiText_Week.text = weeks.ToString();
+        uiText_Week.text = envData.weeks.ToString();
         string[] tempTime = currentTime.ToString().Split(":"[0]);
-        uiText_Day.text = days.ToString() + ": " + tempTime[0] + ":" + tempTime[1];
+        uiText_Day.text = envData.days.ToString() + ": " + tempTime[0] + ":" + tempTime[1];
         uiText_RemainDays.text = GetRemainDayForBattle().ToString();
     }
 
     public int GetRemainDayForBattle()
     {
-        return (int)Constants.DayType.SUNDAY - (int)days;
+        return (int)Constants.DayType.SUNDAY - (int)envData.days;
     }
 
     public bool IsDayForBattle()
     {
-        return ((int)days == (int)Constants.DayType.SUNDAY);
+        return ((int)envData.days == (int)Constants.DayType.SUNDAY);
     }
 
 
     void StartNextDay()
     {
-        days++;
-        time = 0;
+        envData.days++;
+        envData.times = 0;
 
         if(IsDayForBattle())
         {
@@ -159,8 +168,8 @@ public class DayNightCycleManager : MonoBehaviour {
 
     void StartNextWeek()
     {
-        weeks++;
-        days = 0;
+        envData.weeks++;
+        envData.days = 0;
 
         //popup message and
         MasterManager.ManagerPopup.ShowMessageBox("System", "Next Week Started", Constants.PopupType.POPUP_SYSTEM);
@@ -170,15 +179,15 @@ public class DayNightCycleManager : MonoBehaviour {
     {
         speed *= speedMutiplier;
         speedUp = true;
-        expectingTime = time + (Constants.HOUR_SPENT * 3600f);
+        expectingTime = envData.times + (Constants.HOUR_SPENT * 3600f);
         if (expectingTime >= Constants.SECOND_FOR_DAY)
         {
             expectingTime -= Constants.SECOND_FOR_DAY;
-            expectingdDay = days + 1;
+            expectingdDay = envData.days + 1;
             if(expectingdDay > Constants.DayType.SUNDAY)
             {
                 expectingdDay = 0;
-                expectingWeek = weeks + 1;
+                expectingWeek = envData.weeks + 1;
             }
         }
             
