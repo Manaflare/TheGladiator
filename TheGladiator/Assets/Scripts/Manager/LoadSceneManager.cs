@@ -17,11 +17,13 @@ public class LoadSceneManager : MonoBehaviour, IManager {
 	}
     public void LoadScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        Scene curScene = SceneManager.GetSceneByName(sceneName);
+        LoadScene(curScene.buildIndex);
     }
 
     public void LoadScene(int sceneIndex)
     {
         SceneManager.LoadScene(sceneIndex);
+        MasterManager.ManagerGlobalData.SaveAllData();
     }
 }

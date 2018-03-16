@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class TownManager : MonoBehaviour {
 
     private static TownManager instance;
@@ -27,11 +28,13 @@ public class TownManager : MonoBehaviour {
 
     public GameObject[] Objects;
     public GameObject[] Panels;
+    public Text goldText;
     private int selectedIndex = 0;
-
+    private long gold;
 	// Use this for initialization
 	void Start ()
     {
+        gold = MasterManager.ManagerGlobalData.GetEnvData().gold;
         Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
     }
 	
@@ -71,7 +74,25 @@ public class TownManager : MonoBehaviour {
             }
             else
             {
-                Panels[selectedIndex].SetActive(true);
+                BuildingPanel buildingPanel = Panels[selectedIndex].GetComponent<BuildingPanel>();
+                switch (buildingPanel.BuildingType)
+                {
+                    case Constants.BuildingPanel_Type.NOT_IMPLEMENTED:
+                        MasterManager.ManagerPopup.ShowMessageBox("System", "Not implemented yet", Constants.PopupType.POPUP_NO);
+                        break;
+                    case Constants.BuildingPanel_Type.WINDOW:
+                        Panels[selectedIndex].SetActive(true);
+                        break;
+                    case Constants.BuildingPanel_Type.SCENE:
+                        string panelName = Panels[selectedIndex].name;
+                        StringBuilder s = new StringBuilder(panelName);
+                        s.Replace("Panel", "");
+                        MasterManager.ManagerLoadScene.LoadScene(panelName);
+                        break;
+                    default:
+                        break;
+                }
+                
             }
 
         }
@@ -82,6 +103,15 @@ public class TownManager : MonoBehaviour {
             MasterManager.ManagerPopup.ShowMessageBox("TEST", "This is a test", Constants.PopupType.POPUP_NO, TEST, test);
             //for rest button
         }
+
+
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        //"1,234,567"
+        goldText.text = gold.ToString("N0");
     }
 
     public void CloseCurrentWindow()
