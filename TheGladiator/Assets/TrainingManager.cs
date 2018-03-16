@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
+
 public class TrainingManager : MonoBehaviour
 {
     public Text text_MaxHp;
@@ -95,9 +96,25 @@ public class TrainingManager : MonoBehaviour
         playerDataInfo.statsList[0].Dexterity = byte.Parse(NewDexterity.text);
         playerDataInfo.statsList[0].Stamina = short.Parse(NewStam.text);
         playerDataInfo.statsList[0].Strength = byte.Parse(NewStr.text);
-        playerDataInfo.statsList[0].MAXHP = byte.Parse(NewMaxHP.text) / HpMultiplier;
+        playerDataInfo.statsList[0].MAXHP = int.Parse(NewMaxHP.text) / HpMultiplier;
 
         MasterManager.ManagerGlobalData.SavePlayerData();
+    }
+
+    private void TextColor(Text newText)
+    {
+        ResetAllColor();
+        newText.color = new Color(0.0f, 0.39f, 0.0f);
+    }
+
+    private void ResetAllColor()
+    {
+        NewStam.color = new Color(0.0f, 0.0f, 0.0f);
+        NewStr.color = new Color(0.0f, 0.0f, 0.0f);
+        NewAgility.color = new Color(0.0f, 0.0f, 0.0f);
+        NewDexterity.color = new Color(0.0f, 0.0f, 0.0f);
+        NewMaxHP.color = new Color(0.0f, 0.0f, 0.0f);
+
     }
 
 
@@ -108,6 +125,7 @@ public class TrainingManager : MonoBehaviour
         ShowTrainingCompletion();
 
         TrainStat(text_str, NewStr);
+        TextColor(NewStr);
     
     }
 
@@ -118,6 +136,7 @@ public class TrainingManager : MonoBehaviour
         ShowTrainingCompletion();
         
         TrainStat(text_MaxHp, NewMaxHP, HpMultiplier);
+        TextColor(NewMaxHP);
        
 
     }
@@ -129,6 +148,7 @@ public class TrainingManager : MonoBehaviour
         ShowTrainingCompletion();
 
         TrainStat(text_agil, NewAgility);
+        TextColor(NewAgility);
        
     }
 
@@ -139,6 +159,7 @@ public class TrainingManager : MonoBehaviour
         ShowTrainingCompletion();
 
         TrainStat(text_dex, NewDexterity);
+        TextColor(NewDexterity);
        
         
     }
@@ -150,12 +171,14 @@ public class TrainingManager : MonoBehaviour
         ShowTrainingCompletion();
 
         TrainStat(text_stam, NewStam);
+        TextColor(NewStam);
      
     }
 
     void ShowTrainingCompletion()
     {
         TrainingCompletionPrefab.SetActive(true);
+        ResetAllColor();
     }
 
     // Update is called once per frame
