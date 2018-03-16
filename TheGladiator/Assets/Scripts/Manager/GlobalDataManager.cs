@@ -7,12 +7,12 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     private ListDataInfo playerDataInfo;
     private ListEnemiesInfo enemiesDataInfo;
     private ListItemsInfo itemDataInfo;
+    private EnvironmentData envData;
 
     public void Initialize()
     {
         LoadallData();
         Debug.Log("boot Done " + typeof(GlobalDataManager));
-
     }
 
     // Update is called once per frame
@@ -27,6 +27,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         Utility.WriteDataToJSON<ListDataInfo>(Constants.JSONIndex.DATA_PLAYER, ref playerDataInfo);
         Utility.WriteDataToJSON<ListEnemiesInfo>(Constants.JSONIndex.DATA_ENEMY, ref enemiesDataInfo);
         Utility.WriteDataToJSON<ListItemsInfo>(Constants.JSONIndex.DATA_ITEM, ref itemDataInfo);
+        Utility.WriteDataToJSON<EnvironmentData>(Constants.JSONIndex.DATA_ENVIRONMENT, ref envData);
     }
 
     public void LoadallData()
@@ -34,8 +35,14 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         playerDataInfo = Utility.ReadDataFromJSON<ListDataInfo>(Constants.JSONIndex.DATA_PLAYER);
         enemiesDataInfo = Utility.ReadDataFromJSON<ListEnemiesInfo>(Constants.JSONIndex.DATA_ENEMY);
         itemDataInfo = Utility.ReadDataFromJSON<ListItemsInfo>(Constants.JSONIndex.DATA_ITEM);
+        envData = Utility.ReadDataFromJSON<EnvironmentData>(Constants.JSONIndex.DATA_ENVIRONMENT);
         //Debug.Log(playerStatus.spriteList[0].FaceHairIndex);
         //Debug.Log(enemiesStatus[0].statsList[0].Agility);
+    }
+
+    public void SaveEnvData()
+    {
+        Utility.WriteDataToJSON<EnvironmentData>(Constants.JSONIndex.DATA_ENVIRONMENT, ref envData);
     }
 
     public void SavePlayerData()
@@ -85,6 +92,11 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     public ListItemsInfo GetItemDataInfo()
     {
         return itemDataInfo;
+    }
+
+    public EnvironmentData GetEnvData()
+    {
+        return envData;
     }
 
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -655,6 +655,18 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224246677558446962, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,
     type: 2}
   m_PrefabInternal: {fileID: 1979355929}
+--- !u!114 &136518150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 136518146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc034669439e19a44ae317589e204da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingType: 0
 --- !u!1001 &223173083
 Prefab:
   m_ObjectHideFlags: 0
@@ -957,6 +969,18 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224246677558446962, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,
     type: 2}
   m_PrefabInternal: {fileID: 303993600}
+--- !u!114 &354870735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 354870731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc034669439e19a44ae317589e204da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingType: 1
 --- !u!114 &376260446 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114401414954424430, guid: 51af3ba1a56e08c47a7636e5c0dad453,
@@ -1313,6 +1337,18 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224246677558446962, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,
     type: 2}
   m_PrefabInternal: {fileID: 1257577027}
+--- !u!114 &533785894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 533785890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc034669439e19a44ae317589e204da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingType: 2
 --- !u!1 &535385289
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,6 +1639,18 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224246677558446962, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,
     type: 2}
   m_PrefabInternal: {fileID: 1224414943}
+--- !u!114 &661570845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 661570841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc034669439e19a44ae317589e204da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingType: 0
 --- !u!1 &683749389
 GameObject:
   m_ObjectHideFlags: 0
@@ -2101,6 +2149,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 957822263}
+--- !u!1 &997114176 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1781367009563118, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1893443674}
+--- !u!114 &997114179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 997114176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc034669439e19a44ae317589e204da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingType: 0
 --- !u!1 &1029506999
 GameObject:
   m_ObjectHideFlags: 0
@@ -2179,6 +2244,18 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224246677558446962, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,
     type: 2}
   m_PrefabInternal: {fileID: 1611007851}
+--- !u!114 &1031424946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1031424942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc034669439e19a44ae317589e204da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingType: 0
 --- !u!1 &1032515040 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1781367009563118, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,
@@ -2189,6 +2266,18 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224246677558446962, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,
     type: 2}
   m_PrefabInternal: {fileID: 223173083}
+--- !u!114 &1032515044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1032515040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc034669439e19a44ae317589e204da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingType: 0
 --- !u!1 &1038300070
 GameObject:
   m_ObjectHideFlags: 0
@@ -4231,7 +4320,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad373ac295d38844b393461960ec92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
+  envData:
+    gold: 0
+    days: 0
+    weeks: 0
+    times: 0
   speed: 10
   speedMutiplier: 3000
   TownImage: {fileID: 1313924335}

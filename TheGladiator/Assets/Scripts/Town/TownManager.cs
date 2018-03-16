@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,10 +29,11 @@ public class TownManager : MonoBehaviour {
     public GameObject[] Objects;
     public GameObject[] Panels;
     private int selectedIndex = 0;
-
+    private long gold;
 	// Use this for initialization
 	void Start ()
     {
+        gold = MasterManager.ManagerGlobalData.GetEnvData().gold;
         Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
     }
 	
@@ -71,7 +73,25 @@ public class TownManager : MonoBehaviour {
             }
             else
             {
-                Panels[selectedIndex].SetActive(true);
+                BuildingPanel buildingPanel = Panels[selectedIndex].GetComponent<BuildingPanel>();
+                switch (buildingPanel.BuildingType)
+                {
+                    case Constants.BuildingPanel_Type.NOT_IMPLEMENTED:
+                        MasterManager.ManagerPopup.ShowMessageBox("System", "Not implemented yet", Constants.PopupType.POPUP_NO);
+                        break;
+                    case Constants.BuildingPanel_Type.WINDOW:
+                        Panels[selectedIndex].SetActive(true);
+                        break;
+                    case Constants.BuildingPanel_Type.SCENE:
+                        string panelName = Panels[selectedIndex].name;
+                        StringBuilder s = new StringBuilder(panelName);
+                        s.Replace("Panel", "");
+                        MasterManager.ManagerLoadScene.LoadScene(panelName);
+                        break;
+                    default:
+                        break;
+                }
+                
             }
 
         }
