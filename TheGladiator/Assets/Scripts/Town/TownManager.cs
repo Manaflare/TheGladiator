@@ -3,7 +3,7 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class TownManager : MonoBehaviour {
 
     private static TownManager instance;
@@ -28,6 +28,7 @@ public class TownManager : MonoBehaviour {
 
     public GameObject[] Objects;
     public GameObject[] Panels;
+    public Text goldText;
     private int selectedIndex = 0;
     private long gold;
 	// Use this for initialization
@@ -102,6 +103,15 @@ public class TownManager : MonoBehaviour {
             MasterManager.ManagerPopup.ShowMessageBox("TEST", "This is a test", Constants.PopupType.POPUP_NO, TEST, test);
             //for rest button
         }
+
+
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        //"1,234,567"
+        goldText.text = gold.ToString("N0");
     }
 
     public void CloseCurrentWindow()
