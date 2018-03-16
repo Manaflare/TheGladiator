@@ -91,7 +91,11 @@ public class Stats
         Stamina = stamina;
         MaxStamina = stamina;
     }
+    public static Stats copy(Stats source)
+    {
+        return new Stats(source.Name, source.PlayerType, source.MAXHP, source.Strength, source.Agility, source.Dexterity, source.Stamina, source.HP);
 
+    }
 
     public string Name;
     public Constants.PlayerType PlayerType;

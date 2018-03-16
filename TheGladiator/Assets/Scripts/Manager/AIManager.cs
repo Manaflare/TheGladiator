@@ -21,10 +21,14 @@ public class Move
 
         attackerAttribute = attrib;
 
-        attackerStats = atkStat;
-        attackeeStats = defStat;
+        attackerStats = Stats.copy(atkStat);
+        attackeeStats = Stats.copy(defStat);
 
         delayTime = delay;
+    }
+    public static Move copy(Move src)
+    {
+        return new Move(src.attackerStats, src.attackeeStats, src.attackerAttribute, src.attackerAnimator, src.attackeeAnimator, src.delayTime);
     }
 }
 
@@ -187,16 +191,34 @@ public class AIManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f); //Fixed delay of 0.01 seconds between each loop allowing for more accuracy when dealing with similar values
         }
     }//Needs SimulateBattle to Have run
-
-    void attack(Stats player1Stats, Stats player2Stats, Attribute attrib, Animator player1Animator, Animator player2Animator, float delayTime)
+    float stamDelay(Stats s, float time)
     {
-        string player1Name = Utility.getStringFromName(player1Stats.PlayerType);
-        string player2Name = Utility.getStringFromName(player2Stats.PlayerType);
+        float res = 2.0f;
+        float stamCalc = (float)s.Stamina / (float)s.MaxStamina;
+        if (stamCalc >= 0.8f)
+        {
+            res = time;
+        }
+        else if (stamCalc >= 0.4f)
+        {
+            res = time * 1.2f;
+        }
+        else if (stamCalc >= 0.0f)
+        {
+            res = time * 1.4f;
+        }
+        return res;
 
-        if (player1Stats.HP <= 0)
+    }
+    void attack(Stats p1Stats, Stats p2Stats, Attribute attrib, Animator player1Animator, Animator player2Animator, float delayTime)
+    {
+        string player1Name = Utility.getStringFromName(p1Stats.PlayerType);
+        string player2Name = Utility.getStringFromName(p2Stats.PlayerType);
+
+        if (moves.Count != 0 && moves[moves.Count - 1].attackerStats.HP <= 0)
         {
             Debug.Log(player1Name + " Died");
-            Move m = new Move(player1Stats, player2Stats, attrib, player1Animator, player2Animator, delayTime);
+            Move m = new Move(p1Stats, p2Stats, attrib, player1Animator, player2Animator, 0.0f);
             m.type = Constants.MoveType.DEATH;
             moves.Add(m);
             noOneDead = false;
@@ -204,22 +226,33 @@ public class AIManager : MonoBehaviour
 
         if (noOneDead)
         {
-
-            Move m = new Move(player1Stats, player2Stats, attrib, player1Animator, player2Animator, delayTime);
-            //Random.InitState(100);
-            bool hit = Calculations.playerAttacks(player1Stats.Dexterity);
-            bool dodge = Calculations.enemyDodges(player2Stats.Agility);
+            Move m = null;
+            if (moves.Count == 0)
+                m = new Move(p1Stats, p2Stats, attrib, player1Animator, player2Animator, delayTime);
+            else
+            {
+                Move tmpMove = Move.copy(moves[moves.Count - 1]);
+                m = new Move(tmpMove.attackerStats, tmpMove.attackeeStats, tmpMove.attackerAttribute, tmpMove.attackerAnimator, tmpMove.attackeeAnimator, tmpMove.delayTime);
+                Stats t = m.attackeeStats;
+                m.attackeeStats = m.attackerStats;
+                m.attackerStats = t;
+            }
+            //Move m = new Move(p1Stats, p2Stats, attrib, player1Animator, player2Animator, stamDelay(p1Stats, delayTime));
+            bool hit = Calculations.playerAttacks(p1Stats.Dexterity);
+            bool dodge = Calculations.enemyDodges(p2Stats.Agility);
 
             if (hit && !dodge)
             {
                 m.type = Constants.MoveType.ATTACK;
-
-                player2Stats.HP -= player1Stats.Strength;
+                short.Parse(0.ToString());
+                m.attackerStats.Stamina -= 5;
+                m.attackeeStats.HP -= m.attackerStats.Strength;
                 Debug.Log(player1Name + " Attack");
             }
             else if (!hit && !dodge)
             {
                 m.type = Constants.MoveType.MISS;
+                m.attackerStats.Stamina -= 6;
                 Debug.Log(player1Name + " Missed");
             }
             else if (dodge)
@@ -227,6 +260,8 @@ public class AIManager : MonoBehaviour
                 m.type = Constants.MoveType.DODGE;
                 Debug.Log(player1Name + "attacked, " + player2Name + " Dodged");
             }
+            if (m.attackerStats.Stamina < 0) m.attackerStats.Stamina = 0;
+            Debug.LogWarning(m.attackerStats.PlayerType + ": " + m.attackerStats.Stamina);
             moves.Add(m);
         }
     }//Called by Simulate Battle
@@ -255,7 +290,6 @@ public class AIManager : MonoBehaviour
             Debug.Log(m.type);
         }
     }//
-
     void Update()
     {
         //Temporary Until we have a go to battle system.
