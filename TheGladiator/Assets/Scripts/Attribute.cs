@@ -20,6 +20,7 @@ public class ItemDataInfo
     public int Sprite_index;
     public int Tier;
     public int id;
+
     public int price;
 }
 
@@ -104,7 +105,6 @@ public class Stats
         }
 
     }
-
     public Stats(string name, int maxHp, byte str, byte agi, byte dex, short maxStamina, short stamina = short.MinValue, int hp = int.MinValue)
     {
         Name = name;
@@ -116,6 +116,7 @@ public class Stats
         Strength = str;
         Agility = agi;
         Dexterity = dex;
+
         MaxStamina = Stamina = maxStamina;
         if (stamina != short.MinValue)
         {
