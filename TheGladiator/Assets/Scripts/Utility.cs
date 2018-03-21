@@ -7,7 +7,7 @@ public static class Utility
 {
     public static string getStringFromName(Constants.PlayerType n)
     {
-        return (n == 0) ? Constants.playerName : Constants.enemyName;
+        return (n == 0) ? Constants.PLAYER_NAME : Constants.ENEMY_NAME;
     }
 
     //example

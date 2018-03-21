@@ -15,6 +15,7 @@ public class ItemDataInfo
     public Constants.ItemIndex Item_type;
     public int Sprite_index;
     public int Tier;
+    public int id;
 }
 
 [System.Serializable]
@@ -94,6 +95,20 @@ public class Stats
             Stamina = stamina;
         }
 
+    }
+    public Stats(string name, int maxHp, byte str, byte agi, byte dex, short stamina, int hp = int.MinValue)
+    {
+        Name = name;
+        MAXHP = HP = maxHp;
+        if (hp != int.MinValue)
+        {
+            HP = hp;
+        }
+        Strength = str;
+        Agility = agi;
+        Dexterity = dex;
+        Stamina = stamina;
+        MaxStamina = stamina;
     }
     public static Stats copy(Stats source)
     {

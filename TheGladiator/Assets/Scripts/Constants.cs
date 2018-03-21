@@ -123,8 +123,8 @@ public static class Constants
         TIER_3,
 
     }
-
-    public static float HOUR_SPENT = 8.0f;
+    public static  float HOUR_SPENT = 8.0f;
+    public static float STAMINA_REGEN_INTERVAL = 1.0f;
 
     public static string RIGHT_HAND = "right hand";
     public static string ARMOR = "armor";
@@ -133,15 +133,13 @@ public static class Constants
     public static string PANTS = "pants";
     public static string SHOES = "shoes";
 
-    public static string playerName = "Player";
-    public static string enemyName = "Player 2";
+    public static string PLAYER_NAME = "Player";
+    public static string ENEMY_NAME = "Player 2";
 
-    public static string player1Tag = "player1";
-    public static string enemyTag = "player2";
+    public static string PLAYER1_TAG = "player1";
+    public static string ENEMY_TAG = "player2";
 
     public static int PlayerIndex = 0;
-
-
 
     public static string KEY_STRENGTH = "Strength";
     public static string KEY_AGILITY = "Agility";

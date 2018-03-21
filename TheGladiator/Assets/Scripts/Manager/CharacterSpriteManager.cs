@@ -36,7 +36,8 @@ public class CharacterSpriteManager : MonoBehaviour {
     }
     public void loadImages()
     {
-        body      = Instantiate(prefabPart, this.transform).GetComponent<Image>();
+
+        body = Instantiate(prefabPart, this.transform).GetComponent<Image>();
         hair      = Instantiate(prefabPart, this.transform).GetComponent<Image>();
         facehair  = Instantiate(prefabPart, this.transform).GetComponent<Image>();
         armor     = Instantiate(prefabPart, this.transform).GetComponent<Image>();
@@ -46,21 +47,22 @@ public class CharacterSpriteManager : MonoBehaviour {
         foot      = Instantiate(prefabPart, this.transform).GetComponent<Image>();
         pants     = Instantiate(prefabPart, this.transform).GetComponent<Image>();
 
-        body.gameObject.name = "Body";
-        hair.gameObject.name = "Hair";
-        facehair.gameObject.name = "Facial Hair";
-        armor.gameObject.name = "Armor";
-        helmet.gameObject.name = "Helmet";
-        rightHand.gameObject.name = "Right Hand";
-        leftHand.gameObject.name = "Left Hand";
-        foot.gameObject.name = "Foot";
-        pants.gameObject.name = "Pants";
+        body.gameObject.name      =            "Body"                            ;
+        hair.gameObject.name      =            "Hair"                            ;
+        facehair.gameObject.name  =            "Facial Hair"                     ;
+        armor.gameObject.name     =            "Armor"                           ;
+        helmet.gameObject.name    =            "Helmet"                          ;
+        rightHand.gameObject.name =            "Right Hand"                      ;
+        leftHand.gameObject.name  =            "Left Hand"                       ;
+        foot.gameObject.name      =            "Foot"                            ;
+        pants.gameObject.name     =            "Pants"                           ;
     }
     public void applySettings()
     {
         GetSpriteFromManager(body, spriteInfo.BodyIndex, Constants.SpriteType.BODY);
         GetSpriteFromManager(hair, spriteInfo.HairIndex, Constants.SpriteType.HAIR);
         GetSpriteFromManager(facehair, spriteInfo.FaceHairIndex, Constants.SpriteType.FACIAL_HAIR);
+        //GetSpriteFromManager(armor, spriteInfo)
     }
     void UpdateSprites()
     {
