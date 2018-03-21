@@ -51,4 +51,10 @@ public class MasterManager : MonoBehaviour {
 
         yield return null;
     }
+
+    void OnApplicationQuit()
+    {
+        Debug.Log("Application ending after " + Time.time.ToString("0.0") + " seconds");
+        ManagerGlobalData.SaveAllData();
+    }
 }

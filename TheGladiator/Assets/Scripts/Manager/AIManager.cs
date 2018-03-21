@@ -244,7 +244,6 @@ public class AIManager : MonoBehaviour
             else
             {
                 m = Move.copy(moves[moves.Count - 2]);
-                // m = new Move(tmpMove.attackerStats, tmpMove.attackeeStats, tmpMove.attackerAttribute, tmpMove.attackerAnimator, tmpMove.attackeeAnimator, tmpMove.delayTime);
                 Stats t = Stats.copy(moves[moves.Count - 1].attackeeStats);
                 m.attackeeStats = Stats.copy(moves[moves.Count - 1].attackerStats);
                 m.attackerStats = Stats.copy(t);

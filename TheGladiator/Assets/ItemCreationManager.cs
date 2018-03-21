@@ -49,58 +49,120 @@ public class ItemCreationManager : MonoBehaviour {
 
     private List<Sprite> Armors;
     private List<Sprite> Helmets;
-    private List<Sprite> LeftHand;
-    private List<Sprite> RightHand;
+    private List<Sprite> LeftHands;
+    private List<Sprite> RightHands;
     private List<Sprite> Pants;
     private List<Sprite> Shoes;
+
+    private ListItemsInfo itemList;
+    private int spriteIndex;
+    private int id;
 
     // Use this for initialization
     void Start () {
         Armors = MasterManager.ManagerSprite.ArmorList;
         Helmets = MasterManager.ManagerSprite.HelmetList;
-        LeftHand = MasterManager.ManagerSprite.LeftHandList;
-        RightHand = MasterManager.ManagerSprite.RightHandList;
+        LeftHands = MasterManager.ManagerSprite.LeftHandList;
+        RightHands = MasterManager.ManagerSprite.RightHandList;
         Pants = MasterManager.ManagerSprite.PantsList;
         Shoes = MasterManager.ManagerSprite.ShoesList;
-
         ItemDropDown.ClearOptions();
-        // ItemDropDown.AddOptions();
 
+        itemList = MasterManager.ManagerGlobalData.GetItemDataInfo();
+
+        List<string> items = new List<string>();
+        for (int i = 0; i < itemList.itemData.Count; i++)
+        {
+            items.Add(itemList.itemData[i].Stats.Name);
+        }
+        ItemDropDown.AddOptions(items);
 
         List<string> types = new List<string>();
-        types.Add(Constants.ARMOR);
-        types.Add(Constants.HELMET);
         types.Add(Constants.RIGHT_HAND);
+        types.Add(Constants.ARMOR);
         types.Add(Constants.LEFT_HAND);
+        types.Add(Constants.HELMET);
         types.Add(Constants.PANTS);
         types.Add(Constants.SHOES);
-
         tierText.text = tier.ToString();
 
         TypeDropDown.ClearOptions();
         TypeDropDown.AddOptions(types);
 
-
         Reset();
     }
+    public void LoadItem()
+    {
+        Populate(itemList.itemData[ItemDropDown.value]);
+    }
+    void Populate(ItemDataInfo itemData)
+    {
+        this.NameText.text = itemData.Stats.Name;
 
+        this.HPPoints = itemData.Stats.HP;
+        this.StrPoints = itemData.Stats.Strength;
+        this.AgiPoints = itemData.Stats.Agility;
+        this.DexPoints = itemData.Stats.Dexterity;
+        this.StaPoints = itemData.Stats.Stamina;
+
+        TypeDropDown.value = (int)itemData.Item_type;
+
+        switch (itemData.Item_type)
+        {
+            case Constants.ItemIndex.ARMOR:
+                SelectedSprite.sprite = Armors[itemData.Sprite_index];
+                break;
+            case Constants.ItemIndex.HELMET:
+                SelectedSprite.sprite = Helmets[itemData.Sprite_index];
+                break;
+            case Constants.ItemIndex.LEFT_HAND:
+                SelectedSprite.sprite = LeftHands[itemData.Sprite_index];
+                break;
+            case Constants.ItemIndex.PANTS:
+                SelectedSprite.sprite = Pants[itemData.Sprite_index];
+                break;
+            case Constants.ItemIndex.RIGHT_HAND:
+                SelectedSprite.sprite = RightHands[itemData.Sprite_index];
+                break;
+            case Constants.ItemIndex.SHOES:
+                SelectedSprite.sprite = Shoes[itemData.Sprite_index];
+                break;
+        }
+
+        this.tier = itemData.Tier;
+        this.startinAvaliablePoints = (skillPointsPerTier) * tier;
+        int spentPoints = this.HPPoints + this.StrPoints + this.AgiPoints + this.DexPoints + this.StaPoints;
+        this.avaliablePoints = startinAvaliablePoints + (BaseStats * 5) - spentPoints;
+        UpdateStatusText();
+    }
+    public void New()
+    {
+        ItemDataInfo newItem = new ItemDataInfo();
+        Stats newItemStats = new Stats("New Item",  0, 0, 0, 0, 0);
+        newItem.Stats = newItemStats;
+        itemList.itemData.Add(newItem);
+        newItem.Tier = 1;
+        Start();
+        ItemDropDown.value = ItemDropDown.options.Count - 1;
+        LoadItem();
+    }
     public void ShowPopUp()
     {
         PopUp.SetActive(true);
         List<Sprite> spriteList = new List<Sprite>();
         switch (TypeDropDown.value)
         {
-            case 0:
+            case 1:
                 spriteList = Armors;
                 break;
-            case 1:
+            case 3:
                 spriteList = Helmets;
                 break;
-            case 2:
-                spriteList = RightHand;
+            case 0:
+                spriteList = RightHands;
                 break;
-            case 3:
-                spriteList = LeftHand;
+            case 2:
+                spriteList = LeftHands;
                 break;
             case 4:
                 spriteList = Pants;
@@ -120,18 +182,16 @@ public class ItemCreationManager : MonoBehaviour {
             entry.eventID = EventTriggerType.PointerClick;
             entry.callback.AddListener((eventData) => {
                 SelectedSprite.sprite = (eventData as PointerEventData).pointerPress.GetComponentsInChildren<Image>()[1].sprite;
+                spriteIndex = int.Parse(SelectedSprite.sprite.name.Split('_')[1]);
+                Debug.Log(spriteIndex);
                 HidePopUp();
             });
             trigger.triggers.Add(entry);
-
 
             go.GetComponentsInChildren<Image>()[1].sprite = spriteList[i];
             go.transform.SetParent(BlockHolder.transform,false);
         }
     }
-    
-    
-
     public void HidePopUp()
     {
         foreach (Transform child in BlockHolder.transform)
@@ -141,12 +201,10 @@ public class ItemCreationManager : MonoBehaviour {
         PopUp.SetActive(false);
 
     }
-
     public void ChangeType()
     {
         SelectedSprite.sprite = null;
     }
-
     public void Randomize()
     {
         Reset(false);
@@ -171,7 +229,18 @@ public class ItemCreationManager : MonoBehaviour {
 
         UpdateStatusText();
     }
-
+    public void Save()
+    {
+        ItemDataInfo itemData = new ItemDataInfo();
+        itemData.Item_type = (Constants.ItemIndex)TypeDropDown.value;
+        itemData.Stats = new Stats(NameText.text, HPPoints, StrPoints, AgiPoints, DexPoints, StaPoints);
+        itemData.Tier = tier;
+        itemData.Sprite_index = spriteIndex;
+        itemData.id = id;
+        itemList.itemData[ItemDropDown.value] = itemData;
+        MasterManager.ManagerGlobalData.SetItemDataInfo(itemList, true);
+        Start();
+    }
     /**
     * 
     * ATRIBUTES
@@ -251,7 +320,6 @@ public class ItemCreationManager : MonoBehaviour {
         }
         UpdateStatusText();
     }
-
     public void ChangeTier(int value)
     {
         if (tier <= 1 && value < 0)
@@ -267,7 +335,6 @@ public class ItemCreationManager : MonoBehaviour {
 
         UpdateStatusText();
     }
-
     private void UpdateStatusText()
     {
         tierText.text = tier.ToString();

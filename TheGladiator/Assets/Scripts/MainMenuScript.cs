@@ -10,7 +10,8 @@ public class MainMenuScript : MonoBehaviour
     public Button newGameButton;
     public Button continueButton;
     public Button settingsButton;
-    public Button quitButton;
+
+    public GameObject settingsPrefab;
 
     // Use this for initialization
     void Start ()
@@ -18,14 +19,11 @@ public class MainMenuScript : MonoBehaviour
         Button ngb = newGameButton.GetComponent<Button>();
         ngb.onClick.AddListener(toCharacterCreation);
 
-        //Button lgb = continueButton.GetComponent<Button>();
-        //lgb.onClick.AddListener(continueFile);
+        Button lgb = continueButton.GetComponent<Button>();
+        lgb.onClick.AddListener(continueFile);
 
         Button setb = settingsButton.GetComponent<Button>();
         setb.onClick.AddListener(loadSettingsMenu);
-
-        Button quitb = quitButton.GetComponent<Button>();
-        quitb.onClick.AddListener(quitGame);
     }
 
     void toCharacterCreation()
@@ -36,17 +34,12 @@ public class MainMenuScript : MonoBehaviour
 
     void continueFile()
     {
-        SceneManager.LoadScene("TownScreen", LoadSceneMode.Single);
+        SceneManager.LoadScene("Town", LoadSceneMode.Single);
     }
 
     void loadSettingsMenu()
     {
-        SceneManager.LoadScene("SettingsMenu", LoadSceneMode.Single);
-    }
-
-    void quitGame()
-    {
-        Application.Quit();
+        settingsPrefab.SetActive(true);
     }
 	
 	// Update is called once per frame

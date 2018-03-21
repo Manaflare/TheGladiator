@@ -15,7 +15,8 @@ public static class Utility
     {
         {Constants.JSONIndex.DATA_PLAYER,       "/JSON/playerData.json"},
         {Constants.JSONIndex.DATA_ENEMY,        "/JSON/EnemyData.json" },
-        {Constants.JSONIndex.DATA_ITEM,        "/JSON/ItemData.json" },
+        {Constants.JSONIndex.DATA_ITEM,         "/JSON/ItemData.json" },
+        {Constants.JSONIndex.DATA_ENVIRONMENT,  "/JSON/EnvData.json" },
     };
 
 

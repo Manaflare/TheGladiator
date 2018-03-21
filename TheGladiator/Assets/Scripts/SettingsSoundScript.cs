@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class SettingsSoundScript : MonoBehaviour
 {
-
     private float MasterAudioLevel;
     private float BGMAudioLevel;
     private float SFXAudioLevel;
@@ -50,5 +50,14 @@ public class SettingsSoundScript : MonoBehaviour
         PlayerPrefs.SetFloat("MasterVolume", MasterAudioLevel);
         PlayerPrefs.SetFloat("BGMVolume", BGMAudioLevel);
         PlayerPrefs.SetFloat("SFXVolume", SFXAudioLevel);
+        
+        MasterManager.ManagerSound.ApplyToSettings();
+
+        closePopup();
+    }
+
+    public void closePopup()
+    {
+        this.transform.parent.gameObject.SetActive(false);
     }
 }
