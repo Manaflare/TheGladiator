@@ -10,12 +10,14 @@ public class InventoryManager : MonoBehaviour
     public GameObject itemArea;
     public GameObject ItemBlock;
     public GameObject Tabs;
+    public GameObject Character;
 
     private Color higherColor;
     private Color lowerColor;
     private Color equalsColor;
     private Color activeColor;
     private Color desactiveColor;
+    private Color hiddenColor;
 
     public Image armorImage;
     public Image helmetImage;
@@ -51,6 +53,7 @@ public class InventoryManager : MonoBehaviour
         activeColor = new Color(1, 1, 1);
         desactiveColor = new Color(.8f, .8f, .8f);
         equalsColor = new Color(0, 0, 0);
+        hiddenColor = new Color(0, 0, 0, 0);
 
         Armors = MasterManager.ManagerSprite.ArmorList;
         Helmets = MasterManager.ManagerSprite.HelmetList;
@@ -133,12 +136,20 @@ public class InventoryManager : MonoBehaviour
             go.GetComponentsInChildren<Image>()[1].sprite = itemSprite;
             go.transform.SetParent(itemArea.transform, false);
         }
-        if (filteredItemList.Count > 0)
-        {
-            UpdateText(0);
-        }
     }
-
+    public void UnequipItem(int itemType)
+    {
+        for (int i = 0; i < equipedItems.Count; i++)
+        {
+            if ((int)equipedItems[i].Item_type == itemType)
+            {
+                equipedItems[i] = null;
+                equipedItems.RemoveAt(i);
+            }
+        }
+        SavePlayerData();
+        UpdateEquipedVisual();
+    }
     void EquipItem(int id)
     {
         ItemDataInfo tempItem = filteredItemList[id];
@@ -173,9 +184,22 @@ public class InventoryManager : MonoBehaviour
         playerData.equipedItensId = equipedItemsId;
         MasterManager.ManagerGlobalData.SavePlayerData();
     }
-
     void UpdateEquipedVisual()
     {
+
+        rHandImage.sprite = null;
+        rHandImage.color = hiddenColor;
+        armorImage.sprite = null;
+        armorImage.color = hiddenColor;
+        lHandImage.sprite = null;
+        lHandImage.color = hiddenColor;
+        helmetImage.sprite = null;
+        helmetImage.color = hiddenColor;
+        pantsImage.sprite = null;
+        pantsImage.color = hiddenColor;
+        footImage.sprite = null;
+        footImage.color = hiddenColor;
+
         for (int i = 0; i < equipedItems.Count; i++)
         {
             switch (equipedItems[i].Item_type)
@@ -206,6 +230,7 @@ public class InventoryManager : MonoBehaviour
                     break;
             }
         }
+        Character.GetComponent<CharacterSpriteManager>().UpdateSprites();
     }
     public void UpdateTab(int tabIndex)
     {
@@ -265,8 +290,6 @@ public class InventoryManager : MonoBehaviour
                 break;
         }
 
-
-
         ItemDataInfo equipedItem = null;
 
         for (int i = 0; i < equipedItems.Count; i++)
@@ -304,7 +327,7 @@ public class InventoryManager : MonoBehaviour
 
         itemSlot.text = itemPos;
 
-        itemHP.text = filteredItemList[id].Stats.HP.ToString();
+        itemHP.text = (Constants.HP_MULTIPLIER * filteredItemList[id].Stats.HP).ToString();
         itemSTR.text = filteredItemList[id].Stats.Strength.ToString();
         itemAGI.text = filteredItemList[id].Stats.Agility.ToString();
         itemDEX.text = filteredItemList[id].Stats.Dexterity.ToString();

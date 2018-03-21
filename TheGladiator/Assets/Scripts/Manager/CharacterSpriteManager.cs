@@ -32,6 +32,10 @@ public class CharacterSpriteManager : MonoBehaviour {
     // Use this for initialization
     protected virtual void Start ()
     {
+        foreach (Transform child in this.gameObject.transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
         loadImages();
         playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         itemList = playerData.itemList;

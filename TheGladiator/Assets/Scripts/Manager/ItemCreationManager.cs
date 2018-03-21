@@ -139,7 +139,7 @@ public class ItemCreationManager : MonoBehaviour {
     public void New()
     {
         ItemDataInfo newItem = new ItemDataInfo();
-        Stats newItemStats = new Stats("New Item",  0, 0, 0, 0, 0, 0);
+        Stats newItemStats = new Stats("New Item",  0, 0, 0, 0, 0);
         newItem.Stats = newItemStats;
         itemList.itemData.Add(newItem);
         newItem.Tier = 1;

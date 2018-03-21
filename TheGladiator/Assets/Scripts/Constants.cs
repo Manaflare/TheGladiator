@@ -161,7 +161,10 @@ public static class Constants
 
     public static byte MAX_STAT_LEVEL = byte.MaxValue;
 
+    public static float HP_MULTIPLIER = 5;
+
     public static float MINIMUM_DELAY = 0.5f;
+
     public static float BASE_TIME = 2.0f;
     public static float MODIFIABLE_TIME = BASE_TIME - MINIMUM_DELAY;
 
