@@ -81,13 +81,19 @@ public class TownManager : MonoBehaviour {
                         MasterManager.ManagerPopup.ShowMessageBox("System", "Not implemented yet", Constants.PopupType.POPUP_NO);
                         break;
                     case Constants.BuildingPanel_Type.WINDOW:
-                        Panels[selectedIndex].SetActive(true);
+                        if (buildingPanel.CheckStatus())
+                        {
+                            Panels[selectedIndex].SetActive(true);
+                        }
                         break;
                     case Constants.BuildingPanel_Type.SCENE:
-                        string panelName = Panels[selectedIndex].name;
-                        StringBuilder s = new StringBuilder(panelName);
-                        s.Replace("Panel", "");
-                        MasterManager.ManagerLoadScene.LoadScene(panelName);
+                        if(buildingPanel.CheckStatus())
+                        {
+                            string panelName = Panels[selectedIndex].name;
+                            StringBuilder s = new StringBuilder(panelName);
+                            s.Replace("Panel", "");
+                            MasterManager.ManagerLoadScene.LoadScene(panelName);
+                        }
                         break;
                     default:
                         break;
@@ -99,7 +105,7 @@ public class TownManager : MonoBehaviour {
 
         if(MasterManager.ManagerInput.GetKeyDown(KeyCode.E))
         {
-            object[] test = { 1, true, "ASD", 4, 5.7f };
+            object[] test = { "MainMenu" };
             MasterManager.ManagerPopup.ShowMessageBox("TEST", "This is a test", Constants.PopupType.POPUP_NO, TEST, test);
             //for rest button
         }
@@ -126,10 +132,7 @@ public class TownManager : MonoBehaviour {
     //exmaple code
     private void TEST(object[] asd)
     {
-        foreach(object v in asd)
-        {
-            Debug.Log("Elements : " + v);
-        }
+        MasterManager.ManagerLoadScene.LoadScene(asd[0].ToString());
             
     }
 
