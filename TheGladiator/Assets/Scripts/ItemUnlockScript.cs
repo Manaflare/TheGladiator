@@ -109,9 +109,7 @@ public class ItemUnlockScript : MonoBehaviour
                 break;
         }
         playerItems = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
-        ItemInfo chosenItemInfo = new ItemInfo();
-        chosenItemInfo.index = itemData[itemID].id;
-        playerItems.itemList.Add(chosenItemInfo);
+        playerItems.itemList.Add(itemData[itemID]);
         
     }
 }

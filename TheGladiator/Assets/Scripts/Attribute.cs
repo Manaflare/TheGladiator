@@ -49,11 +49,14 @@ public class ListDataInfo
     {
         statsList.Clear();
         spriteList.Clear();
+        itemList.Clear();
+        equipedItensId.Clear();
     }
 
     public List<Stats> statsList;
     public List<SpriteInfo> spriteList;
-    public List<ItemInfo> itemList;
+    public List<ItemDataInfo> itemList;
+    public List<int> equipedItensId;
     public int playerTier;
 }
 

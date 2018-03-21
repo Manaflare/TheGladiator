@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class CharacterSpriteManager : MonoBehaviour {
 
     public GameObject prefabPart;
+    ListDataInfo playerData;
+    List<ItemDataInfo> itemList;
     Image body;
     Image hair;
     Image facehair;
@@ -31,20 +33,22 @@ public class CharacterSpriteManager : MonoBehaviour {
     protected virtual void Start ()
     {
         loadImages();
-        spriteInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo().spriteList[0];
+        playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+        itemList = playerData.itemList;
+        spriteInfo = playerData.spriteList[0];
         applySettings();
     }
     public void loadImages()
     {
         body      = Instantiate(prefabPart, this.transform).GetComponent<Image>();
-        hair      = Instantiate(prefabPart, this.transform).GetComponent<Image>();
-        facehair  = Instantiate(prefabPart, this.transform).GetComponent<Image>();
-        armor     = Instantiate(prefabPart, this.transform).GetComponent<Image>();
-        helmet    = Instantiate(prefabPart, this.transform).GetComponent<Image>();
-        rightHand = Instantiate(prefabPart, this.transform).GetComponent<Image>();
-        leftHand  = Instantiate(prefabPart, this.transform).GetComponent<Image>();
-        foot      = Instantiate(prefabPart, this.transform).GetComponent<Image>();
+        armor = Instantiate(prefabPart, this.transform).GetComponent<Image>();
+        hair = Instantiate(prefabPart, this.transform).GetComponent<Image>();
+        facehair = Instantiate(prefabPart, this.transform).GetComponent<Image>();
+        helmet = Instantiate(prefabPart, this.transform).GetComponent<Image>();
         pants     = Instantiate(prefabPart, this.transform).GetComponent<Image>();
+        foot = Instantiate(prefabPart, this.transform).GetComponent<Image>();
+        leftHand = Instantiate(prefabPart, this.transform).GetComponent<Image>();
+        rightHand = Instantiate(prefabPart, this.transform).GetComponent<Image>();
 
         body.gameObject.name = "Body";
         hair.gameObject.name = "Hair";
@@ -61,10 +65,41 @@ public class CharacterSpriteManager : MonoBehaviour {
         GetSpriteFromManager(body, spriteInfo.BodyIndex, Constants.SpriteType.BODY);
         GetSpriteFromManager(hair, spriteInfo.HairIndex, Constants.SpriteType.HAIR);
         GetSpriteFromManager(facehair, spriteInfo.FaceHairIndex, Constants.SpriteType.FACIAL_HAIR);
-    }
-    void UpdateSprites()
-    {
 
+        for (int p = 0; p < playerData.equipedItensId.Count; p++)
+        {
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                if (itemList[i].id == playerData.equipedItensId[p])
+                {
+                    switch (itemList[i].Item_type)
+                    {
+                        case Constants.ItemIndex.RIGHT_HAND:
+                            GetSpriteFromManager(rightHand, itemList[i].Sprite_index, Constants.SpriteType.RIGHT_HAND);
+                            break;
+                        case Constants.ItemIndex.ARMOR:
+                            GetSpriteFromManager(armor, itemList[i].Sprite_index, Constants.SpriteType.ARMOR);
+                            break;
+                        case Constants.ItemIndex.LEFT_HAND:
+                            GetSpriteFromManager(leftHand, itemList[i].Sprite_index, Constants.SpriteType.LEFT_HAND);
+                            break;
+                        case Constants.ItemIndex.HELMET:
+                            GetSpriteFromManager(helmet, itemList[i].Sprite_index, Constants.SpriteType.HELMET);
+                            break;
+                        case Constants.ItemIndex.PANTS:
+                            GetSpriteFromManager(pants, itemList[i].Sprite_index, Constants.SpriteType.PANTS);
+                            break;
+                        case Constants.ItemIndex.SHOES:
+                            GetSpriteFromManager(foot, itemList[i].Sprite_index, Constants.SpriteType.FOOT);
+                            break;
+                    }
+                }
+            }
+        }
+    }
+    public void UpdateSprites()
+    {
+        Start();
     }
 	
     void GetSpriteFromManager(Image img, int index, Constants.SpriteType type)

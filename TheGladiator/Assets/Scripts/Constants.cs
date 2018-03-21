@@ -139,6 +139,13 @@ public static class Constants
     public static string PANTS = "pants";
     public static string SHOES = "shoes";
 
+    public static string C_RIGHT_HAND = "Right Hand";
+    public static string C_ARMOR = "Armor";
+    public static string C_LEFT_HAND = "Left Hand";
+    public static string C_HELMET = "Helmet";
+    public static string C_PANTS = "Pants";
+    public static string C_SHOES = "Shoes";
+
     public static string playerName = "Player";
     public static string enemyName = "Player 2";
 
