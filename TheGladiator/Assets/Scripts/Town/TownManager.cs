@@ -120,17 +120,17 @@ public class TownManager : MonoBehaviour {
         goldText.text = gold.ToString("N0");
     }
 
-    public void CloseCurrentWindow(bool bSpendTime = true)
+    public void CloseCurrentWindow(bool bSpendTime = true, Constants.CallbackFunction callFunc = null, float spendingTurn = 1.0f)
     {
         MasterManager.ManagerGlobalData.SavePlayerData();
         Panels[selectedIndex].SetActive(false);
 
         if (bSpendTime)
-            DayNightCycleManager.Instance.SpendTime();
+            DayNightCycleManager.Instance.SpendTime(spendingTurn, callFunc);
     }
 
     //exmaple code
-    private void TEST(object[] asd)
+    public void TEST(object[] asd)
     {
         MasterManager.ManagerLoadScene.LoadScene(asd[0].ToString());
             

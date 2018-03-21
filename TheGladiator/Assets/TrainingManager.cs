@@ -181,6 +181,16 @@ public class TrainingManager : MonoBehaviour
         ResetAllColor();
     }
 
+    public void CloseWindow(bool Spendtime)
+    {
+        TownManager.Instance.CloseCurrentWindow(Spendtime, CallBackShowTraining);
+    }
+
+    public void CallBackShowTraining()
+    {
+        ShowTrainingCompletion();
+    }
+
     // Update is called once per frame
     void Update()
     {

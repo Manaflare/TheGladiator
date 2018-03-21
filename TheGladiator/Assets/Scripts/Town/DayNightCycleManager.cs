@@ -91,6 +91,7 @@ public class DayNightCycleManager : MonoBehaviour {
                 if(expectHandler != null)
                 {
                     expectHandler();
+                    expectHandler = null;
                 }
 
                 speedUp = false;
@@ -182,11 +183,11 @@ public class DayNightCycleManager : MonoBehaviour {
         MasterManager.ManagerPopup.ShowMessageBox("System", "Next Week Started", Constants.PopupType.POPUP_SYSTEM);
     }
 
-    public void SpendTime(Constants.CallbackFunction callbackFunc = null)
+    public void SpendTime(float hourMultiPlier = 1.0f, Constants.CallbackFunction callbackFunc = null)
     {
         speed *= speedMutiplier;
         speedUp = true;
-        expectingTime = envData.times + (Constants.HOUR_SPENT * 3600f);
+        expectingTime = envData.times + (Constants.HOUR_SPENT * hourMultiPlier * 3600f);
         expectingdDay = envData.days;
         expectingWeek = envData.weeks;
 
