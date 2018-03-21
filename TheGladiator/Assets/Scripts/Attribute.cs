@@ -20,6 +20,7 @@ public class ItemDataInfo
     public int Sprite_index;
     public int Tier;
     public int id;
+    public int price;
 }
 
 [System.Serializable]

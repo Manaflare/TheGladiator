@@ -8,6 +8,11 @@ public abstract class Item : MonoBehaviour {
     public GameObject Effect;
     public List<int> values;
 
+    public Item()
+    {
+
+    }
+
     public enum INDEX_VALUE
     {
         HP,
