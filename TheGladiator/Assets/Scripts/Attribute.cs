@@ -101,6 +101,25 @@ public class Stats
         }
 
     }
+
+    public Stats(string name, int maxHp, byte str, byte agi, byte dex, short maxStamina, short stamina = short.MinValue, int hp = int.MinValue)
+    {
+        Name = name;
+        MAXHP = HP = maxHp;
+        if (hp != int.MinValue)
+        {
+            HP = hp;
+        }
+        Strength = str;
+        Agility = agi;
+        Dexterity = dex;
+        MaxStamina = Stamina = maxStamina;
+        if (stamina != short.MinValue)
+        {
+            Stamina = stamina;
+        }
+
+    }
     public static Stats copy(Stats source)
     {
         return new Stats(source.Name, source.PlayerType, source.MAXHP, source.Strength, source.Agility, source.Dexterity,source.MaxStamina, source.Stamina, source.HP);
