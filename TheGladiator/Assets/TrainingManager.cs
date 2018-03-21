@@ -13,6 +13,8 @@ public class TrainingManager : MonoBehaviour
     public Text text_str;
     public Text text_dex;
 
+    public Text ShowCost;
+
     public Text NameText;
     public int HpMultiplier = 5;
     protected int HPPoints;
@@ -50,9 +52,17 @@ public class TrainingManager : MonoBehaviour
     public int maxChange;
     public GameObject TrainingCompletionPrefab;
 
+    [Header("Button Visibility")]
+    public Button MHp_btn;
+    public Button Str_btn;
+    public Button Agi_btn;
+    public Button Dex_btn;
+    public Button Stam_btn;
+
     // Use this for initialization
     void OnEnable()
     {
+       
          ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
          int agil = playerDataInfo.statsList[0].Agility;
 
@@ -78,6 +88,11 @@ public class TrainingManager : MonoBehaviour
 
     }
 
+    void TrainingCost()
+    {
+
+    }
+
     private void TrainStat(Text originText, Text newText, int multiplier = 1)
     {
         //for variables in train complete window
@@ -97,6 +112,15 @@ public class TrainingManager : MonoBehaviour
         playerDataInfo.statsList[0].Stamina = short.Parse(NewStam.text);
         playerDataInfo.statsList[0].Strength = byte.Parse(NewStr.text);
         playerDataInfo.statsList[0].MAXHP = int.Parse(NewMaxHP.text) / HpMultiplier;
+
+        MHp_btn.enabled = true;
+        Agi_btn.enabled = true;
+        Dex_btn.enabled = true;
+        Str_btn.enabled = true;
+        Stam_btn.enabled = true;
+
+
+
 
         MasterManager.ManagerGlobalData.SavePlayerData();
     }
@@ -121,6 +145,10 @@ public class TrainingManager : MonoBehaviour
     public void TrainStrength()
     {
         byte ammountAdd = (byte) Random.Range(minChange, maxChange);
+        if (MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Strength >= byte.MaxValue)
+        {
+            Str_btn.enabled = false;
+        }
         MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Strength += ammountAdd;
         ShowTrainingCompletion();
 
@@ -132,6 +160,10 @@ public class TrainingManager : MonoBehaviour
     public void TrainMaxHP()
     {
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
+        if(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP >= int.MaxValue)
+        {
+            MHp_btn.enabled = false;
+        }
         MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP += ammountAdd;
         ShowTrainingCompletion();
         
@@ -144,6 +176,10 @@ public class TrainingManager : MonoBehaviour
     public void TrainAgility()
     {
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
+        if(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Agility >= byte.MaxValue)
+        {
+            Agi_btn.enabled = false;
+        }
         MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Agility += ammountAdd;
         ShowTrainingCompletion();
 
@@ -155,6 +191,10 @@ public class TrainingManager : MonoBehaviour
     public void TrainDexterity()
     {
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
+        if (MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Dexterity >= byte.MaxValue)
+        {
+            Dex_btn.enabled = false;
+        }
         MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Dexterity += ammountAdd;
         ShowTrainingCompletion();
 
@@ -167,6 +207,10 @@ public class TrainingManager : MonoBehaviour
     public void TrainStamina()
     {
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
+        if (MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MaxStamina >= byte.MaxValue)
+        {
+            Stam_btn.enabled = false;
+        }
         MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MaxStamina += ammountAdd;
         ShowTrainingCompletion();
 
@@ -174,6 +218,7 @@ public class TrainingManager : MonoBehaviour
         TextColor(NewStam);
      
     }
+    
 
     void ShowTrainingCompletion()
     {
