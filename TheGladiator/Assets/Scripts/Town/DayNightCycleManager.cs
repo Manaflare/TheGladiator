@@ -63,6 +63,8 @@ public class DayNightCycleManager : MonoBehaviour {
     private float expectingTime = 0.0f;
     private int expectingWeek = 0;
     private Constants.DayType expectingdDay;
+
+    private Constants.CallbackFunction expectHandler;
     void Start ()
     {
         //get time data from json
@@ -86,6 +88,11 @@ public class DayNightCycleManager : MonoBehaviour {
         {
             if (envData.times >= expectingTime && envData.days == expectingdDay && envData.weeks == expectingWeek)
             {
+                if(expectHandler != null)
+                {
+                    expectHandler();
+                }
+
                 speedUp = false;
                 speed = 10;
             }
@@ -175,11 +182,16 @@ public class DayNightCycleManager : MonoBehaviour {
         MasterManager.ManagerPopup.ShowMessageBox("System", "Next Week Started", Constants.PopupType.POPUP_SYSTEM);
     }
 
-    public void SpendTime()
+    public void SpendTime(Constants.CallbackFunction callbackFunc = null)
     {
         speed *= speedMutiplier;
         speedUp = true;
         expectingTime = envData.times + (Constants.HOUR_SPENT * 3600f);
+        expectingdDay = envData.days;
+        expectingWeek = envData.weeks;
+
+        expectHandler = callbackFunc;
+
         if (expectingTime >= Constants.SECOND_FOR_DAY)
         {
             expectingTime -= Constants.SECOND_FOR_DAY;

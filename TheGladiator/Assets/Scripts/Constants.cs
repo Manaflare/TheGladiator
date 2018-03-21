@@ -92,6 +92,12 @@ public static class Constants
         SCENE,
     }
 
+    public enum BuildingPanel_Status
+    {
+        NOT_AVAILABLE = 0,
+        AVAILABLE,
+    }
+
     public const float SECOND_FOR_DAY = 86400.0f;
     public const float TIME_DAYTIME = 43200.0f;
     public const float TIME_SUNSET = 64800.0f;

@@ -29,8 +29,9 @@ public class ItemCreationManager : MonoBehaviour {
     protected byte DexPoints;
     protected short StaPoints;
 
-    [Header("Name")]
+    [Header("Inputs")]
     public InputField NameText;
+    public InputField PriceText;
 
     [Header("Dropdown")]
     public Dropdown ItemDropDown;
@@ -56,7 +57,6 @@ public class ItemCreationManager : MonoBehaviour {
 
     private ListItemsInfo itemList;
     private int spriteIndex;
-    private int id;
 
     // Use this for initialization
     void Start () {
@@ -98,13 +98,14 @@ public class ItemCreationManager : MonoBehaviour {
     void Populate(ItemDataInfo itemData)
     {
         this.NameText.text = itemData.Stats.Name;
+        this.PriceText.text = itemData.price.ToString();
 
         this.HPPoints = itemData.Stats.HP;
         this.StrPoints = itemData.Stats.Strength;
         this.AgiPoints = itemData.Stats.Agility;
         this.DexPoints = itemData.Stats.Dexterity;
         this.StaPoints = itemData.Stats.Stamina;
-
+        spriteIndex = itemData.Sprite_index;
         TypeDropDown.value = (int)itemData.Item_type;
 
         switch (itemData.Item_type)
@@ -183,7 +184,6 @@ public class ItemCreationManager : MonoBehaviour {
             entry.callback.AddListener((eventData) => {
                 SelectedSprite.sprite = (eventData as PointerEventData).pointerPress.GetComponentsInChildren<Image>()[1].sprite;
                 spriteIndex = int.Parse(SelectedSprite.sprite.name.Split('_')[1]);
-                Debug.Log(spriteIndex);
                 HidePopUp();
             });
             trigger.triggers.Add(entry);
@@ -226,6 +226,7 @@ public class ItemCreationManager : MonoBehaviour {
         {
             NameText.text = "";
         }
+        PriceText.text = "";
 
         UpdateStatusText();
     }
@@ -236,10 +237,12 @@ public class ItemCreationManager : MonoBehaviour {
         itemData.Stats = new Stats(NameText.text, HPPoints, StrPoints, AgiPoints, DexPoints, StaPoints);
         itemData.Tier = tier;
         itemData.Sprite_index = spriteIndex;
-        itemData.id = id;
+        itemData.id = ItemDropDown.value;
+        itemData.price = int.Parse(PriceText.text);
         itemList.itemData[ItemDropDown.value] = itemData;
         MasterManager.ManagerGlobalData.SetItemDataInfo(itemList, true);
         Start();
+        LoadItem();
     }
     /**
     * 
