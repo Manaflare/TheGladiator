@@ -982,6 +982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BuildingType: 1
+  BuildingStatus: 1
 --- !u!1 &357716493
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,7 +1058,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 357716493}
-  BuildingStatus: 1
 --- !u!114 &376260446 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114401414954424430, guid: 51af3ba1a56e08c47a7636e5c0dad453,
@@ -2269,8 +2269,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 630718355}
-        m_MethodName: CloseCurrentWindow
+      - m_Target: {fileID: 2070065793}
+        m_MethodName: CloseWindow
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5511,7 +5511,7 @@ GameObject:
   - component: {fileID: 1849888407}
   - component: {fileID: 1849888409}
   m_Layer: 5
-  m_Name: Center Image
+  m_Name: SleepImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5532,8 +5532,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000076293945, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: -314.7681, y: -95.903824}
+  m_SizeDelta: {x: 170.46, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1849888407
 MonoBehaviour:
@@ -6512,7 +6512,7 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 630718355}
+      objectReference: {fileID: 2070065793}
     - target: {fileID: 1840032917769338, guid: 51af3ba1a56e08c47a7636e5c0dad453, type: 2}
       propertyPath: m_IsActive
       value: 0
@@ -6576,6 +6576,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114952924083383562, guid: 51af3ba1a56e08c47a7636e5c0dad453,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseWindow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51af3ba1a56e08c47a7636e5c0dad453, type: 2}
@@ -6729,16 +6734,16 @@ MonoBehaviour:
   minChange: 1
   maxChange: 3
   TrainingCompletionPrefab: {fileID: 621799022}
+  MHp_btn: {fileID: 0}
+  Str_btn: {fileID: 0}
+  Agi_btn: {fileID: 0}
+  Dex_btn: {fileID: 0}
+  Stam_btn: {fileID: 0}
 --- !u!224 &2075985425 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224254110530490010, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,
     type: 2}
   m_PrefabInternal: {fileID: 1224414943}
-  MHp_btn: {fileID: 1512888872}
-  Str_btn: {fileID: 1824876240}
-  Agi_btn: {fileID: 1914521790}
-  Dex_btn: {fileID: 37631743}
-  Stam_btn: {fileID: 94100898}
 --- !u!1 &2089216168
 GameObject:
   m_ObjectHideFlags: 0
