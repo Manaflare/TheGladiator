@@ -5,10 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class ListItemsInfo
 {
-    public ListItemsInfo()
-    {
-        itemData = new List<ItemDataInfo>();
-    }
     public List<ItemDataInfo> itemData;
 }
 
@@ -19,7 +15,6 @@ public class ItemDataInfo
     public Constants.ItemIndex Item_type;
     public int Sprite_index;
     public int Tier;
-    public int id;
 }
 
 [System.Serializable]
@@ -81,7 +76,7 @@ public class ItemInfo
 [System.Serializable]
 public class Stats
 {
-    public Stats(string name, Constants.PlayerType playerType, int maxHp, byte str, byte agi, byte dex, short stamina, int hp = int.MinValue)
+    public Stats(string name, Constants.PlayerType playerType, int maxHp, byte str, byte agi, byte dex, short maxStamina, short stamina = short.MinValue, int hp = int.MinValue)
     {
         Name = name;
         PlayerType = playerType;
@@ -93,23 +88,19 @@ public class Stats
         Strength = str;
         Agility = agi;
         Dexterity = dex;
-        Stamina = stamina;
-        MaxStamina = stamina;
-    }
-    public Stats(string name, int maxHp, byte str, byte agi, byte dex, short stamina, int hp = int.MinValue)
-    {
-        Name = name;
-        MAXHP = HP = maxHp;
-        if (hp != int.MinValue)
+        MaxStamina = Stamina = maxStamina;
+        if (stamina != short.MinValue)
         {
-            HP = hp;
+            Stamina = stamina;
         }
-        Strength = str;
-        Agility = agi;
-        Dexterity = dex;
-        Stamina = stamina;
-        MaxStamina = stamina;
+
     }
+    public static Stats copy(Stats source)
+    {
+        return new Stats(source.Name, source.PlayerType, source.MAXHP, source.Strength, source.Agility, source.Dexterity,source.MaxStamina, source.Stamina, source.HP);
+
+    }
+
     public string Name;
     public Constants.PlayerType PlayerType;
     public int HP;
@@ -151,6 +142,7 @@ public class Attribute : MonoBehaviour
 	}
     public virtual void onDeath()
     {
+        this.gameObject.SetActive(false);
         GameObject gore = Instantiate(gorePrefab, GameObject.FindObjectOfType<Canvas>().transform);
         gore.GetComponent<RectTransform>().anchoredPosition = this.GetComponent<RectTransform>().anchoredPosition;
         gore.SetActive(true);
