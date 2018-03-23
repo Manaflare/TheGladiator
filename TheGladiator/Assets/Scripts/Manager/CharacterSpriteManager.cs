@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class CharacterSpriteManager : MonoBehaviour {
 
     public GameObject prefabPart;
-    ListDataInfo playerData;
-    List<ItemDataInfo> itemList;
     Image body;
     Image hair;
     Image facehair;
@@ -17,18 +15,14 @@ public class CharacterSpriteManager : MonoBehaviour {
     Image leftHand;
     Image foot;
     Image pants;
-    protected static int index = 0;
+
+    protected ListDataInfo playerData;
+    protected List<ItemDataInfo> itemList;
     protected SpriteInfo spriteInfo;
 
     Color showColor = new Color(1, 1, 1, 1);
     Color hideColor = new Color(1, 1, 1, 0);
 
-
-    private void Awake()
-    {
-
-
-    }
     // Use this for initialization
     protected virtual void Start ()
     {
@@ -70,12 +64,15 @@ public class CharacterSpriteManager : MonoBehaviour {
         foot.gameObject.name = "Foot";
         pants.gameObject.name = "Pants";
     }
+
     public void applySettings()
     {
         if(spriteInfo == null)
         {
             return;
         }
+        itemList = playerData.itemList;
+        spriteInfo = playerData.spriteList[0];
         GetSpriteFromManager(body, spriteInfo.BodyIndex, Constants.SpriteType.BODY);
         GetSpriteFromManager(hair, spriteInfo.HairIndex, Constants.SpriteType.HAIR);
         GetSpriteFromManager(facehair, spriteInfo.FaceHairIndex, Constants.SpriteType.FACIAL_HAIR);

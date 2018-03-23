@@ -374,7 +374,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.33333334, g: 0.33333334, b: 0.33333334, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -6734,11 +6734,11 @@ MonoBehaviour:
   minChange: 1
   maxChange: 3
   TrainingCompletionPrefab: {fileID: 621799022}
-  MHp_btn: {fileID: 0}
-  Str_btn: {fileID: 0}
-  Agi_btn: {fileID: 0}
-  Dex_btn: {fileID: 0}
-  Stam_btn: {fileID: 0}
+  MHp_btn: {fileID: 1512888872}
+  Str_btn: {fileID: 1824876240}
+  Agi_btn: {fileID: 1914521790}
+  Dex_btn: {fileID: 37631743}
+  Stam_btn: {fileID: 94100898}
 --- !u!224 &2075985425 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224254110530490010, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,

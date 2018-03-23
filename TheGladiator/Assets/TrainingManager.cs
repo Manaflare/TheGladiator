@@ -65,21 +65,61 @@ public class TrainingManager : MonoBehaviour
        
          ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
          int agil = playerDataInfo.statsList[0].Agility;
-
          text_agil.text = agil.ToString();
+         if(agil == byte.MaxValue)
+        {
+            Agi_btn.gameObject.SetActive(false);
+        }
+         else
+        {
+            Agi_btn.enabled = true;
+        }
 
          int stam = playerDataInfo.statsList[0].Stamina;
          text_stam.text = stam.ToString();
+         if(stam == byte.MaxValue)
+        {
+            Stam_btn.gameObject.SetActive(false);
+        }
+        else
+        {
+            Stam_btn.enabled = true;
+        }
 
          int str = playerDataInfo.statsList[0].Strength;
          text_str.text = str.ToString();
+        if(str == byte.MaxValue)
+        {
+            Str_btn.gameObject.SetActive(false);
+        }
+        else
+        {
+            Str_btn.enabled = true;
+        }
+
 
          int dex = playerDataInfo.statsList[0].Dexterity;
          text_dex.text = dex.ToString();
+         if(dex == byte.MaxValue)
+        {
+            Dex_btn.gameObject.SetActive(false);
+        }
+         else
+        {
+            Dex_btn.enabled = true;
+        }
 
 
          int MaxHp = playerDataInfo.statsList[0].MAXHP * HpMultiplier;
-         text_MaxHp.text = MaxHp.ToString();     
+         text_MaxHp.text = MaxHp.ToString();
+         if(MaxHp == byte.MaxValue)
+        {
+            MHp_btn.gameObject.SetActive(false);
+        }
+         else
+        {
+            MHp_btn.enabled = true;
+        }     
 
          TrainingCompletionPrefab.SetActive(false);
         //Stats playerStats = new Stats(NameText.text, Constants.PlayerType.PLAYER, HPPoints, StrPoints, AgiPoints, DexPoints, StaPoints);
@@ -113,15 +153,6 @@ public class TrainingManager : MonoBehaviour
         playerDataInfo.statsList[0].Strength = byte.Parse(NewStr.text);
         playerDataInfo.statsList[0].MAXHP = int.Parse(NewMaxHP.text) / HpMultiplier;
 
-        MHp_btn.enabled = true;
-        Agi_btn.enabled = true;
-        Dex_btn.enabled = true;
-        Str_btn.enabled = true;
-        Stam_btn.enabled = true;
-
-
-
-
         MasterManager.ManagerGlobalData.SavePlayerData();
     }
 
@@ -145,11 +176,17 @@ public class TrainingManager : MonoBehaviour
     public void TrainStrength()
     {
         byte ammountAdd = (byte) Random.Range(minChange, maxChange);
-        if (MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Strength >= byte.MaxValue)
+        int expectedStr = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Strength + ammountAdd;
+
+        if (expectedStr >= byte.MaxValue)
         {
-            Str_btn.enabled = false;
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Strength = byte.MaxValue;
         }
-        MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Strength += ammountAdd;
+        else
+        {
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Strength += ammountAdd;
+        }
+       
         ShowTrainingCompletion();
 
         TrainStat(text_str, NewStr);
@@ -160,11 +197,17 @@ public class TrainingManager : MonoBehaviour
     public void TrainMaxHP()
     {
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
-        if(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP >= int.MaxValue)
+        int expectedMaxHp = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP + ammountAdd;
+
+        if (expectedMaxHp >= byte.MaxValue)
         {
-            MHp_btn.enabled = false;
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP = byte.MaxValue;
         }
-        MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP += ammountAdd;
+        else
+        {
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP += ammountAdd;
+        }
+        
         ShowTrainingCompletion();
         
         TrainStat(text_MaxHp, NewMaxHP, HpMultiplier);
@@ -176,11 +219,17 @@ public class TrainingManager : MonoBehaviour
     public void TrainAgility()
     {
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
-        if(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Agility >= byte.MaxValue)
+        int expectedAgi = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Agility + ammountAdd;
+
+        if (expectedAgi >= byte.MaxValue)
         {
-            Agi_btn.enabled = false;
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Agility = byte.MaxValue;
         }
-        MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Agility += ammountAdd;
+        else
+        {
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Agility += ammountAdd;
+        }
+       
         ShowTrainingCompletion();
 
         TrainStat(text_agil, NewAgility);
@@ -191,11 +240,17 @@ public class TrainingManager : MonoBehaviour
     public void TrainDexterity()
     {
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
-        if (MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Dexterity >= byte.MaxValue)
+        int expectedDex = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Dexterity + ammountAdd;
+
+        if (expectedDex >= byte.MaxValue)
         {
-            Dex_btn.enabled = false;
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Dexterity = byte.MaxValue;
         }
-        MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Dexterity += ammountAdd;
+        else
+        {
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Dexterity += ammountAdd;
+        }
+        
         ShowTrainingCompletion();
 
         TrainStat(text_dex, NewDexterity);
@@ -207,11 +262,17 @@ public class TrainingManager : MonoBehaviour
     public void TrainStamina()
     {
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
-        if (MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MaxStamina >= byte.MaxValue)
+        int expectedStam = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MaxStamina + ammountAdd;
+
+        if (expectedStam >= byte.MaxValue)
         {
-            Stam_btn.enabled = false;
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MaxStamina = byte.MaxValue;
         }
-        MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MaxStamina += ammountAdd;
+        else
+        {
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MaxStamina += ammountAdd;
+        }
+        
         ShowTrainingCompletion();
 
         TrainStat(text_stam, NewStam);

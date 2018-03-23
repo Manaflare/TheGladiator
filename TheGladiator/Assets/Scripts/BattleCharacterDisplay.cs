@@ -10,11 +10,11 @@ public class BattleCharacterDisplay : CharacterSpriteManager {
 
         if (player1 == null)
         {
-            spriteInfo = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[0].spriteList[0];
+            playerData = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[0];
         }
         else
         {
-            spriteInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo().spriteList[0];
+            playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         }
 
         applySettings();
