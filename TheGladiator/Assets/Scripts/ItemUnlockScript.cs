@@ -9,6 +9,8 @@ public class ItemUnlockScript : MonoBehaviour
     private ListDataInfo playerDataInfo;
     private ListItemsInfo itemDataInfo;
     private ListDataInfo playerItems;
+    List<ItemDataInfo> itemData;
+
     private byte winStreak;
 
     private int currentTier;
@@ -23,19 +25,24 @@ public class ItemUnlockScript : MonoBehaviour
     public Text itemAGI;
     public Text itemDEX;
     public Text itemSTA;
-
+    
     public Image itemSprite;
 
     // Use this for initialization
 	void Start ()
     {
 	    rngCannon = Random.Range(0, 100);
+
         Button btn = test.GetComponent<Button>();
         btn.onClick.AddListener(fireTheCannon);
+
         playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
-        currentTier = playerDataInfo.playerTier;
+        currentTier = playerDataInfo.playerTier == 0 ? 1 : playerDataInfo.playerTier;
 
         itemDataInfo = MasterManager.ManagerGlobalData.GetItemDataInfo();
+        itemData = new List<ItemDataInfo>();
+
+       
     }
 	
 	// Update is called once per frame
@@ -58,7 +65,8 @@ public class ItemUnlockScript : MonoBehaviour
     {
         if (rngCannon < 50)
         {
-            itemTier = currentTier - 1;
+            itemTier = currentTier == 1 ? currentTier : currentTier - 1;
+            
         }
         else if (rngCannon > 50 && rngCannon < 85)
         {
@@ -68,8 +76,6 @@ public class ItemUnlockScript : MonoBehaviour
         {
             itemTier = currentTier + 1;
         }
-
-        List<ItemDataInfo> itemData = new List<ItemDataInfo>();
 
         for (int i = 0; i < itemDataInfo.itemData.Count; i++)
         {
@@ -81,6 +87,7 @@ public class ItemUnlockScript : MonoBehaviour
 
         int itemID = Random.Range(0, itemData.Count - 1);
 
+        itemName.text = itemData[itemID].Stats.Name.ToString();
         itemHP.text = itemData[itemID].Stats.HP.ToString();
         itemSTR.text = itemData[itemID].Stats.Strength.ToString();
         itemAGI.text = itemData[itemID].Stats.Agility.ToString();
@@ -108,6 +115,7 @@ public class ItemUnlockScript : MonoBehaviour
                 itemSprite.sprite = MasterManager.ManagerSprite.ShoesList[itemData[itemID].Sprite_index];
                 break;
         }
+
         playerItems = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         playerItems.itemList.Add(itemData[itemID]);
         
