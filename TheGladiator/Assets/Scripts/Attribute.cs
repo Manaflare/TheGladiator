@@ -157,7 +157,7 @@ public class Attribute : MonoBehaviour
 
     public void setSTATS(Stats newStats)
     {
-        STATS = newStats;
+        STATS = Stats.copy( newStats );
     }
 
     public bool IsAlive { get; private set; }

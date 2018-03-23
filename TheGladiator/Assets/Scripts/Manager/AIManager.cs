@@ -7,14 +7,16 @@ public class Move
 {
     public Constants.MoveType type;
 
-    public Animator attackerAnimator; //Attacker is who is attacking
-    public Animator attackeeAnimator; //Attackee is who is being attacked. Used for Dodge.
-
-    public Attribute attackerAttribute;
-    public Attribute attackeeAttribute;
-
+    #region Attacker
     public Stats attackerStats;
+    public Attribute attackerAttribute;
+    public Animator attackerAnimator; //Attacker is who is attacking
+    #endregion
+    #region Attackee
+    public Animator attackeeAnimator; //Attackee is who is being attacked. Used for Dodge.
+    public Attribute attackeeAttribute;
     public Stats attackeeStats;
+    #endregion
 
     public float delayTime;
 
@@ -49,6 +51,10 @@ public class AIManager : MonoBehaviour
     public GameObject battleResult;
 
     public bool debugList = false;
+
+    #region Enemy Loading
+    Queue<int> enemyIndexes;
+    #endregion
 
     #region Sub Variables from GameObjects
     Stats player1Stats;
@@ -94,14 +100,39 @@ public class AIManager : MonoBehaviour
     #region Start up
     void Start()
     {
+        Random.InitState(100);
+        enemySelection();
         directValues();
         ResetValues();
         SimulateBattle(player1Stats, player2Stats);
 
     }
+    private void enemySelection()
+    {
+        //For an entire tournament we need atleast 15
+        int maxIndex = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData.Count;
+        enemyIndexes = new Queue<int>();
+        List<int> possibleIndexes = new List<int>();
+        for (int i = 0; i < maxIndex; i++) possibleIndexes.Add(i);
+        
+
+        for (int i = 0; i < 15; i++)
+        {
+            int ran = Random.Range(0, maxIndex);
+            if (possibleIndexes.Contains(ran))
+            {
+                enemyIndexes.Enqueue(ran);
+                possibleIndexes.Remove(ran);
+            }
+        }
+    }
     // Points the Values from the Game Object to shorten Code
     private void directValues()
     {
+        //player1Stats = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0];
+        //player1Object.GetComponent<PlayerAttribute>().setSTATS(player1Stats);
+        //player2Stats = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[enemyIndexes.Dequeue()].statsList[0];
+        //player2Object.GetComponent<EnemyAttribute>().setSTATS(player2Stats);
         player1Stats = player1Object.GetComponent<Attribute>().getSTATS();
         player2Stats = player2Object.GetComponent<Attribute>().getSTATS();
 
@@ -113,7 +144,6 @@ public class AIManager : MonoBehaviour
     }
     private void ResetValues()
     {
-        Random.InitState(100);
         player1Object.SetActive(true);
         player2Object.SetActive(true);
 
@@ -147,8 +177,8 @@ public class AIManager : MonoBehaviour
                 m.attackerAnimator.Play("Attack");
                 break;
             case Constants.MoveType.DODGE:
-                m.attackerAnimator.Play("Attack");
-                m.attackeeAnimator.Play("Dodge");
+                m.attackeeAnimator.Play("Attack");
+                m.attackerAnimator.Play("Dodge");
                 break;
             case Constants.MoveType.MISS:
                 m.attackerAnimator.Play("Miss");
@@ -172,15 +202,15 @@ public class AIManager : MonoBehaviour
         {
             if (!player1Character.isAttacking && !player2Character.isAttacking)
             {
-                firstTime += 0.01f;
-                secondTime += 0.01f;
+                firstTime += 0.001f;//Time.deltaTime;
+                //secondTime += 0.01f;
             }
 
-            if (!player2Character.isAttacking && firstIndex < moves.Count && firstTime >= Move1)
+                Debug.LogError(firstTime);
+            if (firstIndex < moves.Count && firstTime >= Move1)
             {
-                player1Character.isAttacking = true;
                 playMove(moves[firstIndex]);
-                firstIndex += 2;
+                firstIndex++;
                 if (firstIndex < moves.Count)
                 {
                     totalIndex++;
@@ -188,20 +218,8 @@ public class AIManager : MonoBehaviour
                     Move1 = moves[firstIndex].delayTime;
                 }
             }
-            if (!player1Character.isAttacking && secondIndex < moves.Count && secondTime >= Move2)
-            {
-                player2Character.isAttacking = true;
-                playMove(moves[secondIndex]);
-                secondIndex += 2;
-                if (secondIndex < moves.Count)
-                {
-
-                    totalIndex++;
-                    secondTime = 0.0f;
-                    Move2 = moves[secondIndex].delayTime;
-                }
-            }
-            yield return new WaitForSeconds(0.01f); //Fixed delay of 0.01 seconds between each loop allowing for more accuracy when dealing with similar values
+            //yield return new WaitForFixedUpdate();
+            yield return new WaitForSecondsRealtime(0.001f); //Fixed delay of 0.01 seconds between each loop allowing for more accuracy when dealing with similar values
         }
     }//Needs SimulateBattle to Have run
     #endregion
@@ -286,7 +304,7 @@ public class AIManager : MonoBehaviour
                 m.delayTime = stamDelay(m.attackerStats, enemyDelayTime);
             }
             if (m.attackerStats.Stamina < 0) m.attackerStats.Stamina = 0;
-            Debug.LogWarning(m.attackerStats.PlayerType + ": " + m.attackerStats.HP);
+            //Debug.LogWarning(m.attackerStats.PlayerType + ": " + m.attackerStats.HP);
             if (moves.Count % 2 == 0)
             {
                 firstMove += m.delayTime;
@@ -312,6 +330,7 @@ public class AIManager : MonoBehaviour
                 }
             }
             if (m.attackerStats.Stamina > m.attackerStats.MaxStamina) m.attackerStats.Stamina = m.attackerStats.MaxStamina;
+            Debug.LogWarning(m.attackerAnimator.gameObject.transform.name);
             moves.Add(m);
         }
     }//Called by Simulate Battle

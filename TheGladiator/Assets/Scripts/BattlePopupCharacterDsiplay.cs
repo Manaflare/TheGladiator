@@ -12,13 +12,12 @@ public class BattlePopupCharacterDsiplay : CharacterSpriteManager
         if (s.PlayerType != Constants.PlayerType.PLAYER)
         {
             loadImages();
-            spriteInfo = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[0].spriteList[0];
+            playerData = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[0];
             applySettings();
         }
         else
         {
             base.Start();
-
         }
         prefabPart.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 100);
         
