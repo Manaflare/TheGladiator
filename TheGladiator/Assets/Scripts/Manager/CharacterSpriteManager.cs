@@ -39,9 +39,15 @@ public class CharacterSpriteManager : MonoBehaviour {
         loadImages();
         playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         itemList = playerData.itemList;
-        spriteInfo = playerData.spriteList[0];
+        spriteInfo = playerData.spriteList.Count > 0 ? playerData.spriteList[0]:null;
         applySettings();
     }
+
+    private void OnEnable()
+    {
+        Start();
+    }
+
     public void loadImages()
     {
         body      = Instantiate(prefabPart, this.transform).GetComponent<Image>();
@@ -66,6 +72,10 @@ public class CharacterSpriteManager : MonoBehaviour {
     }
     public void applySettings()
     {
+        if(spriteInfo == null)
+        {
+            return;
+        }
         GetSpriteFromManager(body, spriteInfo.BodyIndex, Constants.SpriteType.BODY);
         GetSpriteFromManager(hair, spriteInfo.HairIndex, Constants.SpriteType.HAIR);
         GetSpriteFromManager(facehair, spriteInfo.FaceHairIndex, Constants.SpriteType.FACIAL_HAIR);
