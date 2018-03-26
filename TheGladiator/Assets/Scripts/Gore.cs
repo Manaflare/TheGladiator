@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.UI;
 
 public class Gore : MonoBehaviour {
@@ -30,7 +29,7 @@ public class Gore : MonoBehaviour {
         int currentLayerLength = 3;
         
         int index = 0;
-        foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(goreTexture)))
+        foreach (Object o in Resources.LoadAll<Sprite>(goreTexture.name))
         {
             if (o.GetType().ToString() == "UnityEngine.Sprite")
             {

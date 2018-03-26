@@ -90,7 +90,8 @@ public class Stats
     {
         Name = name;
         PlayerType = playerType;
-        MAXHP = HP = maxHp;
+        MAXHP  = maxHp;
+        HP = (int)(MAXHP * Constants.HP_MULTIPLIER);
         if (hp != int.MinValue)
         {
             HP = hp;
@@ -108,7 +109,8 @@ public class Stats
     public Stats(string name, int maxHp, byte str, byte agi, byte dex, short maxStamina, short stamina = short.MinValue, int hp = int.MinValue)
     {
         Name = name;
-        MAXHP = HP = maxHp;
+        MAXHP = maxHp;
+        HP = (int)(MAXHP * Constants.HP_MULTIPLIER);
         if (hp != int.MinValue)
         {
             HP = hp;

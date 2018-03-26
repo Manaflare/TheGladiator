@@ -31,77 +31,90 @@ public class TownManager : MonoBehaviour {
     public Text goldText;
     private int selectedIndex = 0;
     private long gold;
-	// Use this for initialization
-	void Start ()
+
+    [Header("Player Display")]
+    public GameObject Character;
+    public Text playerName;
+    public Text MaxHP;
+    public Text HP;
+    public Text STR;
+    public Text AGI;
+    public Text DEX;
+    public Text STA;
+    // Use this for initialization
+    void Start ()
     {
         gold = MasterManager.ManagerGlobalData.GetEnvData().gold;
-        Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
+        //Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
+        UpdatePlayerUI();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        Objects[selectedIndex].GetComponent<GlowButton>().EndGlow();
+        //Objects[selectedIndex].GetComponent<GlowButton>().EndGlow();
 
-        if (MasterManager.ManagerInput.GetKeyDown(KeyCode.LeftArrow))
-        {
-            DecideSelectedObject(-1);
-        }
-        else if (MasterManager.ManagerInput.GetKeyDown(KeyCode.RightArrow))
-        {
-            DecideSelectedObject(1);
+        //if (MasterManager.ManagerInput.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //    DecideSelectedObject(-1);
+        //}
+        //else if (MasterManager.ManagerInput.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    DecideSelectedObject(1);
 
-        }
-        else if (MasterManager.ManagerInput.GetKeyDown(KeyCode.UpArrow))
-        {
-            DecideSelectedObject(-3);
-
-
-        }
-        else if (MasterManager.ManagerInput.GetKeyDown(KeyCode.DownArrow))
-        {
-            DecideSelectedObject(3);
-        }
+        //}
+        //else if (MasterManager.ManagerInput.GetKeyDown(KeyCode.UpArrow))
+        //{
+        //    DecideSelectedObject(-3);
 
 
-        Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
+        //}
+        //else if (MasterManager.ManagerInput.GetKeyDown(KeyCode.DownArrow))
+        //{
+        //    DecideSelectedObject(3);
+        //}
 
-        if (MasterManager.ManagerInput.GetKeyDown(KeyCode.Return))
-        {
-            if (selectedIndex == Panels.Length)
-            {
-                Debug.Log(Constants.DayTimeType.MORNING.ToString());
-            }
-            else
-            {
-                BuildingPanel buildingPanel = Panels[selectedIndex].GetComponent<BuildingPanel>();
-                switch (buildingPanel.BuildingType)
-                {
-                    case Constants.BuildingPanel_Type.NOT_IMPLEMENTED:
-                        MasterManager.ManagerPopup.ShowMessageBox("System", "Not implemented yet", Constants.PopupType.POPUP_NO);
-                        break;
-                    case Constants.BuildingPanel_Type.WINDOW:
-                        if (buildingPanel.CheckStatus())
-                        {
-                            Panels[selectedIndex].SetActive(true);
-                        }
-                        break;
-                    case Constants.BuildingPanel_Type.SCENE:
-                        if(buildingPanel.CheckStatus())
-                        {
-                            string panelName = Panels[selectedIndex].name;
-                            StringBuilder s = new StringBuilder(panelName);
-                            s.Replace("Panel", "");
-                            MasterManager.ManagerLoadScene.LoadScene(panelName);
-                        }
-                        break;
-                    default:
-                        break;
-                }
+
+        //Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
+
+        //if (MasterManager.ManagerInput.GetKeyDown(KeyCode.Return))
+        //{
+        //    if (selectedIndex == Panels.Length)
+        //    {
+        //        Debug.Log(Constants.DayTimeType.MORNING.ToString());
+        //    }
+        //    else
+        //    {
+        //        BuildingPanel buildingPanel = Panels[selectedIndex].GetComponent<BuildingPanel>();
+        //        switch (buildingPanel.BuildingType)
+        //        {
+        //            case Constants.BuildingPanel_Type.NOT_IMPLEMENTED:
+        //                MasterManager.ManagerPopup.ShowMessageBox("System", "Not implemented yet", Constants.PopupType.POPUP_NO);
+        //                break;
+        //            case Constants.BuildingPanel_Type.WINDOW:
+        //                if (buildingPanel.CheckStatus())
+        //                {
+        //                    Panels[selectedIndex].SetActive(true);
+        //                }
+        //                break;
+        //            case Constants.BuildingPanel_Type.SCENE:
+        //                if(buildingPanel.CheckStatus())
+        //                {
+        //                    string panelName = Panels[selectedIndex].name;
+        //                    StringBuilder s = new StringBuilder(panelName);
+        //                    s.Replace("Panel", "");
+        //                    MasterManager.ManagerLoadScene.LoadScene(panelName);
+        //                }
+        //                break;
+        //            default:
+        //                break;
+        //        }
                 
-            }
+        //    }
 
-        }
+        //}
+
+       
 
         if(MasterManager.ManagerInput.GetKeyDown(KeyCode.E))
         {
@@ -114,10 +127,41 @@ public class TownManager : MonoBehaviour {
         UpdateUI();
     }
 
-    private void UpdateUI()
+    public void SelectPanel(int index)
+    {
+        selectedIndex = index;
+        BuildingPanel buildingPanel = Panels[selectedIndex].GetComponent<BuildingPanel>();
+        switch (buildingPanel.BuildingType)
+        {
+            case Constants.BuildingPanel_Type.NOT_IMPLEMENTED:
+                MasterManager.ManagerPopup.ShowMessageBox("System", "Not implemented yet", Constants.PopupType.POPUP_NO);
+                break;
+            case Constants.BuildingPanel_Type.WINDOW:
+                if (buildingPanel.CheckStatus())
+                {
+                    Panels[selectedIndex].SetActive(true);
+                }
+                break;
+            case Constants.BuildingPanel_Type.SCENE:
+                if (buildingPanel.CheckStatus())
+                {
+                    string panelName = Panels[selectedIndex].name;
+                    StringBuilder s = new StringBuilder(panelName);
+                    s.Replace("Panel", "");
+                    MasterManager.ManagerLoadScene.LoadScene(panelName);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+        private void UpdateUI()
     {
         //"1,234,567"
         goldText.text = gold.ToString("N0");
+
+       
     }
 
     public void CloseCurrentWindow(bool bSpendTime = true, Constants.CallbackFunction callFunc = null, float spendingTurn = 1.0f)
@@ -127,6 +171,24 @@ public class TownManager : MonoBehaviour {
 
         if (bSpendTime)
             DayNightCycleManager.Instance.SpendTime(spendingTurn, callFunc);
+
+        UpdatePlayerUI();
+
+
+    }
+
+    public void UpdatePlayerUI()
+    {
+        ListDataInfo playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+        playerName.text = playerData.statsList[0].Name;
+        MaxHP.text = (playerData.statsList[0].MAXHP * Constants.HP_MULTIPLIER).ToString();
+        HP.text = playerData.statsList[0].HP.ToString();
+        STR.text = playerData.statsList[0].Strength.ToString();
+        AGI.text = playerData.statsList[0].Agility.ToString();
+        DEX.text = playerData.statsList[0].Dexterity.ToString();
+        STA.text = playerData.statsList[0].MaxStamina.ToString();
+
+        Character.GetComponent<CharacterSpriteManager>().UpdateSprites();
     }
 
     //exmaple code

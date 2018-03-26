@@ -25,7 +25,17 @@ public static class Utility
         string fileName;
         if(JsonFileList.TryGetValue(fileIndex, out fileName) == true)
         {
-            string jsonString = System.IO.File.ReadAllText(Application.dataPath + fileName);
+            string path = (Application.platform == RuntimePlatform.Android ||
+               Application.platform == RuntimePlatform.IPhonePlayer ?
+               Application.persistentDataPath : Application.dataPath) + fileName;
+
+            if (!System.IO.File.Exists(path))
+            {
+                string tempJsonString = JsonUtility.ToJson("{ }");
+                WriteDataToJSON(fileIndex, ref tempJsonString);
+            }
+
+            string jsonString = System.IO.File.ReadAllText(path);
             return JsonUtility.FromJson<T>(jsonString);
         }
         else
@@ -42,7 +52,26 @@ public static class Utility
         if (JsonFileList.TryGetValue(fileIndex, out fileName) == true)
         {
             string jsonString = JsonUtility.ToJson(jsonData);
-            System.IO.File.WriteAllText(Application.dataPath + fileName, jsonString);
+            string directory = (Application.platform == RuntimePlatform.Android ||
+                Application.platform == RuntimePlatform.IPhonePlayer ?
+                Application.persistentDataPath : Application.dataPath);
+            string path = directory + fileName;
+
+            if (!System.IO.Directory.Exists(directory))
+            {
+                System.IO.Directory.CreateDirectory(directory);
+            }
+            string jsonFolder = '/' + fileName.Split('/')[1];
+            if (!System.IO.Directory.Exists(directory + jsonFolder))
+            {
+                System.IO.Directory.CreateDirectory(directory + jsonFolder);
+            }
+
+            if (!System.IO.File.Exists(path))
+            {
+                System.IO.File.Create(path).Dispose();
+            }
+            System.IO.File.WriteAllText(path, jsonString);
         }
         else
         {

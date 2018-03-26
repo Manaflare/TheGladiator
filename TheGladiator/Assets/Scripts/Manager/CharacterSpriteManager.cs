@@ -24,13 +24,18 @@ public class CharacterSpriteManager : MonoBehaviour {
     Color hideColor = new Color(1, 1, 1, 0);
 
     // Use this for initialization
-    protected virtual void Start ()
+    protected virtual void Start()
     {
+        if (MasterManager.ManagerGlobalData == null)
+        {
+            return;
+        }
         foreach (Transform child in this.gameObject.transform)
         {
             GameObject.Destroy(child.gameObject);
         }
         loadImages();
+
         playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         itemList = playerData.itemList;
         spriteInfo = playerData.spriteList.Count > 0 ? playerData.spriteList[0]:null;

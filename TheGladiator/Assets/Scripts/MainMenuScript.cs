@@ -44,7 +44,7 @@ public class MainMenuScript : MonoBehaviour
             STR.text = playerData.statsList[0].Strength.ToString();
             AGI.text = playerData.statsList[0].Agility.ToString();
             DEX.text = playerData.statsList[0].Dexterity.ToString();
-            STA.text = playerData.statsList[0].Stamina.ToString();
+            STA.text = playerData.statsList[0].MaxStamina.ToString();
         }
 
 

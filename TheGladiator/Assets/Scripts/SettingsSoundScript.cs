@@ -17,9 +17,9 @@ public class SettingsSoundScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        MasterAudioLevel = PlayerPrefs.GetFloat("MasterVolume");
-        BGMAudioLevel = PlayerPrefs.GetFloat("BGMVolume");
-        SFXAudioLevel = PlayerPrefs.GetFloat("SFXVolume");
+        MasterAudioLevel = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume"):100;
+        BGMAudioLevel = PlayerPrefs.HasKey("BGMVolume") ? PlayerPrefs.GetFloat("BGMVolume") : 100;
+        SFXAudioLevel = PlayerPrefs.HasKey("SFXVolume") ? PlayerPrefs.GetFloat("SFXVolume") : 100;
 
         masterSlider.value = MasterAudioLevel;
         bgmSlider.value = BGMAudioLevel;
@@ -45,7 +45,7 @@ public class SettingsSoundScript : MonoBehaviour
         SFXAudioLevel = sfxSlider.value;
         Debug.Log("SFX changed to " + SFXAudioLevel);
     }
-    public void saveChanges()
+    public void saveChanges(bool isMainMenu = false)
     {
         PlayerPrefs.SetFloat("MasterVolume", MasterAudioLevel);
         PlayerPrefs.SetFloat("BGMVolume", BGMAudioLevel);
@@ -53,11 +53,19 @@ public class SettingsSoundScript : MonoBehaviour
         
         MasterManager.ManagerSound.ApplyToSettings();
 
-        closePopup();
+        closePopup(isMainMenu);
     }
 
-    public void closePopup()
+    public void closePopup(bool isMainMenu = false)
     {
-        this.transform.parent.gameObject.SetActive(false);
+        if (isMainMenu)
+        {
+            this.transform.parent.gameObject.SetActive(false);
+
+        }
+        else
+        {
+            TownManager.Instance.CloseCurrentWindow(false);
+        }
     }
 }

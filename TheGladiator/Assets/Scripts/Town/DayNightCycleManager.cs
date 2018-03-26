@@ -9,7 +9,7 @@ public class EnvironmentData
 {
     public long gold;
     public Constants.DayType days;
-    public byte weeks;
+    public byte weeks = 1;
     public float times;
 }
 
@@ -147,7 +147,7 @@ public class DayNightCycleManager : MonoBehaviour {
     {
         uiText_Week.text = envData.weeks.ToString();
         string[] tempTime = currentTime.ToString().Split(":"[0]);
-        uiText_Day.text = envData.days.ToString() + ": " + tempTime[0] + ":" + tempTime[1];
+        uiText_Day.text = envData.days.ToString()[0] + envData.days.ToString().Remove(0,1).ToLower() + "\n " + tempTime[0] + ":" + tempTime[1];
         uiText_RemainDays.text = GetRemainDayForBattle().ToString();
     }
 
