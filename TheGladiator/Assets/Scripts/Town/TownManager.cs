@@ -41,6 +41,7 @@ public class TownManager : MonoBehaviour {
     public Text AGI;
     public Text DEX;
     public Text STA;
+    public Text MaxSTA;
     // Use this for initialization
     void Start ()
     {
@@ -186,7 +187,8 @@ public class TownManager : MonoBehaviour {
         STR.text = playerData.statsList[0].Strength.ToString();
         AGI.text = playerData.statsList[0].Agility.ToString();
         DEX.text = playerData.statsList[0].Dexterity.ToString();
-        STA.text = playerData.statsList[0].MaxStamina.ToString();
+        STA.text = playerData.statsList[0].Stamina.ToString();
+        MaxSTA.text = playerData.statsList[0].MaxStamina.ToString();
 
         Character.GetComponent<CharacterSpriteManager>().UpdateSprites();
     }

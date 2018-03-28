@@ -75,7 +75,7 @@ public class TrainingManager : MonoBehaviour
             Agi_btn.enabled = true;
         }
 
-         int stam = playerDataInfo.statsList[0].Stamina;
+         int stam = playerDataInfo.statsList[0].MaxStamina;
          text_stam.text = stam.ToString();
          if(stam == byte.MaxValue)
         {
@@ -149,7 +149,7 @@ public class TrainingManager : MonoBehaviour
         ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         playerDataInfo.statsList[0].Agility = byte.Parse(NewAgility.text);
         playerDataInfo.statsList[0].Dexterity = byte.Parse(NewDexterity.text);
-        playerDataInfo.statsList[0].Stamina = short.Parse(NewStam.text);
+        playerDataInfo.statsList[0].MaxStamina = short.Parse(NewStam.text);
         playerDataInfo.statsList[0].Strength = byte.Parse(NewStr.text);
         playerDataInfo.statsList[0].MAXHP = int.Parse(NewMaxHP.text) / HpMultiplier;
 
@@ -187,7 +187,7 @@ public class TrainingManager : MonoBehaviour
             MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Strength += ammountAdd;
         }
        
-        ShowTrainingCompletion();
+        CallBackShowTraining();
 
         TrainStat(text_str, NewStr);
         TextColor(NewStr);
@@ -208,7 +208,7 @@ public class TrainingManager : MonoBehaviour
             MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP += ammountAdd;
         }
         
-        ShowTrainingCompletion();
+        CallBackShowTraining();
         
         TrainStat(text_MaxHp, NewMaxHP, HpMultiplier);
         TextColor(NewMaxHP);
@@ -229,8 +229,8 @@ public class TrainingManager : MonoBehaviour
         {
             MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Agility += ammountAdd;
         }
-       
-        ShowTrainingCompletion();
+
+        CallBackShowTraining();
 
         TrainStat(text_agil, NewAgility);
         TextColor(NewAgility);
@@ -250,8 +250,8 @@ public class TrainingManager : MonoBehaviour
         {
             MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Dexterity += ammountAdd;
         }
-        
-        ShowTrainingCompletion();
+
+        CallBackShowTraining();
 
         TrainStat(text_dex, NewDexterity);
         TextColor(NewDexterity);
