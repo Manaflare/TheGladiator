@@ -149,7 +149,7 @@ public class TownManager : MonoBehaviour {
                     string panelName = Panels[selectedIndex].name;
                     StringBuilder s = new StringBuilder(panelName);
                     s.Replace("Panel", "");
-                    MasterManager.ManagerLoadScene.LoadScene(panelName);
+                    MasterManager.ManagerLoadScene.LoadScene(s.ToString());
                 }
                 break;
             default:

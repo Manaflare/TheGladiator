@@ -65,6 +65,8 @@ public class DayNightCycleManager : MonoBehaviour {
     private Constants.DayType expectingdDay;
 
     private Constants.CallbackFunction expectHandler;
+
+    public GameObject Blocker;
     void Start ()
     {
         //get time data from json
@@ -88,14 +90,7 @@ public class DayNightCycleManager : MonoBehaviour {
         {
             if (envData.times >= expectingTime && envData.days == expectingdDay && envData.weeks == expectingWeek)
             {
-                if(expectHandler != null)
-                {
-                    expectHandler();
-                    expectHandler = null;
-                }
-
-                speedUp = false;
-                speed = 10;
+                EndExpectedTime();
             }
         }
         
@@ -115,12 +110,12 @@ public class DayNightCycleManager : MonoBehaviour {
         if (envData.times < Constants.TIME_DAWN)       // dawn
         {
             colourSource = fogNight;
-            ColourDest = fogNight;
-            intensity = 1;
+            ColourDest = fogDay;
+            intensity = envData.times / Constants.PER_TIME;
         }
         else if (envData.times >= Constants.TIME_DAWN && envData.times < Constants.TIME_DAYTIME) //dawn to daytime
         {
-            colourSource = fogNight;
+            colourSource = fogDay;
             ColourDest = fogDay;
             intensity = (envData.times - Constants.TIME_DAWN) / Constants.PER_TIME;
         }
@@ -203,7 +198,23 @@ public class DayNightCycleManager : MonoBehaviour {
                 expectingWeek = envData.weeks + 1;
             }
         }
-            
+
+        Blocker.SetActive(true);
+
+
+    }
+
+    private void EndExpectedTime()
+    {
+        Blocker.SetActive(false);
+        if (expectHandler != null)
+        {
+            expectHandler();
+            expectHandler = null;
+        }
+
+        speedUp = false;
+        speed = 10;
     }
 
 }
