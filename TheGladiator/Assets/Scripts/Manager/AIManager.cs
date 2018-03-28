@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using C = Constants;
-
+#region Move Class
 public class Move
 {
     public Constants.MoveType type;
@@ -38,7 +38,7 @@ public class Move
         return new Move(src.attackerStats, src.attackeeStats, src.attackerAttribute, src.attackerAnimator, src.attackeeAnimator, src.delayTime, src.attackeeAttribute);
     }
 }
-
+#endregion
 public class AIManager : MonoBehaviour
 {
 
@@ -194,20 +194,16 @@ public class AIManager : MonoBehaviour
                 break;
         }
     }//Called by Play Animation
+
     IEnumerator playAnimation()
     {
         float Move1 = moves[firstIndex].delayTime;
-        float Move2 = moves[secondIndex].delayTime;
+        float oldTime = 0.0f;
+        //float Move2 = moves[secondIndex].delayTime;
         while (true)
         {
-            if (!player1Character.isAttacking && !player2Character.isAttacking)
-            {
-                firstTime += 0.001f;//Time.deltaTime;
-                //secondTime += 0.01f;
-            }
-
-                Debug.LogError(firstTime);
-            if (firstIndex < moves.Count && firstTime >= Move1)
+            Debug.LogAssertion("Test");
+            if (firstIndex < moves.Count)
             {
                 playMove(moves[firstIndex]);
                 firstIndex++;
@@ -215,11 +211,25 @@ public class AIManager : MonoBehaviour
                 {
                     totalIndex++;
                     firstTime = 0.0f;
+                    oldTime = Move1;
                     Move1 = moves[firstIndex].delayTime;
                 }
             }
-            //yield return new WaitForFixedUpdate();
-            yield return new WaitForSecondsRealtime(0.001f); //Fixed delay of 0.01 seconds between each loop allowing for more accuracy when dealing with similar values
+            float waitTime = 0.0f;
+            if (firstIndex == 0)
+            {
+                waitTime = Move1;
+            }
+            else
+            {
+                waitTime = Move1 - oldTime;
+            }
+            if (moves[firstIndex].type == C.MoveType.ATTACK)
+            {
+                waitTime += 0.83f;
+            }
+            yield return new WaitForSecondsRealtime(waitTime + 0.83f); //Fixed delay of 0.01 seconds between each loop allowing for more accuracy when dealing with similar values
+       
         }
     }//Needs SimulateBattle to Have run
     #endregion
@@ -359,12 +369,13 @@ public class AIManager : MonoBehaviour
         }
     }//
     #endregion
-
+    bool once = true;
     void Update()
     {
         //Temporary Until we have a go to battle system.
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && once)
         {
+            once = false;
             StartCoroutine("playAnimation");
             ResetValues();
         }
