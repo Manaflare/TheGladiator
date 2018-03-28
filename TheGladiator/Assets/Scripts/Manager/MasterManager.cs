@@ -23,6 +23,7 @@ public class MasterManager : MonoBehaviour {
 
     private void Awake()
     {
+        QualitySettings.vSyncCount = 0;
         ManagerLoadScene = GetComponent<LoadSceneManager>();
         ManagerGlobalData = GetComponent<GlobalDataManager>();
         ManagerSound = GetComponent<SoundManager>();
