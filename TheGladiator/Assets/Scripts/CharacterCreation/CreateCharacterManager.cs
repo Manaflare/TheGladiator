@@ -60,7 +60,7 @@ public class CreateCharacterManager : MonoBehaviour {
         Stats playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
         SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
         MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo,true);
-        SceneManager.LoadScene("Town", LoadSceneMode.Single);
+        MasterManager.ManagerLoadScene.LoadScene("Town");
     }
 
     public void Reset(bool clearName = true)
@@ -97,7 +97,7 @@ public class CreateCharacterManager : MonoBehaviour {
     
     public void Back()
     {
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        MasterManager.ManagerLoadScene.LoadScene("MainMenu", false);
     }
 
     public void Randomize()
