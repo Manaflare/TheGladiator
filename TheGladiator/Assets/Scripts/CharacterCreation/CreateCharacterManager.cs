@@ -77,7 +77,7 @@ public class CreateCharacterManager : MonoBehaviour {
         MasterManager.ManagerSound.PlaySingleSound("Menu Confirm");
 
         MasterManager.ManagerGlobalData.NewGame();
-
+            
         Stats playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
         SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
         MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo,true);
@@ -216,7 +216,7 @@ public class CreateCharacterManager : MonoBehaviour {
             faceHairIndex--;
             if (faceHairIndex < 0)
             {
-                faceHairIndex = SpriteManager.Instance.FacialHairList.Count;
+                faceHairIndex = SpriteManager.Instance.FacialHairList.Count - 1;
             }
             // call SFX
             MasterManager.ManagerSound.PlaySingleSound("Menu Select");
@@ -228,7 +228,7 @@ public class CreateCharacterManager : MonoBehaviour {
         else
         {
             faceHairIndex++;
-            if (faceHairIndex > SpriteManager.Instance.FacialHairList.Count)
+            if (faceHairIndex > SpriteManager.Instance.FacialHairList.Count - 1)
             {
                 faceHairIndex = 0;
             }
