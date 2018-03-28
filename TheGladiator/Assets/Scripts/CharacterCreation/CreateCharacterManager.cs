@@ -52,8 +52,17 @@ public class CreateCharacterManager : MonoBehaviour {
     {
         if(avaliablePoints > 0 || NameText.text == "")
         {
-            //@TODO Show Error message
-            Debug.LogError("Missing Information");
+            string errorMessage = "";
+            if(NameText.text == "")
+            {
+                errorMessage = "Please name your character";
+            }
+            else
+            {
+                errorMessage = "Please use all your avaliable points";
+            }
+
+            MM.ManagerPopup.ShowMessageBox("Hey!", errorMessage, Constants.PopupType.POPUP_NO);
             return;
         }
 
