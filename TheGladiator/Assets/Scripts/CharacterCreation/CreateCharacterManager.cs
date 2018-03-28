@@ -62,9 +62,10 @@ public class CreateCharacterManager : MonoBehaviour {
                 errorMessage = "Please use all your avaliable points";
             }
 
-            MM.ManagerPopup.ShowMessageBox("Hey!", errorMessage, Constants.PopupType.POPUP_NO);
+            MM.ManagerPopup.ShowMessageBox("Hey, Listen!", errorMessage, Constants.PopupType.POPUP_NO);
             return;
         }
+        MasterManager.ManagerGlobalData.NewGame();
 
         Stats playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
         SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
