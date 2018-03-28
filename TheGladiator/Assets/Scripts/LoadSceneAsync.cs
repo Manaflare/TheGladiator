@@ -18,6 +18,18 @@ public class LoadSceneAsync : MonoBehaviour {
     // Use this for initialization
     public CanvasScaler cScaler;
     public AudioClip loading_sound;
+
+
+    public Image bodyImage;
+    public Image hairImage;
+    public Image faceialHairImage;
+    public Image armorImage;
+    public Image helmetImage;
+    public Image rHandImage;
+    public Image lHandImage;
+    public Image footImage;
+    public Image pantsImage;
+
     public static void LoadScene(string nextSceneName)
     {
         if (nextSceneName == null)
@@ -47,6 +59,22 @@ public class LoadSceneAsync : MonoBehaviour {
         loading_text.text = "0%";
 
         Background_Image.sprite = images[Random.Range(0, images.Length)];
+
+        if (MasterManager.ManagerSprite)
+        {
+            bodyImage.sprite = MasterManager.ManagerSprite.BodyList[Random.Range(0, MasterManager.ManagerSprite.BodyList.Count)];
+             hairImage.sprite = MasterManager.ManagerSprite.HairList[Random.Range(1, MasterManager.ManagerSprite.HairList.Count)] ;
+            faceialHairImage.sprite = MasterManager.ManagerSprite.FacialHairList[Random.Range(1, MasterManager.ManagerSprite.FacialHairList.Count)];
+            armorImage.sprite = MasterManager.ManagerSprite.ArmorList[Random.Range(0, MasterManager.ManagerSprite.ArmorList.Count)] ;
+            helmetImage.sprite = MasterManager.ManagerSprite.HelmetList[Random.Range(0, MasterManager.ManagerSprite.HelmetList.Count)] ;
+            rHandImage.sprite = MasterManager.ManagerSprite.RightHandList[Random.Range(0, MasterManager.ManagerSprite.RightHandList.Count)];
+            lHandImage.sprite = MasterManager.ManagerSprite.LeftHandList[Random.Range(0, MasterManager.ManagerSprite.LeftHandList.Count)];
+            footImage.sprite = MasterManager.ManagerSprite.ShoesList[Random.Range(0, MasterManager.ManagerSprite.ShoesList.Count)]; 
+            pantsImage.sprite = MasterManager.ManagerSprite.PantsList[Random.Range(0, MasterManager.ManagerSprite.BodyList.Count)]; 
+        }
+
+        
+
         StartCoroutine(IE_NextLoadScene());
     }
 
