@@ -17,8 +17,6 @@ public class ItemUnlockScript : MonoBehaviour
     private int itemTier;
     private int rngCannon;
 
-    public Button test;
-
     public Text itemName;
     public Text itemHP;
     public Text itemSTR;
@@ -32,9 +30,6 @@ public class ItemUnlockScript : MonoBehaviour
 	void Start ()
     {
 	    rngCannon = Random.Range(0, 100);
-
-        Button btn = test.GetComponent<Button>();
-        btn.onClick.AddListener(fireTheCannon);
 
         playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         currentTier = playerDataInfo.playerTier == 0 ? 1 : playerDataInfo.playerTier;
