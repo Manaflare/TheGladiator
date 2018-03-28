@@ -39,11 +39,18 @@ public class CreateCharacterManager : MonoBehaviour {
     protected byte DexPoints;
     protected short StaPoints;
 
+    // declare variable for BGM
+    public AudioClip backgroundMusic;
+
     [Header("Name")]
     public InputField NameText;
     protected ListDataInfo playerStatusList;
 
-    void Start () {
+    void Start ()
+    {
+        // call BGM
+        MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
+
         playerStatusList = new ListDataInfo();
         Reset();
 
@@ -56,6 +63,8 @@ public class CreateCharacterManager : MonoBehaviour {
             Debug.LogError("Missing Information");
             return;
         }
+        // call SFX
+        MasterManager.ManagerSound.PlaySingleSound("Menu Confirm");
 
         Stats playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
         SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
@@ -128,6 +137,8 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 bodyIndex = SpriteManager.Instance.BodyList.Count - 1;
             }
+            // call SFX
+            MasterManager.ManagerSound.PlaySingleSound("Menu Select");
         }
         else if (direction == "NONE")
         {
@@ -140,6 +151,8 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 bodyIndex = 0;
             }
+            // call SFX
+            MasterManager.ManagerSound.PlaySingleSound("Menu Select");
         }
         bodyText.text = bodyIndex.ToString();
         bodyImage.sprite = SpriteManager.Instance.BodyList[bodyIndex];
@@ -154,6 +167,8 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 hairIndex = SpriteManager.Instance.HairList.Count - 1;
             }
+            // call SFX
+            MasterManager.ManagerSound.PlaySingleSound("Menu Select");
         }
         else if (direction == "NONE")
         {
@@ -165,6 +180,8 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 hairIndex = 0;
             }
+            // call SFX
+            MasterManager.ManagerSound.PlaySingleSound("Menu Select");
         }
 
         if (hairIndex == 0)
@@ -189,6 +206,8 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 faceHairIndex = SpriteManager.Instance.FacialHairList.Count;
             }
+            // call SFX
+            MasterManager.ManagerSound.PlaySingleSound("Menu Select");
         }
         else if (direction == "NONE")
         {
@@ -201,6 +220,8 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 faceHairIndex = 0;
             }
+            // call SFX
+            MasterManager.ManagerSound.PlaySingleSound("Menu Select");
         }
        
         faceHairText.text = faceHairIndex.ToString();
@@ -232,22 +253,32 @@ public class CreateCharacterManager : MonoBehaviour {
         if (attribute == (int)Constants.AttributeTypes.HP)
         {
             HPPoints++;
+            // call SFX
+            MasterManager.ManagerSound.PlaySingleSound("Menu Select");
         }
         else if (attribute == (int)Constants.AttributeTypes.STR)
         {
             StrPoints++;
+            // call SFX
+            MasterManager.ManagerSound.PlaySingleSound("Menu Select");
         }
         else if (attribute == (int)Constants.AttributeTypes.AGI)
         {
             AgiPoints++;
+            // call SFX
+            MasterManager.ManagerSound.PlaySingleSound("Menu Select");
         }
         else if (attribute == (int)Constants.AttributeTypes.DEX)
         {
             DexPoints++;
+            // call SFX
+            MasterManager.ManagerSound.PlaySingleSound("Menu Select");
         }
         else if (attribute == (int)Constants.AttributeTypes.STA)
         {
             StaPoints++;
+            // call SFX
+            MasterManager.ManagerSound.PlaySingleSound("Menu Select");
         }
         UpdateStatusText();
     }
@@ -259,6 +290,8 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 HPPoints--;
                 avaliablePoints++;
+                // call SFX
+                MasterManager.ManagerSound.PlaySingleSound("Menu Select");
             }
         }
         else if (attribute == (int)Constants.AttributeTypes.STR)
@@ -267,6 +300,8 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 StrPoints--;
                 avaliablePoints++;
+                // call SFX
+                MasterManager.ManagerSound.PlaySingleSound("Menu Select");
             }
         }
         else if (attribute == (int)Constants.AttributeTypes.AGI)
@@ -275,6 +310,8 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 AgiPoints--;
                 avaliablePoints++;
+                // call SFX
+                MasterManager.ManagerSound.PlaySingleSound("Menu Select");
             }
         }
         else if (attribute == (int)Constants.AttributeTypes.DEX)
@@ -283,6 +320,8 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 DexPoints--;
                 avaliablePoints++;
+                // call SFX
+                MasterManager.ManagerSound.PlaySingleSound("Menu Select");
             }
         }
         else if (attribute == (int)Constants.AttributeTypes.STA)
@@ -291,6 +330,8 @@ public class CreateCharacterManager : MonoBehaviour {
             {
                 StaPoints--;
                 avaliablePoints++;
+                // call SFX
+                MasterManager.ManagerSound.PlaySingleSound("Menu Select");
             }
         }
         UpdateStatusText();

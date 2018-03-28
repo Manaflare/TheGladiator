@@ -21,9 +21,17 @@ public class MainMenuScript : MonoBehaviour
 
     public GameObject settingsPrefab;
     private ListDataInfo playerData;
+
+    // declare variable for BGM
+    public AudioClip backgroundMusic;
+
     // Use this for initialization
     void Start ()
     {
+        // call BGM and SFX
+        MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
+        MasterManager.ManagerSound.PlaySingleSound("Attack Sword");
+
         Button ngb = newGameButton.GetComponent<Button>();
         ngb.onClick.AddListener(toCharacterCreation);
 

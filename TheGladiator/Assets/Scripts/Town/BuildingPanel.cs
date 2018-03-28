@@ -7,10 +7,14 @@ public class BuildingPanel : MonoBehaviour {
 
     public Constants.BuildingPanel_Type BuildingType;
 
+
+
     [SerializeField]
     private Constants.BuildingPanel_Status BuildingStatus = Constants.BuildingPanel_Status.AVAILABLE;
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
+
     }
 
     // Update is called once per frame

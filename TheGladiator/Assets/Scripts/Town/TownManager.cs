@@ -41,12 +41,19 @@ public class TownManager : MonoBehaviour {
     public Text AGI;
     public Text DEX;
     public Text STA;
+
+    // declare variable for BGM
+    public AudioClip backgroundMusic;
+
     // Use this for initialization
     void Start ()
     {
+        // call BGM
+        MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
+
         gold = MasterManager.ManagerGlobalData.GetEnvData().gold;
         //Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
-        UpdatePlayerUI();
+        UpdatePlayerUI();        
     }
 	
 	// Update is called once per frame
@@ -164,6 +171,11 @@ public class TownManager : MonoBehaviour {
        
     }
 
+    public void GoBackToMusic()
+    {
+        MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
+    }
+
     public void CloseCurrentWindow(bool bSpendTime = true, Constants.CallbackFunction callFunc = null, float spendingTurn = 1.0f)
     {
         MasterManager.ManagerGlobalData.SavePlayerData();
@@ -174,7 +186,7 @@ public class TownManager : MonoBehaviour {
 
         UpdatePlayerUI();
 
-
+        
     }
 
     public void UpdatePlayerUI()

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2960,6 +2960,7 @@ MonoBehaviour:
   AGI: {fileID: 1951380546}
   DEX: {fileID: 1795858315}
   STA: {fileID: 1595022793}
+  backgroundMusic: {fileID: 8300000, guid: 52c0a80a5f8d24f48b62d21d1e8c3b51, type: 3}
 --- !u!4 &630718356
 Transform:
   m_ObjectHideFlags: 0
@@ -3969,6 +3970,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114868289446334244, guid: 677d08acb69d96848ab37206797da7d3,
+        type: 2}
+      propertyPath: backgroundMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: f96e47c26cfd18849a21ef46f99b263d, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 677d08acb69d96848ab37206797da7d3, type: 2}
   m_IsPrefabParent: 0
@@ -10345,6 +10351,7 @@ MonoBehaviour:
   Agi_btn: {fileID: 1914521790}
   Dex_btn: {fileID: 37631743}
   Stam_btn: {fileID: 94100898}
+  backgroundMusic: {fileID: 8300000, guid: 3485c229772a96844af7efa0a1d979c3, type: 3}
 --- !u!224 &2075985425 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224254110530490010, guid: 1fbb88b8f7d5d5b48b319ac4f0b3da5d,
