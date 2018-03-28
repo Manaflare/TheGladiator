@@ -43,14 +43,18 @@ public class AIManager : MonoBehaviour
 {
 
     #region Variables
-    public List<Move> moves;
+    public List<Move> DisplayMoves;
+    bool once = true;
+    #region Player Settings
     [Header("Player Settings")]
     public GameObject player1Object;
     public GameObject player2Object;
+    #endregion
+
+    #region Battle Result
     [Header("Battle Result")]
     public GameObject battleResult;
-
-    public bool debugList = false;
+    #endregion
 
     #region Enemy Loading
     Queue<int> enemyIndexes;
@@ -76,13 +80,10 @@ public class AIManager : MonoBehaviour
 
     #region Timers
     private float firstTime; // The player with the Higher Agility uses this timer
-    private float secondTime; // The lower uses this time
-    private float repeatTime; // If one action is being repeated than this is being played
     #endregion
 
     #region Playthrough Indexes
     private int firstIndex; //for moving through the list
-    private int secondIndex;
     private int totalIndex;
     #endregion
 
@@ -97,6 +98,7 @@ public class AIManager : MonoBehaviour
 
     #endregion
 
+    #region Functions
     #region Start up
     void Start()
     {
@@ -104,7 +106,7 @@ public class AIManager : MonoBehaviour
         enemySelection();
         directValues();
         ResetValues();
-        SimulateBattle(player1Stats, player2Stats);
+        DisplayMoves = SimulateBattle(player1Stats, player2Stats);
 
     }
     private void enemySelection()
@@ -148,15 +150,12 @@ public class AIManager : MonoBehaviour
         player2Object.SetActive(true);
 
         firstTime = 0.0f;
-        secondTime = 0.0f;
-        repeatTime = 0.0f;
 
         firstIndex = 0;
-        secondIndex = 1;
 
         totalIndex = 0;
 
-        if (moves == null) moves = new List<Move>();
+        if (DisplayMoves == null) DisplayMoves = new List<Move>();
 
         Calculations.agilityTest(player1Stats, player2Stats);
 
@@ -177,19 +176,16 @@ public class AIManager : MonoBehaviour
                 m.attackerAnimator.Play("Attack");
                 break;
             case Constants.MoveType.DODGE:
-                m.attackeeAnimator.Play("Attack");
-                m.attackerAnimator.Play("Dodge");
+                m.attackerAnimator.Play("Attack");
+                m.attackeeAnimator.Play("Dodge");
                 break;
             case Constants.MoveType.MISS:
                 m.attackerAnimator.Play("Miss");
                 break;
             case Constants.MoveType.DEATH:
                 StopCoroutine("playAnimation");
-
                 GameObject refferenceGameObject = Instantiate(battleResult);
-
                 refferenceGameObject.GetComponent<BattleResultScript>().winner = m.attackeeStats;
-
                 m.attackeeAttribute.onDeath();
                 break;
         }
@@ -197,39 +193,27 @@ public class AIManager : MonoBehaviour
 
     IEnumerator playAnimation()
     {
-        float Move1 = moves[firstIndex].delayTime;
-        float oldTime = 0.0f;
-        //float Move2 = moves[secondIndex].delayTime;
+
+        float Move1 = DisplayMoves[firstIndex].delayTime;
         while (true)
         {
-            Debug.LogAssertion("Test");
-            if (firstIndex < moves.Count)
+            if (!player1Character.isAttacking && !player2Character.isAttacking)
             {
-                playMove(moves[firstIndex]);
+                firstTime += Time.fixedDeltaTime;
+            }
+            if (firstIndex < DisplayMoves.Count && firstTime > Move1)
+            {
+                Debug.LogWarning(DisplayMoves[firstIndex].attackerStats.PlayerType + ": " +  DisplayMoves[firstIndex].type);
+                playMove(DisplayMoves[firstIndex]);
                 firstIndex++;
-                if (firstIndex < moves.Count)
+                if (firstIndex < DisplayMoves.Count)
                 {
                     totalIndex++;
                     firstTime = 0.0f;
-                    oldTime = Move1;
-                    Move1 = moves[firstIndex].delayTime;
+                    Move1 = DisplayMoves[firstIndex].delayTime;
                 }
             }
-            float waitTime = 0.0f;
-            if (firstIndex == 0)
-            {
-                waitTime = Move1;
-            }
-            else
-            {
-                waitTime = Move1 - oldTime;
-            }
-            if (moves[firstIndex].type == C.MoveType.ATTACK)
-            {
-                waitTime += 0.83f;
-            }
-            yield return new WaitForSecondsRealtime(waitTime + 0.83f); //Fixed delay of 0.01 seconds between each loop allowing for more accuracy when dealing with similar values
-       
+            yield return new WaitForFixedUpdate();       
         }
     }//Needs SimulateBattle to Have run
     #endregion
@@ -254,25 +238,31 @@ public class AIManager : MonoBehaviour
         return res;
 
     }
-    void attack(Stats p1Stats, Stats p2Stats, Attribute attrib, Animator player1Animator, Animator player2Animator, float delayTime, Attribute eAttrib)
+
+    void attack(Stats p1Stats, Stats p2Stats, Attribute attrib, Animator player1Animator, Animator player2Animator, float delayTime, Attribute eAttrib, ref List<Move> moves)
     {
-
-
         if (moves.Count != 0 && moves[moves.Count - 1].attackerStats.HP <= 0)
         {
             moves.RemoveAt(moves.Count - 1);
+
+            #region Move Creation
             Move m = Move.copy(moves[moves.Count - 1]);
             Debug.Log(m.attackeeStats.PlayerType + " Died");
             m.type = Constants.MoveType.DEATH;
+            #endregion
+
+            #region Stat Swap
             Stats t = Stats.copy(moves[moves.Count - 1].attackeeStats);
             m.attackeeStats = Stats.copy(moves[moves.Count - 1].attackerStats);
             m.attackerStats = Stats.copy(t);
+            #endregion
             moves.Add(m);
             noOneDead = false;
         }
 
         if (noOneDead)
         {
+            #region Move Creation
             Move m = null;
             if (moves.Count <= 1)
             {
@@ -285,10 +275,14 @@ public class AIManager : MonoBehaviour
                 m.attackeeStats = Stats.copy(moves[moves.Count - 1].attackerStats);
                 m.attackerStats = Stats.copy(t);
             }
+            #endregion
 
+            #region Attack Conditions
             bool playerHits = Calculations.playerAttacks(p1Stats.Dexterity);
             bool enemyDodge = Calculations.enemyDodges(p2Stats.Agility);
+            #endregion
 
+            #region Move Type Conditions
             if (playerHits && !enemyDodge)
             {
                 m.type = Constants.MoveType.ATTACK;
@@ -304,7 +298,9 @@ public class AIManager : MonoBehaviour
             {
                 m.type = Constants.MoveType.DODGE;
             }
+            #endregion
 
+            #region Stamina Delay Time
             if (m.attackerStats.PlayerType == Constants.PlayerType.PLAYER)
             {
                 m.delayTime = stamDelay(m.attackerStats, playerDelayTime);
@@ -314,7 +310,9 @@ public class AIManager : MonoBehaviour
                 m.delayTime = stamDelay(m.attackerStats, enemyDelayTime);
             }
             if (m.attackerStats.Stamina < 0) m.attackerStats.Stamina = 0;
-            //Debug.LogWarning(m.attackerStats.PlayerType + ": " + m.attackerStats.HP);
+            #endregion
+
+            #region Does Stamina Increase?
             if (moves.Count % 2 == 0)
             {
                 firstMove += m.delayTime;
@@ -340,12 +338,14 @@ public class AIManager : MonoBehaviour
                 }
             }
             if (m.attackerStats.Stamina > m.attackerStats.MaxStamina) m.attackerStats.Stamina = m.attackerStats.MaxStamina;
-            Debug.LogWarning(m.attackerAnimator.gameObject.transform.name);
+            #endregion
             moves.Add(m);
         }
     }//Called by Simulate Battle
-    void SimulateBattle(Stats player1, Stats player2)
+
+    List<Move> SimulateBattle(Stats player1, Stats player2)
     {
+        List<Move> moves = new List<Move>();
         int index = 0; //Prevents endless loop
         moves.Clear(); //Ensures that the moves Only contain 1 battle;
         while (noOneDead && index < 1000)
@@ -353,23 +353,25 @@ public class AIManager : MonoBehaviour
             index++;
             if (playerDelayTime < enemyDelayTime)
             {
-                attack(player1, player2, player1Object.GetComponent<Attribute>(), player1Animator, player2Animator, playerDelayTime, player2Object.GetComponent<Attribute>());
-                attack(player2, player1, player2Object.GetComponent<Attribute>(), player2Animator, player1Animator, enemyDelayTime, player1Object.GetComponent<Attribute>());
+                attack(player1, player2, player1Object.GetComponent<Attribute>(), player1Animator, player2Animator, playerDelayTime, player2Object.GetComponent<Attribute>(), ref moves);
+                attack(player2, player1, player2Object.GetComponent<Attribute>(), player2Animator, player1Animator, enemyDelayTime, player1Object.GetComponent<Attribute>(), ref moves);
             }
             else
             {
-                attack(player2, player1, player2Object.GetComponent<Attribute>(), player2Animator, player1Animator, enemyDelayTime, player1Object.GetComponent<Attribute>());
-                attack(player1, player2, player1Object.GetComponent<Attribute>(), player1Animator, player2Animator, playerDelayTime, player2Object.GetComponent<Attribute>());
+                attack(player2, player1, player2Object.GetComponent<Attribute>(), player2Animator, player1Animator, enemyDelayTime, player1Object.GetComponent<Attribute>(), ref moves);
+                attack(player1, player2, player1Object.GetComponent<Attribute>(), player1Animator, player2Animator, playerDelayTime, player2Object.GetComponent<Attribute>(), ref moves);
             }
 
         }
-        foreach (Move m in moves)
-        {
-            Debug.Log(m.type);
-        }
+        //foreach (Move m in moves)
+        //{
+        //    Debug.Log(m.type);
+        //}
+        return moves;
     }//
     #endregion
-    bool once = true;
+    #endregion
+
     void Update()
     {
         //Temporary Until we have a go to battle system.

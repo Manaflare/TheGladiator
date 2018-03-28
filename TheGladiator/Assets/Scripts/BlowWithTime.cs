@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlowWithTime : Attribute {
     public float time;
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
 
         StartCoroutine(Explode());
 	}
@@ -16,9 +16,4 @@ public class BlowWithTime : Attribute {
         onDeath();
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

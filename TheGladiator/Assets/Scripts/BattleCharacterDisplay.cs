@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class BattleCharacterDisplay : CharacterSpriteManager {
 	// Use this for initialization
+    
 	protected override void Start () {
         loadImages();
         Attribute player1 = GetComponent<PlayerAttribute>();
-
         if (player1 == null)
         {
-            playerData = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[0];
+            try
+            {
+
+                playerData = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[0];
+            }
+            catch { }
         }
         else
         {
+            try
+            {
+
             playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+            }
+            catch { }
         }
 
         applySettings();
