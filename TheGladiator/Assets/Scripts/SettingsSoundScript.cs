@@ -34,25 +34,26 @@ public class SettingsSoundScript : MonoBehaviour
     {
         MasterAudioLevel = masterSlider.value;
         Debug.Log("Master changed to " + MasterAudioLevel);
+        MasterManager.ManagerSound.PreviewAppliedSetting("MasterVolume", MasterAudioLevel);
     }
     public void onBGMVolumeChange()
     {
         BGMAudioLevel = bgmSlider.value;
         Debug.Log("BGM changed to " + BGMAudioLevel);
+        MasterManager.ManagerSound.PreviewAppliedSetting("BGMVolume", BGMAudioLevel);
     }
     public void onSFXVolumeChange()
     {
         SFXAudioLevel = sfxSlider.value;
         Debug.Log("SFX changed to " + SFXAudioLevel);
+        MasterManager.ManagerSound.PreviewAppliedSetting("SFXVolume", SFXAudioLevel);
     }
     public void saveChanges(bool isMainMenu = false)
     {
         PlayerPrefs.SetFloat("MasterVolume", MasterAudioLevel);
         PlayerPrefs.SetFloat("BGMVolume", BGMAudioLevel);
         PlayerPrefs.SetFloat("SFXVolume", SFXAudioLevel);
-        
-        MasterManager.ManagerSound.ApplyToSettings();
-
+       
         closePopup(isMainMenu);
     }
 

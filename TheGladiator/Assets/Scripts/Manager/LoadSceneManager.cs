@@ -15,15 +15,26 @@ public class LoadSceneManager : MonoBehaviour, IManager {
     void Update () {
 		
 	}
-    public void LoadScene(string sceneName)
+    public void LoadScene(string sceneName, bool withLoading = true)
     {
-        Scene curScene = SceneManager.GetSceneByName(sceneName);
-        LoadScene(curScene.buildIndex);
+        if(withLoading)
+        {
+            LoadSceneAsync.LoadScene(sceneName);
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+
+        MasterManager.ManagerGlobalData.SaveAllData();
+
     }
 
-    public void LoadScene(int sceneIndex)
+    public void LoadScene(int sceneIndex, bool withLoading = true)
     {
-        SceneManager.LoadScene(sceneIndex);
-        MasterManager.ManagerGlobalData.SaveAllData();
+        string scene_path = SceneUtility.GetScenePathByBuildIndex(sceneIndex);
+        string scene_name_with_extension = scene_path.Split('/')[2];
+        string scene_name = System.IO.Path.GetFileNameWithoutExtension(scene_name_with_extension);
+        LoadScene(scene_name, withLoading);
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -61,12 +60,12 @@ public class MainMenuScript : MonoBehaviour
     void toCharacterCreation()
     {
         //Application.LoadLevel("CharacterCreator");
-        SceneManager.LoadScene("CharacterCreator", LoadSceneMode.Single);
+        MasterManager.ManagerLoadScene.LoadScene("CharacterCreator", false);
     }
 
     void continueFile()
     {
-        SceneManager.LoadScene("Town", LoadSceneMode.Single);
+        MasterManager.ManagerLoadScene.LoadScene("Town");
     }
 
     void loadSettingsMenu()

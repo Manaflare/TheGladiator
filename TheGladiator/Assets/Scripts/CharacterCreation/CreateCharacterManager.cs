@@ -59,17 +59,29 @@ public class CreateCharacterManager : MonoBehaviour {
     {
         if(avaliablePoints > 0 || NameText.text == "")
         {
-            //@TODO Show Error message
-            Debug.LogError("Missing Information");
+            string errorMessage = "";
+            if(NameText.text == "")
+            {
+                errorMessage = "Please name your character";
+            }
+            else
+            {
+                errorMessage = "Please use all your avaliable points";
+            }
+
+            MM.ManagerPopup.ShowMessageBox("Hey, Listen!", errorMessage, Constants.PopupType.POPUP_NO);
             return;
         }
+
         // call SFX
         MasterManager.ManagerSound.PlaySingleSound("Menu Confirm");
+
+        MasterManager.ManagerGlobalData.NewGame();
 
         Stats playerStats = new Stats(NameText.text,Constants.PlayerType.PLAYER,HPPoints,StrPoints,AgiPoints,DexPoints,StaPoints);
         SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
         MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo,true);
-        SceneManager.LoadScene("Town", LoadSceneMode.Single);
+        MasterManager.ManagerLoadScene.LoadScene("Town");
     }
 
     public void Reset(bool clearName = true)
@@ -106,7 +118,7 @@ public class CreateCharacterManager : MonoBehaviour {
     
     public void Back()
     {
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        MasterManager.ManagerLoadScene.LoadScene("MainMenu", false);
     }
 
     public void Randomize()

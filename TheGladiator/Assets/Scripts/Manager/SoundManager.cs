@@ -26,7 +26,7 @@ public class SoundManager : MonoBehaviour, IManager {
         }
 
         //PlayBackgroundMusic(ac[0]);
-        ApplyToSettings();
+        ApplyToAllSettings();
     }
 
     // Update is called once per frame
@@ -96,14 +96,34 @@ public class SoundManager : MonoBehaviour, IManager {
         sfxSource.PlayOneShot(clips[randomIdx]);
     }
 
-    public void ApplyToSettings()
+    public void ApplyToAllSettings()
     {
         if(masterMixer != null)
         {
-            masterMixer.SetFloat("MasterVol", PlayerPrefs.GetFloat("MasterVolume", 1.0f));
-            masterMixer.SetFloat("BGMVol", PlayerPrefs.GetFloat("BGMVolume", 1.0f));
-            masterMixer.SetFloat("SFXVol", PlayerPrefs.GetFloat("SFXVolume", 1.0f));
+            ApplyToSetting("MasterVolume");
+            ApplyToSetting("BGMVolume");
+            ApplyToSetting("SFXVolume");
         }
         
+    }
+
+    public void PreviewAppliedSetting(string keyExposedParam, float sliderValue)
+    {
+        float valueForMixer = Mathf.Log10(sliderValue);
+        float normalizedValue = Mathf.Lerp(-80f, 0f, valueForMixer - 1);
+
+        masterMixer.SetFloat(keyExposedParam, normalizedValue);
+    }
+
+    public void ApplyToSetting(string keyValue)
+    {
+        const float default_value = 0.0f;
+
+        float VolumeValue = PlayerPrefs.GetFloat(keyValue, default_value);
+        float valueForMixer = Mathf.Log10(VolumeValue);
+        float normalizedValue = Mathf.Lerp(-80f, 0f, valueForMixer - 1);
+
+        Debug.Log("SliderValue : " + VolumeValue + " MixerValue : " + valueForMixer + " rangedValue : " + normalizedValue);
+        masterMixer.SetFloat(keyValue, normalizedValue);
     }
 }
