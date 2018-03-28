@@ -3161,21 +3161,6 @@ Prefab:
       propertyPath: sleepImage
       value: 
       objectReference: {fileID: 1849888405}
-    - target: {fileID: 114575192515290862, guid: ff5fe596977c17b4d87db4d8a18a38fb,
-        type: 2}
-      propertyPath: m_FontData.m_FontSize
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 114575192515290862, guid: ff5fe596977c17b4d87db4d8a18a38fb,
-        type: 2}
-      propertyPath: m_FontData.m_FontStyle
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114160467254436566, guid: ff5fe596977c17b4d87db4d8a18a38fb,
-        type: 2}
-      propertyPath: m_FontData.m_FontStyle
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff5fe596977c17b4d87db4d8a18a38fb, type: 2}
   m_IsPrefabParent: 0
@@ -10106,7 +10091,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1732679873398636, guid: 677d08acb69d96848ab37206797da7d3, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224475307120154802, guid: 677d08acb69d96848ab37206797da7d3,
         type: 2}
@@ -10562,6 +10547,11 @@ Prefab:
         type: 2}
       propertyPath: m_AnchoredPosition.x
       value: 660
+      objectReference: {fileID: 0}
+    - target: {fileID: 224426638494563014, guid: 677d08acb69d96848ab37206797da7d3,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00000283665
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 677d08acb69d96848ab37206797da7d3, type: 2}
