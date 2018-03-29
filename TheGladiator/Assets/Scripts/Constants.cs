@@ -177,5 +177,15 @@ public static class Constants
     public static float MAXIMUM_DODGE = 0.7F;
     public static float DODGE_STEP_AMOUNT = (MAXIMUM_DODGE - MINIMUM_DODGE) / MAX_STAT_LEVEL;
 
+    public static string CONFIG_PATH = "Assets/Resources/Config/";
+    public static string LOCALE_PATH = "Assets/Resources/Locale/localText_";
+
+    public enum LOCALE_TYPE
+    {
+        EN_CA = 0,
+        FR_CA,
+        KO_KR,
+        PT_BR,
+    }
 }
 
