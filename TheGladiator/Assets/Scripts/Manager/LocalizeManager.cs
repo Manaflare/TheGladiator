@@ -8,8 +8,11 @@ public class LocalizeManager : MonoBehaviour, IManager {
     private Dictionary<string, string> stringList = new Dictionary<string, string>();
     private Constants.LOCALE_TYPE locale_type;
     // Use this for initialization
+
     public void Initialize()
     {
+        stringList.Clear();
+
         StreamReader reader = new StreamReader(Constants.CONFIG_PATH + "locale.slc");
         string current_locale = reader.ReadLine().ToUpper();
 
@@ -31,6 +34,25 @@ public class LocalizeManager : MonoBehaviour, IManager {
 
         string temp = GetValue("#TEXT_HOME_MESSAGE");
         Debug.Log(temp);
+
+        locale_reader.Close();
+        reader.Close();
+    }
+
+    public Constants.LOCALE_TYPE GetLocaleType()
+    {
+        return locale_type;
+    }
+
+    public void ChangeLanguage(Constants.LOCALE_TYPE type)
+    {
+        //overwrite
+        StreamWriter writer = new StreamWriter(Constants.CONFIG_PATH + "locale.slc", false);
+        writer.WriteLine(type.ToString().ToLower());
+        writer.Close();
+
+        //intialize
+        Initialize();
     }
 
     private void Parse(string str)
@@ -69,7 +91,8 @@ public class LocalizeManager : MonoBehaviour, IManager {
         }
         else
         {
-            throw new System.Exception("the key (" + keyValue + ") doesn't exist. please check it again");
+            Debug.LogWarning("the key (" + keyValue + ") doesn't exist. please check it again");
+            return keyValue;
         }
     }
 }

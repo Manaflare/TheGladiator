@@ -14,17 +14,41 @@ public class SettingsSoundScript : MonoBehaviour
     public Slider bgmSlider;
     public Slider sfxSlider;
 
-	// Use this for initialization
-	void Start ()
+    public Dropdown languageDropdown;
+    private Constants.LOCALE_TYPE current_localeType;
+
+    private void OnEnable()
     {
-        MasterAudioLevel = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume"):100;
+        current_localeType = MasterManager.ManagerLocalize.GetLocaleType();
+        MasterAudioLevel = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : 100;
         BGMAudioLevel = PlayerPrefs.HasKey("BGMVolume") ? PlayerPrefs.GetFloat("BGMVolume") : 100;
         SFXAudioLevel = PlayerPrefs.HasKey("SFXVolume") ? PlayerPrefs.GetFloat("SFXVolume") : 100;
 
         masterSlider.value = MasterAudioLevel;
         bgmSlider.value = BGMAudioLevel;
         sfxSlider.value = SFXAudioLevel;
-	}	
+
+        InitializeLanguege();
+
+        languageDropdown.value = (int)current_localeType;
+    }
+    void InitializeLanguege()
+    {
+        LocalizedText[] textsinSettings = GameObject.FindObjectsOfType<LocalizedText>();
+        foreach(LocalizedText localText in textsinSettings)
+        {
+            localText.Intialize();
+        }
+
+        languageDropdown.ClearOptions();
+        List<string> languageList = new List<string>();
+        languageList.Add(Utility.GetLocalizedString("#TEXT_LOCALE_ENGLISH"));
+        languageList.Add(Utility.GetLocalizedString("#TEXT_LOCALE_FRENCH"));
+        languageList.Add(Utility.GetLocalizedString("#TEXT_LOCALE_KOREAN"));
+        languageList.Add(Utility.GetLocalizedString("#TEXT_LOCALE_POURT"));
+
+        languageDropdown.AddOptions(languageList);
+    }
 	// Update is called once per frame
 	void Update ()
     {
@@ -57,6 +81,15 @@ public class SettingsSoundScript : MonoBehaviour
         closePopup(isMainMenu);
     }
 
+    public void Back(bool isMainMenu = false)
+    {
+        //restore
+        MasterManager.ManagerLocalize.ChangeLanguage(current_localeType);
+        //change current window
+        InitializeLanguege();
+
+        closePopup(isMainMenu);
+    }
     public void closePopup(bool isMainMenu = false)
     {
         if (isMainMenu)
@@ -68,5 +101,17 @@ public class SettingsSoundScript : MonoBehaviour
         {
             TownManager.Instance.CloseCurrentWindow(false);
         }
+
+        //change current window
+        InitializeLanguege();
+
+    }
+
+    public void OnChangeLanguage()
+    {
+        Constants.LOCALE_TYPE type = (Constants.LOCALE_TYPE)languageDropdown.value;
+        MasterManager.ManagerLocalize.ChangeLanguage(type);
+        //change current window
+        InitializeLanguege();
     }
 }

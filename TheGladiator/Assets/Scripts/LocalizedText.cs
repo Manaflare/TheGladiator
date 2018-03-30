@@ -8,13 +8,18 @@ public class LocalizedText : MonoBehaviour {
     public string keyValue;
 	// Use this for initialization
 	void Start () {
-        text_ui = GetComponent<Text>();
-        text_ui.text = Utility.GetLocalizedString(keyValue);
-	}
+        Intialize();
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void Intialize()
+    {
+        text_ui = GetComponent<Text>();
+        text_ui.text = Utility.GetLocalizedString(keyValue);
+    }
 
 }
