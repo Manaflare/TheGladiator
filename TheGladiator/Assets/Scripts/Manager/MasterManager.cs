@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteManager))]
 [RequireComponent(typeof(InputManager))]
 [RequireComponent(typeof(PopupManager))]
+[RequireComponent(typeof(LocalizeManager))]
 public class MasterManager : MonoBehaviour {
 
     private List<IManager> managerList = new List<IManager>();
@@ -18,17 +19,21 @@ public class MasterManager : MonoBehaviour {
     public static SpriteManager      ManagerSprite      { get; private set; }
 
     public static PopupManager       ManagerPopup       { get; private set; }
+    public static LocalizeManager    ManagerLocalize       { get; private set; }
     public static InputManager ManagerInput { get; private set; }
 
 
     private void Awake()
     {
+        QualitySettings.vSyncCount = 0;
         ManagerLoadScene = GetComponent<LoadSceneManager>();
         ManagerGlobalData = GetComponent<GlobalDataManager>();
         ManagerSound = GetComponent<SoundManager>();
         ManagerInput = GetComponent<InputManager>();
         ManagerSprite = GetComponent<SpriteManager>();
         ManagerPopup = GetComponent<PopupManager>();
+        ManagerLocalize = GetComponent<LocalizeManager>();
+
         //added all manager in the manager list
         managerList.Add(ManagerLoadScene);
         managerList.Add(ManagerGlobalData);
@@ -36,6 +41,7 @@ public class MasterManager : MonoBehaviour {
         managerList.Add(ManagerSprite);
         managerList.Add(ManagerInput);
         managerList.Add(ManagerPopup);
+        managerList.Add(ManagerLocalize);
         StartCoroutine(IE_BootAllManager());
 
         //keep this gameobject the entire project

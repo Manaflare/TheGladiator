@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -599,6 +599,7 @@ MonoBehaviour:
   startinAvaliablePoints: 25
   HPMultiplyer: 5
   BaseStats: 5
+  backgroundMusic: {fileID: 8300000, guid: 52c0a80a5f8d24f48b62d21d1e8c3b51, type: 3}
   NameText: {fileID: 1651846242}
 --- !u!4 &202670160
 Transform:
@@ -1832,7 +1833,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 90, y: 30}
+  m_SizeDelta: {x: 106.9, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &694012150
 MonoBehaviour:
@@ -3429,7 +3430,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 90, y: 30}
+  m_SizeDelta: {x: 106.74, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1190550926
 MonoBehaviour:
@@ -3787,7 +3788,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 202670159}
-        m_MethodName: HairArrowPressed
+        m_MethodName: FaceHairArrowPressed
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4185,7 +4186,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 90, y: 30}
+  m_SizeDelta: {x: 106.91, y: 30}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1414214017
 MonoBehaviour:
@@ -4219,7 +4220,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Facil Hair
+  m_Text: Facial Hair
 --- !u!222 &1414214018
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6141,7 +6142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41577be3c924f24cbfda3e6e6052977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  popupPrefabs: {fileID: 0}
+  popupPrefabs: {fileID: 1591415738364900, guid: a48e4e2654c71724a9b83b5aaaf6c7bb,
+    type: 2}
 --- !u!1 &2140862085
 GameObject:
   m_ObjectHideFlags: 0

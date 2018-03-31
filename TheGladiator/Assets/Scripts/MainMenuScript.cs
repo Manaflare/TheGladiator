@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -21,9 +20,17 @@ public class MainMenuScript : MonoBehaviour
 
     public GameObject settingsPrefab;
     private ListDataInfo playerData;
+
+    // declare variable for BGM
+    public AudioClip backgroundMusic;
+
     // Use this for initialization
     void Start ()
     {
+        // call BGM and SFX
+        MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
+        MasterManager.ManagerSound.PlaySingleSound("Attack Sword");
+
         Button ngb = newGameButton.GetComponent<Button>();
         ngb.onClick.AddListener(toCharacterCreation);
 
@@ -53,12 +60,12 @@ public class MainMenuScript : MonoBehaviour
     void toCharacterCreation()
     {
         //Application.LoadLevel("CharacterCreator");
-        SceneManager.LoadScene("CharacterCreator", LoadSceneMode.Single);
+        MasterManager.ManagerLoadScene.LoadScene("CharacterCreator", false);
     }
 
     void continueFile()
     {
-        SceneManager.LoadScene("Town", LoadSceneMode.Single);
+        MasterManager.ManagerLoadScene.LoadScene("Town");
     }
 
     void loadSettingsMenu()

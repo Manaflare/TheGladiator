@@ -45,6 +45,10 @@ public class InventoryManager : MonoBehaviour
     private List<Sprite> RightHands;
     private List<Sprite> Pants;
     private List<Sprite> Shoes;
+
+    // declare variable for BGM
+    public AudioClip backgroundMusic;
+    
     // Use this for initialization
     void Start()
     {
@@ -78,7 +82,17 @@ public class InventoryManager : MonoBehaviour
         }
         UpdateItemArea();
         UpdateEquipedVisual();
+
+       
     }
+
+    // plays music when the Inventory is opened
+    private void OnEnable()
+    {
+        // call BGM
+        MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
+    }
+
     void UpdateItemArea()
     {
         foreach (Transform child in itemArea.transform)
@@ -336,6 +350,7 @@ public class InventoryManager : MonoBehaviour
     public void CloseWindow(bool Spendtime)
     {
         SavePlayerData();
+        TownManager.Instance.GoBackToMusic();
         TownManager.Instance.CloseCurrentWindow(Spendtime);
     }
 

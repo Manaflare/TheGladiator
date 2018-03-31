@@ -118,4 +118,10 @@ public static class Utility
     {
         return number.ToString();
     }
+
+
+    public static string GetLocalizedString(string keyValue)
+    {
+        return MasterManager.ManagerLocalize.GetValue(keyValue);
+    }
 }

@@ -42,9 +42,14 @@ public class GlobalDataManager : MonoBehaviour, IManager {
 
     public void SaveEnvData()
     {
+        
         Utility.WriteDataToJSON<EnvironmentData>(Constants.JSONIndex.DATA_ENVIRONMENT, ref envData);
     }
-
+    public void NewGame()
+    {
+        envData = new EnvironmentData();
+        playerDataInfo = new ListDataInfo();
+    }
     public void SavePlayerData()
     {
         Utility.WriteDataToJSON<ListDataInfo>(Constants.JSONIndex.DATA_PLAYER, ref playerDataInfo);

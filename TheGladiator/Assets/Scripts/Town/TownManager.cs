@@ -41,12 +41,21 @@ public class TownManager : MonoBehaviour {
     public Text AGI;
     public Text DEX;
     public Text STA;
+
+    // declare variable for BGM
+    public AudioClip backgroundMusic;
+
+    public Text MaxSTA;
+
     // Use this for initialization
     void Start ()
     {
+        // call BGM
+        MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
+
         gold = MasterManager.ManagerGlobalData.GetEnvData().gold;
         //Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
-        UpdatePlayerUI();
+        UpdatePlayerUI();        
     }
 	
 	// Update is called once per frame
@@ -148,7 +157,7 @@ public class TownManager : MonoBehaviour {
                     string panelName = Panels[selectedIndex].name;
                     StringBuilder s = new StringBuilder(panelName);
                     s.Replace("Panel", "");
-                    MasterManager.ManagerLoadScene.LoadScene(panelName);
+                    MasterManager.ManagerLoadScene.LoadScene(s.ToString());
                 }
                 break;
             default:
@@ -164,6 +173,11 @@ public class TownManager : MonoBehaviour {
        
     }
 
+    public void GoBackToMusic()
+    {
+        MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
+    }
+
     public void CloseCurrentWindow(bool bSpendTime = true, Constants.CallbackFunction callFunc = null, float spendingTurn = 1.0f)
     {
         MasterManager.ManagerGlobalData.SavePlayerData();
@@ -174,7 +188,7 @@ public class TownManager : MonoBehaviour {
 
         UpdatePlayerUI();
 
-
+        
     }
 
     public void UpdatePlayerUI()
@@ -186,7 +200,8 @@ public class TownManager : MonoBehaviour {
         STR.text = playerData.statsList[0].Strength.ToString();
         AGI.text = playerData.statsList[0].Agility.ToString();
         DEX.text = playerData.statsList[0].Dexterity.ToString();
-        STA.text = playerData.statsList[0].MaxStamina.ToString();
+        STA.text = playerData.statsList[0].Stamina.ToString();
+        MaxSTA.text = playerData.statsList[0].MaxStamina.ToString();
 
         Character.GetComponent<CharacterSpriteManager>().UpdateSprites();
     }
