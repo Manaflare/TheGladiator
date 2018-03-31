@@ -36,6 +36,10 @@ public class SoundManager : MonoBehaviour, IManager {
 
     public void PlayBackgroundMusic(AudioClip backgroundMusic)
     {
+        if(musicSource == null)
+        {
+            return;
+        }
         if (musicSource.isPlaying == true)
             musicSource.Stop();
 
@@ -57,7 +61,7 @@ public class SoundManager : MonoBehaviour, IManager {
         }
         else
         {
-            throw new System.Exception(audioName + " is not in the auidolist in soundManager");
+         //   throw new System.Exception(audioName + " is not in the auidolist in soundManager");
         }
     }
 
@@ -123,7 +127,7 @@ public class SoundManager : MonoBehaviour, IManager {
         float valueForMixer = Mathf.Log10(VolumeValue);
         float normalizedValue = Mathf.Lerp(-80f, 0f, valueForMixer - 1);
 
-        Debug.Log("SliderValue : " + VolumeValue + " MixerValue : " + valueForMixer + " rangedValue : " + normalizedValue);
+        //Debug.Log("SliderValue : " + VolumeValue + " MixerValue : " + valueForMixer + " rangedValue : " + normalizedValue);
         masterMixer.SetFloat(keyValue, normalizedValue);
     }
 }

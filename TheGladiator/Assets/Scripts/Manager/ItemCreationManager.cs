@@ -100,7 +100,7 @@ public class ItemCreationManager : MonoBehaviour {
         this.NameText.text = itemData.Stats.Name;
         this.PriceText.text = itemData.price.ToString();
 
-        this.HPPoints = itemData.Stats.HP;
+        this.HPPoints = itemData.Stats.MAXHP;
         this.StrPoints = itemData.Stats.Strength;
         this.AgiPoints = itemData.Stats.Agility;
         this.DexPoints = itemData.Stats.Dexterity;

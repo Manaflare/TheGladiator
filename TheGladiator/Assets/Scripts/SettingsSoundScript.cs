@@ -10,6 +10,10 @@ public class SettingsSoundScript : MonoBehaviour
     private float BGMAudioLevel;
     private float SFXAudioLevel;
 
+    private float initialMasterAudioLevel;
+    private float initialBGMAudioLevel;
+    private float initialSFXAudioLevel;
+
     public Slider masterSlider;
     public Slider bgmSlider;
     public Slider sfxSlider;
@@ -20,9 +24,9 @@ public class SettingsSoundScript : MonoBehaviour
     private void OnEnable()
     {
         current_localeType = MasterManager.ManagerLocalize.GetLocaleType();
-        MasterAudioLevel = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : 100;
-        BGMAudioLevel = PlayerPrefs.HasKey("BGMVolume") ? PlayerPrefs.GetFloat("BGMVolume") : 100;
-        SFXAudioLevel = PlayerPrefs.HasKey("SFXVolume") ? PlayerPrefs.GetFloat("SFXVolume") : 100;
+        initialMasterAudioLevel = MasterAudioLevel = PlayerPrefs.HasKey("MasterVolume") ? PlayerPrefs.GetFloat("MasterVolume") : 100;
+        initialBGMAudioLevel =  BGMAudioLevel = PlayerPrefs.HasKey("BGMVolume") ? PlayerPrefs.GetFloat("BGMVolume") : 100;
+        initialSFXAudioLevel = SFXAudioLevel = PlayerPrefs.HasKey("SFXVolume") ? PlayerPrefs.GetFloat("SFXVolume") : 100;
 
         masterSlider.value = MasterAudioLevel;
         bgmSlider.value = BGMAudioLevel;
@@ -57,19 +61,19 @@ public class SettingsSoundScript : MonoBehaviour
     public void onMasterVolumeChange()
     {
         MasterAudioLevel = masterSlider.value;
-        Debug.Log("Master changed to " + MasterAudioLevel);
+        //Debug.Log("Master changed to " + MasterAudioLevel);
         MasterManager.ManagerSound.PreviewAppliedSetting("MasterVolume", MasterAudioLevel);
     }
     public void onBGMVolumeChange()
     {
         BGMAudioLevel = bgmSlider.value;
-        Debug.Log("BGM changed to " + BGMAudioLevel);
+        //Debug.Log("BGM changed to " + BGMAudioLevel);
         MasterManager.ManagerSound.PreviewAppliedSetting("BGMVolume", BGMAudioLevel);
     }
     public void onSFXVolumeChange()
     {
         SFXAudioLevel = sfxSlider.value;
-        Debug.Log("SFX changed to " + SFXAudioLevel);
+        //Debug.Log("SFX changed to " + SFXAudioLevel);
         MasterManager.ManagerSound.PreviewAppliedSetting("SFXVolume", SFXAudioLevel);
     }
     public void saveChanges(bool isMainMenu = false)
@@ -88,6 +92,10 @@ public class SettingsSoundScript : MonoBehaviour
         //change current window
         InitializeLanguege();
 
+        PlayerPrefs.SetFloat("MasterVolume", initialMasterAudioLevel);
+        PlayerPrefs.SetFloat("BGMVolume", initialBGMAudioLevel);
+        PlayerPrefs.SetFloat("SFXVolume", initialSFXAudioLevel);
+   
         closePopup(isMainMenu);
     }
     public void closePopup(bool isMainMenu = false)

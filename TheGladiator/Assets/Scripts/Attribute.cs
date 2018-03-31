@@ -37,7 +37,7 @@ public class ListDataInfo
     {
         statsList = new List<Stats>();
         spriteList = new List<SpriteInfo>();
-
+        playerTier = 1;
         itemList = new List<ItemDataInfo>();
         equipedItensId = new List<int>();
     }
