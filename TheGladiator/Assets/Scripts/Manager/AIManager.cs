@@ -1,230 +1,127 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using UnityEngine;
+
 using C = Constants;
 
 public class Move
 {
-    public Constants.MoveType type;
 
-    #region Attacker
-    public Stats attackerStats;
-    public Attribute attackerAttribute;
-    public Animator attackerAnimator; //Attacker is who is attacking
-    #endregion
-    #region Attackee
-    public Animator attackeeAnimator; //Attackee is who is being attacked. Used for Dodge.
-    public Attribute attackeeAttribute;
-    public Stats attackeeStats;
-    #endregion
-
+    public Constants.MoveType typeOfMove;
+    public Stats AttackerStats;
+    public Stats DefenderStats;
     public float delayTime;
 
-    public Move(Stats atkStat, Stats defStat, Attribute attrib, Animator attacker, Animator attackee, float delay, Attribute eAttrib)
+    public Move()
     {
-        attackerAnimator = attacker;
-        attackeeAnimator = attackee;
-
-        attackerAttribute = attrib;
-        attackeeAttribute = eAttrib;
-
-        attackerStats = Stats.copy(atkStat);
-        attackeeStats = Stats.copy(defStat);
-
-        delayTime = delay;
+        typeOfMove = C.MoveType.ATTACK;
+        AttackerStats = null;
+        DefenderStats = null;
+        delayTime = 0.0f;
     }
-    public static Move copy(Move src)
+    public Move(Constants.MoveType type, Stats p1, Stats p2, float time)
     {
-        return new Move(src.attackerStats, src.attackeeStats, src.attackerAttribute, src.attackerAnimator, src.attackeeAnimator, src.delayTime, src.attackeeAttribute);
+        typeOfMove = type;
+        AttackerStats = p1;
+        DefenderStats = p2;
+        delayTime = time;
     }
+
 }
 
 public class AIManager : MonoBehaviour
 {
-
-    #region Variables
-    public List<Move> moves;
-    [Header("Player Settings")]
-    public GameObject player1Object;
-    public GameObject player2Object;
     [Header("Battle Result")]
-    public GameObject battleResult;
+    public GameObject WinnerPopup;
 
-    public bool debugList = false;
+    [Header("Player Object")]
+    public GameObject player1;
+    public GameObject player2;
 
-    #region Enemy Loading
-    Queue<int> enemyIndexes;
-    #endregion
+    [HideInInspector]
+    public bool CanAttack = true;
 
-    #region Sub Variables from GameObjects
-    Stats player1Stats;
-    Stats player2Stats;
 
-    Character player1Character;
-    Character player2Character;
+    private List<Move> Battle;
+    private Stats player1Stats;
+    private Stats player2Stats;
+    private Dictionary<C.PlayerType, Animator> animators;
 
-    Animator player1Animator;
-    Animator player2Animator;
-    #endregion
 
-    #region DelayValues
-    [SerializeField]
-    private float playerDelayTime;
-    [SerializeField]
-    private float enemyDelayTime;
-    #endregion
-
-    #region Timers
-    private float firstTime; // The player with the Higher Agility uses this timer
-    private float secondTime; // The lower uses this time
-    private float repeatTime; // If one action is being repeated than this is being played
-    #endregion
-
-    #region Playthrough Indexes
-    private int firstIndex; //for moving through the list
-    private int secondIndex;
-    private int totalIndex;
-    #endregion
-
-    #region Playthrough Conditions
-    private bool noOneDead = true;
-    #endregion
-
-    #region Fake Stamina
-    float firstMove = 0.0f;
-    float secondMove = 0.0f;
-    #endregion
-
-    #endregion
-
-    #region Start up
-    void Start()
+    private void Start()
     {
         Random.InitState(100);
-        enemySelection();
-        directValues();
-        ResetValues();
-        SimulateBattle(player1Stats, player2Stats);
+        Battle = new List<Move>();
 
-    }
-    private void enemySelection()
-    {
-        //For an entire tournament we need atleast 15
-        int maxIndex = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData.Count;
-        enemyIndexes = new Queue<int>();
-        List<int> possibleIndexes = new List<int>();
-        for (int i = 0; i < maxIndex; i++) possibleIndexes.Add(i);
-        
-
-        for (int i = 0; i < 15; i++)
+        animators = new Dictionary<C.PlayerType, Animator>()
         {
-            int ran = Random.Range(0, maxIndex);
-            if (possibleIndexes.Contains(ran))
-            {
-                enemyIndexes.Enqueue(ran);
-                possibleIndexes.Remove(ran);
-            }
-        }
+            {C.PlayerType.PLAYER, player1.GetComponent<Animator>() },
+            {C.PlayerType.ENEMY, player2.GetComponent<Animator>() }
+        };
+
+        player1Stats = player1.GetComponent<Attribute>().getSTATS();
+        player2Stats = player2.GetComponent<Attribute>().getSTATS();
+
+        Battle = BattleSimulator(player1Stats, player2Stats);
+
+        StartCoroutine(animateBattle());
+        //writeListToFile(Battle);
+
+
     }
-    // Points the Values from the Game Object to shorten Code
-    private void directValues()
-    {
-        //player1Stats = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0];
-        //player1Object.GetComponent<PlayerAttribute>().setSTATS(player1Stats);
-        //player2Stats = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[enemyIndexes.Dequeue()].statsList[0];
-        //player2Object.GetComponent<EnemyAttribute>().setSTATS(player2Stats);
-        player1Stats = player1Object.GetComponent<Attribute>().getSTATS();
-        player2Stats = player2Object.GetComponent<Attribute>().getSTATS();
 
-        player1Character = player1Object.GetComponent<Character>();
-        player2Character = player2Object.GetComponent<Character>();
-
-        player1Animator = player1Object.GetComponent<Animator>();
-        player2Animator = player2Object.GetComponent<Animator>();
-    }
-    private void ResetValues()
-    {
-        player1Object.SetActive(true);
-        player2Object.SetActive(true);
-
-        firstTime = 0.0f;
-        secondTime = 0.0f;
-        repeatTime = 0.0f;
-
-        firstIndex = 0;
-        secondIndex = 1;
-
-        totalIndex = 0;
-
-        if (moves == null) moves = new List<Move>();
-
-        Calculations.agilityTest(player1Stats, player2Stats);
-
-        playerDelayTime = Calculations.calculateDelay(player1Stats);
-        enemyDelayTime = Calculations.calculateDelay(player2Stats);
-
-        GameObject battlePopup = GameObject.FindGameObjectWithTag("battlepopup");
-        if (battlePopup != null) Destroy(battlePopup);
-    }
-    #endregion
-
-    #region Display Animation
     void playMove(Move m)
     {
-        switch (m.type)
+        switch (m.typeOfMove)
         {
             case Constants.MoveType.ATTACK:
-                m.attackerAnimator.Play("Attack");
+                animators[m.AttackerStats.PlayerType].Play("Attack");
                 break;
             case Constants.MoveType.DODGE:
-                m.attackeeAnimator.Play("Attack");
-                m.attackerAnimator.Play("Dodge");
+                animators[m.AttackerStats.PlayerType].Play("Attack");
+                animators[m.DefenderStats.PlayerType].Play("Dodge");
                 break;
             case Constants.MoveType.MISS:
-                m.attackerAnimator.Play("Miss");
+                animators[m.AttackerStats.PlayerType].Play("Miss");
                 break;
             case Constants.MoveType.DEATH:
-                StopCoroutine("playAnimation");
-
-                GameObject refferenceGameObject = Instantiate(battleResult);
-
-                refferenceGameObject.GetComponent<BattleResultScript>().winner = m.attackeeStats;
-
-                m.attackeeAttribute.onDeath();
+                GameObject reff = Instantiate(WinnerPopup);
+                reff.GetComponent<BattleResultScript>().winner = m.DefenderStats;
+                animators[m.AttackerStats.PlayerType].gameObject.GetComponent<Attribute>().onDeath();
                 break;
         }
-    }//Called by Play Animation
-    IEnumerator playAnimation()
+    }
+
+    IEnumerator animateBattle()
     {
-        float Move1 = moves[firstIndex].delayTime;
-        float Move2 = moves[secondIndex].delayTime;
+        Queue<Move> moveQueue = new Queue<Move>();
+
+        foreach (Move m in Battle)
+        {
+            moveQueue.Enqueue(m);
+        }
+        float cummulativeTime = 0.0f;
+        Move CurrentMove = moveQueue.Dequeue();
+        
         while (true)
         {
-            if (!player1Character.isAttacking && !player2Character.isAttacking)
+            if (CanAttack && !player1.GetComponent<Character>().isAttacking && !player2.GetComponent<Character>().isAttacking)
             {
-                firstTime += 0.001f;//Time.deltaTime;
-                //secondTime += 0.01f;
+                cummulativeTime += Time.fixedDeltaTime;
             }
-
-                Debug.LogError(firstTime);
-            if (firstIndex < moves.Count && firstTime >= Move1)
+            if (CanAttack && CurrentMove.delayTime <= cummulativeTime)
             {
-                playMove(moves[firstIndex]);
-                firstIndex++;
-                if (firstIndex < moves.Count)
-                {
-                    totalIndex++;
-                    firstTime = 0.0f;
-                    Move1 = moves[firstIndex].delayTime;
-                }
+                CanAttack = false;
+                playMove(CurrentMove);
+                if (moveQueue.Count > 0)
+                    CurrentMove = moveQueue.Dequeue();
             }
-            //yield return new WaitForFixedUpdate();
-            yield return new WaitForSecondsRealtime(0.001f); //Fixed delay of 0.01 seconds between each loop allowing for more accuracy when dealing with similar values
+            yield return new WaitForFixedUpdate();
         }
-    }//Needs SimulateBattle to Have run
-    #endregion
-
-    #region SimulateBattle
+    }
+    
     float stamDelay(Stats s, float time)
     {
         float res = 2.0f;
@@ -244,129 +141,165 @@ public class AIManager : MonoBehaviour
         return res;
 
     }
-    void attack(Stats p1Stats, Stats p2Stats, Attribute attrib, Animator player1Animator, Animator player2Animator, float delayTime, Attribute eAttrib)
+
+    void MoveAssembler(Stats Attacker, Stats Defender, Dictionary<Constants.PlayerType, float> delays, ref Dictionary<Constants.PlayerType, float> staminaTimes,
+        ref List<Move> moves, ref Stats sourcePlayer, ref Stats sourceEnemy, ref Dictionary<Constants.PlayerType, float> cummulativeTime)
     {
+        Move temp = new Move();
 
+        Stats atk = Stats.copy(Attacker);
+        Stats def = Stats.copy(Defender);
 
-        if (moves.Count != 0 && moves[moves.Count - 1].attackerStats.HP <= 0)
+        bool playerHit = Calculations.playerAttacks(atk.Dexterity);
+        bool enemyDodges = Calculations.enemyDodges(def.Agility);
+
+        if (playerHit && !enemyDodges)
         {
-            moves.RemoveAt(moves.Count - 1);
-            Move m = Move.copy(moves[moves.Count - 1]);
-            Debug.Log(m.attackeeStats.PlayerType + " Died");
-            m.type = Constants.MoveType.DEATH;
-            Stats t = Stats.copy(moves[moves.Count - 1].attackeeStats);
-            m.attackeeStats = Stats.copy(moves[moves.Count - 1].attackerStats);
-            m.attackerStats = Stats.copy(t);
-            moves.Add(m);
-            noOneDead = false;
+            atk.Stamina -= 2;
+            def.HP -= atk.Strength;
+        }
+        else if (!playerHit)
+        {
+            temp.typeOfMove = C.MoveType.MISS;
+            atk.Stamina -= 3;
+        }
+        else if (playerHit && enemyDodges)
+        {
+            temp.typeOfMove = C.MoveType.DODGE;
+            def.Stamina -= 1;
         }
 
-        if (noOneDead)
+
+        //STAMINA INCREASE
+
+        float tempStamTime = staminaTimes[atk.PlayerType];
+
+        if (tempStamTime >= Constants.STAMINA_REGEN_INTERVAL)
         {
-            Move m = null;
-            if (moves.Count <= 1)
+            while (tempStamTime >= Constants.STAMINA_REGEN_INTERVAL)
             {
-                m = new Move(p1Stats, p2Stats, attrib, player1Animator, player2Animator, delayTime, eAttrib);
-            }
-            else
-            {
-                m = Move.copy(moves[moves.Count - 2]);
-                Stats t = Stats.copy(moves[moves.Count - 1].attackeeStats);
-                m.attackeeStats = Stats.copy(moves[moves.Count - 1].attackerStats);
-                m.attackerStats = Stats.copy(t);
-            }
+                atk.Stamina += 1;
 
-            bool playerHits = Calculations.playerAttacks(p1Stats.Dexterity);
-            bool enemyDodge = Calculations.enemyDodges(p2Stats.Agility);
+                tempStamTime -= Constants.STAMINA_REGEN_INTERVAL;
+                staminaTimes[atk.PlayerType] = 0.0f;
+            }
+        }
+        else
+        {
+           staminaTimes[atk.PlayerType] += delays[atk.PlayerType];
+        }
 
-            if (playerHits && !enemyDodge)
-            {
-                m.type = Constants.MoveType.ATTACK;
-                m.attackerStats.Stamina -= 5;
-                m.attackeeStats.HP -= m.attackerStats.Strength;
-            }
-            else if (!playerHits && !enemyDodge)
-            {
-                m.type = Constants.MoveType.MISS;
-                m.attackerStats.Stamina -= 6;
-            }
-            else if (enemyDodge)
-            {
-                m.type = Constants.MoveType.DODGE;
-            }
+        //END STAMINA
 
-            if (m.attackerStats.PlayerType == Constants.PlayerType.PLAYER)
+
+
+        atk.Stamina = (atk.Stamina < 0) ? short.Parse("0") : atk.Stamina;
+        def.Stamina = (def.Stamina < 0) ? short.Parse("0") : def.Stamina;
+
+        temp.AttackerStats = Stats.copy(atk);
+        temp.DefenderStats = Stats.copy(def);
+        temp.delayTime = cummulativeTime[atk.PlayerType];
+        cummulativeTime[atk.PlayerType] += delays[atk.PlayerType];
+
+
+        moves.Add(temp);
+
+        if (atk.PlayerType == C.PlayerType.PLAYER)
+        {
+            sourcePlayer = Stats.copy(atk);
+            sourceEnemy = Stats.copy(def);
+        }
+        else
+        {
+            sourcePlayer = Stats.copy(def);
+            sourceEnemy = Stats.copy(atk);
+        }
+    }
+
+    List<Move> BattleSimulator(Stats p1, Stats p2)
+    {
+        List<Move> moves = new List<Move>();
+        int noInfloops = 0;
+        float player1delay = Calculations.calculateDelay(p1);
+        float player2delay = Calculations.calculateDelay(p2);
+
+        float player1currentTime = 0.0f;
+        float player2currentTime = 0.0f;
+
+        Dictionary<Constants.PlayerType, float> delayDictionary = new Dictionary<Constants.PlayerType, float>()
+        {
+            { Constants.PlayerType.PLAYER, player1delay },
+            { Constants.PlayerType.ENEMY, player2delay },
+        };
+
+        Dictionary<Constants.PlayerType, float> staminaTimes = new Dictionary<C.PlayerType, float>()
+        {
+            { Constants.PlayerType.PLAYER, 0.0f },
+            { Constants.PlayerType.ENEMY, 0.0f },
+        };
+
+        Dictionary<Constants.PlayerType, float> cummulativeTime = new Dictionary<Constants.PlayerType, float>()
+        {
+            { Constants.PlayerType.PLAYER, player1delay },
+            { Constants.PlayerType.ENEMY, player2delay },
+        };
+
+        bool playerStart = player1delay < player2delay;
+
+        if (playerStart)
+        {
+            player1currentTime += player1delay;
+            player2currentTime += player2delay;
+        }
+        else
+        {
+            player1currentTime += player1delay;
+            player2currentTime += player2delay;
+        }
+
+        while (true && noInfloops < 100)
+        {
+            noInfloops++;
+            if (playerStart)
             {
-                m.delayTime = stamDelay(m.attackerStats, playerDelayTime);
-            }
-            else
-            {
-                m.delayTime = stamDelay(m.attackerStats, enemyDelayTime);
-            }
-            if (m.attackerStats.Stamina < 0) m.attackerStats.Stamina = 0;
-            //Debug.LogWarning(m.attackerStats.PlayerType + ": " + m.attackerStats.HP);
-            if (moves.Count % 2 == 0)
-            {
-                firstMove += m.delayTime;
-                if (firstMove >= C.STAMINA_REGEN_INTERVAL)
+                if (player1currentTime < player2currentTime)
                 {
-                    while (firstMove >= C.STAMINA_REGEN_INTERVAL)
-                    {
-                        firstMove -= C.STAMINA_REGEN_INTERVAL;
-                        m.attackerStats.Stamina += 1;
-                    }
+                    MoveAssembler(p1, p2, delayDictionary, ref staminaTimes, ref moves, ref p1, ref p2, ref cummulativeTime);
+                    player1currentTime += player1delay;
+                }
+                else
+                {
+                    MoveAssembler(p2, p1, delayDictionary, ref staminaTimes, ref moves, ref p1, ref p2, ref cummulativeTime);
+                    player2currentTime += player2delay;
                 }
             }
             else
             {
-                secondMove += m.delayTime;
-                if (secondMove >= C.STAMINA_REGEN_INTERVAL)
+                if (player1currentTime > player2currentTime)
                 {
-                    while (secondMove >= C.STAMINA_REGEN_INTERVAL)
-                    {
-                        secondMove -= C.STAMINA_REGEN_INTERVAL;
-                        m.attackerStats.Stamina += 1;
-                    }
+                    MoveAssembler(p2, p1, delayDictionary, ref staminaTimes, ref moves, ref p1, ref p2, ref cummulativeTime);
+                    player2currentTime += player2delay;
+                }
+                else
+                {
+                    MoveAssembler(p1, p2, delayDictionary, ref staminaTimes, ref moves, ref p1, ref p2, ref cummulativeTime);
+                    player1currentTime += player1delay;
                 }
             }
-            if (m.attackerStats.Stamina > m.attackerStats.MaxStamina) m.attackerStats.Stamina = m.attackerStats.MaxStamina;
-            Debug.LogWarning(m.attackerAnimator.gameObject.transform.name);
-            moves.Add(m);
-        }
-    }//Called by Simulate Battle
-    void SimulateBattle(Stats player1, Stats player2)
-    {
-        int index = 0; //Prevents endless loop
-        moves.Clear(); //Ensures that the moves Only contain 1 battle;
-        while (noOneDead && index < 1000)
-        {
-            index++;
-            if (playerDelayTime < enemyDelayTime)
-            {
-                attack(player1, player2, player1Object.GetComponent<Attribute>(), player1Animator, player2Animator, playerDelayTime, player2Object.GetComponent<Attribute>());
-                attack(player2, player1, player2Object.GetComponent<Attribute>(), player2Animator, player1Animator, enemyDelayTime, player1Object.GetComponent<Attribute>());
-            }
-            else
-            {
-                attack(player2, player1, player2Object.GetComponent<Attribute>(), player2Animator, player1Animator, enemyDelayTime, player1Object.GetComponent<Attribute>());
-                attack(player1, player2, player1Object.GetComponent<Attribute>(), player1Animator, player2Animator, playerDelayTime, player2Object.GetComponent<Attribute>());
-            }
 
+            if (moves[moves.Count - 1].DefenderStats.HP <= 0)
+            {
+                Move tmp = new Move(C.MoveType.DEATH, moves[moves.Count - 1].DefenderStats, moves[moves.Count - 1].AttackerStats, moves[moves.Count - 1].delayTime + 0.5f);
+                moves.Add(tmp);
+                break;
+            }
+            
         }
-        foreach (Move m in moves)
-        {
-            Debug.Log(m.type);
-        }
-    }//
-    #endregion
+        return moves;
+    }
 
     void Update()
     {
-        //Temporary Until we have a go to battle system.
-        if (Input.GetButton("Fire1"))
-        {
-            StartCoroutine("playAnimation");
-            ResetValues();
-        }
+
     }
 }

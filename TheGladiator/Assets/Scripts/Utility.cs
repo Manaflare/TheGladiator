@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using UnityEngine;
 
 //this scripts is expected to be used for common function that we can have an access to this anywhere
@@ -19,6 +21,35 @@ public static class Utility
         {Constants.JSONIndex.DATA_ENVIRONMENT,  "/JSON/EnvData.json" },
     };
 
+    public static void writeListToFile(List<Move> moves)
+    {
+        string fn = "log.txt";
+        if (File.Exists(fn))
+        {
+            File.Delete(fn);
+        }
+        List<string> lines = new List<string>();
+        foreach (Move m in moves)
+        {
+            lines.Add("=======================================[" + m.typeOfMove + "]============================================================");
+            lines.Add("Delay time: " + m.delayTime);
+            lines.Add(
+                "Attacker Name: " + m.AttackerStats.PlayerType + " HP: " + m.AttackerStats.HP + "/" + m.AttackerStats.MAXHP +
+                " Strength: " + m.AttackerStats.Strength + " Agility: " + m.AttackerStats.Agility + " Dexterity " + m.AttackerStats.Dexterity +
+                " Stamina: " + m.AttackerStats.Stamina + "/" + m.AttackerStats.MaxStamina
+                );
+            lines.Add(
+                 "Defender Name: " + m.DefenderStats.PlayerType + " HP: " + m.DefenderStats.HP + "/" + m.DefenderStats.MAXHP +
+                 " Strength: " + m.DefenderStats.Strength + " Agility: " + m.DefenderStats.Agility + " Dexterity " + m.DefenderStats.Dexterity +
+                 " Stamina: " + m.DefenderStats.Stamina + "/" + m.DefenderStats.MaxStamina
+                 );
+
+        }
+
+        Process.Start("notepad.exe", fn);
+        File.WriteAllLines(fn, lines.ToArray());
+
+    }
 
     public static T ReadDataFromJSON<T>(Constants.JSONIndex fileIndex)
     {

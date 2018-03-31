@@ -37,14 +37,18 @@ public class CharacterSpriteManager : MonoBehaviour {
         loadImages();
 
         playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
-        itemList = playerData.itemList;
-        spriteInfo = playerData.spriteList.Count > 0 ? playerData.spriteList[0]:null;
+
         applySettings();
     }
 
     private void OnEnable()
     {
+        try
+        {
+
         Start();
+        }
+        catch { }
     }
 
     public void loadImages()
@@ -72,10 +76,12 @@ public class CharacterSpriteManager : MonoBehaviour {
 
     public void applySettings()
     {
-        if(spriteInfo == null)
+        if (playerData == null)
         {
             return;
         }
+        itemList = playerData.itemList;
+        spriteInfo = playerData.spriteList.Count > 0 ? playerData.spriteList[0] : null;
         itemList = playerData.itemList;
         spriteInfo = playerData.spriteList[0];
         GetSpriteFromManager(body, spriteInfo.BodyIndex, Constants.SpriteType.BODY);

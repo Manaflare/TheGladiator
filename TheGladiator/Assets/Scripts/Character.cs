@@ -12,6 +12,8 @@ public class Character : MonoBehaviour
     }
     public void endAttack()
     {
+        GameObject ai = GameObject.FindGameObjectWithTag("aimanager");
+        ai.GetComponent<AIManager>().CanAttack = true;
         isAttacking = false;
     }
 	// Use this for initialization
