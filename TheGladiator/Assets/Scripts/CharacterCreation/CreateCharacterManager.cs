@@ -109,6 +109,7 @@ public class CreateCharacterManager : MonoBehaviour {
         }
 
         UpdateStatusText();
+        MasterManager.ManagerSound.PlaySingleSound("Menu Select");
     }
 
     // Update is called once per frame

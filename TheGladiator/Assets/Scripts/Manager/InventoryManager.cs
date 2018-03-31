@@ -12,12 +12,12 @@ public class InventoryManager : MonoBehaviour
     public GameObject Tabs;
     public GameObject Character;
 
-    private Color higherColor;
-    private Color lowerColor;
-    private Color equalsColor;
-    private Color activeColor;
-    private Color desactiveColor;
-    private Color hiddenColor;
+    protected Color higherColor;
+    protected Color lowerColor;
+    protected Color equalsColor;
+    protected Color activeColor;
+    protected Color desactiveColor;
+    protected Color hiddenColor;
 
     public Image armorImage;
     public Image helmetImage;
@@ -34,23 +34,23 @@ public class InventoryManager : MonoBehaviour
     public Text itemDEX;
     public Text itemSTA;
 
-    ListDataInfo playerData;
-    List<ItemDataInfo> equipedItems;
-    List<ItemDataInfo> filteredItemList;
-    List<ItemDataInfo> itemList;
+    protected ListDataInfo playerData;
+    protected List<ItemDataInfo> equipedItems;
+    protected List<ItemDataInfo> filteredItemList;
+    protected List<ItemDataInfo> itemList;
 
-    private List<Sprite> Armors;
-    private List<Sprite> Helmets;
-    private List<Sprite> LeftHands;
-    private List<Sprite> RightHands;
-    private List<Sprite> Pants;
-    private List<Sprite> Shoes;
+    protected List<Sprite> Armors;
+    protected List<Sprite> Helmets;
+    protected List<Sprite> LeftHands;
+    protected List<Sprite> RightHands;
+    protected List<Sprite> Pants;
+    protected List<Sprite> Shoes;
 
     // declare variable for BGM
     public AudioClip backgroundMusic;
     
     // Use this for initialization
-    void Start()
+    protected virtual void  Start()
     {
         higherColor = new Color(0, .5f, 0);
         lowerColor = new Color(1, 0, 0);
@@ -85,15 +85,15 @@ public class InventoryManager : MonoBehaviour
 
        
     }
-
     // plays music when the Inventory is opened
-    private void OnEnable()
+    protected void OnEnable()
     {
+        Start();
         // call BGM
-        MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
+        if(backgroundMusic)
+            MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
     }
-
-    void UpdateItemArea()
+    protected virtual void UpdateItemArea()
     {
         foreach (Transform child in itemArea.transform)
         {
@@ -201,18 +201,27 @@ public class InventoryManager : MonoBehaviour
     void UpdateEquipedVisual()
     {
 
-        rHandImage.sprite = null;
-        rHandImage.color = hiddenColor;
-        armorImage.sprite = null;
-        armorImage.color = hiddenColor;
-        lHandImage.sprite = null;
-        lHandImage.color = hiddenColor;
-        helmetImage.sprite = null;
-        helmetImage.color = hiddenColor;
-        pantsImage.sprite = null;
-        pantsImage.color = hiddenColor;
-        footImage.sprite = null;
-        footImage.color = hiddenColor;
+        try
+        {
+            rHandImage.sprite = null;
+            rHandImage.color = hiddenColor;
+            armorImage.sprite = null;
+            armorImage.color = hiddenColor;
+            lHandImage.sprite = null;
+            lHandImage.color = hiddenColor;
+            helmetImage.sprite = null;
+            helmetImage.color = hiddenColor;
+            pantsImage.sprite = null;
+            pantsImage.color = hiddenColor;
+            footImage.sprite = null;
+            footImage.color = hiddenColor;
+        }
+        catch 
+        {
+            return;
+        }
+
+        
 
         for (int i = 0; i < equipedItems.Count; i++)
         {
@@ -277,12 +286,12 @@ public class InventoryManager : MonoBehaviour
         }
         UpdateItemArea();
     }
-    void UpdateText(int id)
+    protected virtual void UpdateText(int id)
     {
         itemName.text = filteredItemList[id].Stats.Name;
 
         string itemPos = "";
-        switch (itemList[id].Item_type)
+        switch (filteredItemList[id].Item_type)
         {
             case Constants.ItemIndex.ARMOR:
                 itemPos = Constants.C_ARMOR;
@@ -332,11 +341,11 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            itemHP.color = equalsColor;
-            itemSTR.color = equalsColor;
-            itemAGI.color = equalsColor;
-            itemDEX.color = equalsColor;
-            itemSTA.color = equalsColor;
+            itemHP.color =  filteredItemList[id].Stats.MAXHP >     0?higherColor:equalsColor;
+            itemSTR.color = filteredItemList[id].Stats.Strength >  0?higherColor:equalsColor;
+            itemAGI.color = filteredItemList[id].Stats.Agility >   0?higherColor:equalsColor;
+            itemDEX.color = filteredItemList[id].Stats.Dexterity > 0?higherColor:equalsColor;
+            itemSTA.color = filteredItemList[id].Stats.Stamina >   0?higherColor:equalsColor;
         }
 
         itemSlot.text = itemPos;
@@ -353,6 +362,4 @@ public class InventoryManager : MonoBehaviour
         TownManager.Instance.GoBackToMusic();
         TownManager.Instance.CloseCurrentWindow(Spendtime);
     }
-
-
 }
