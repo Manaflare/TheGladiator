@@ -38,8 +38,10 @@ public class WorkPanel : MonoBehaviour
     public GameObject workPopup;
     // Use this for initialization
     private bool bMoving = false;
-    
 
+    public Text goldText;
+    public Text staminaText;
+    public Text TimeText;
     void Start()
     {
         ResetWork();
@@ -63,11 +65,13 @@ public class WorkPanel : MonoBehaviour
             randomIndecies[i] = i;
 
         //random pick
-        int temp, randomIndex;
+        int temp, randomIndex, actualIndex;
         for (int i = 0; i < availiableWorkNum; ++i)
         {
             randomIndex = Random.Range(0, listSize);
-            workList.Add(allWorkInfo.workList[randomIndex]);
+            actualIndex = randomIndecies[randomIndex];
+
+            workList.Add(allWorkInfo.workList[actualIndex]);
 
             //move the element to the end the list
             temp = randomIndecies[randomIndex];
@@ -79,6 +83,9 @@ public class WorkPanel : MonoBehaviour
 
         //current work page setup
        SetWorkPage(workList[currentIndex], Current);
+       goldText.text = workList[currentIndex].gold.ToString("N0");
+       staminaText.text = workList[currentIndex].stamina.ToString();
+       TimeText.text = ((int)(workList[currentIndex].turn * Constants.HOUR_SPENT)).ToString();
     }
 
     private void OnEnable()
@@ -157,6 +164,9 @@ public class WorkPanel : MonoBehaviour
             currentIndex = 0;
 
         SetWorkPage(workList[currentIndex], Current);
+        goldText.text = workList[currentIndex].gold.ToString("N0");
+        staminaText.text = workList[currentIndex].stamina.ToString();
+        TimeText.text = ((int)(workList[currentIndex].turn * Constants.HOUR_SPENT)).ToString();
     }
 
     IEnumerator IE_MoveToRight()
@@ -193,6 +203,9 @@ public class WorkPanel : MonoBehaviour
             currentIndex = workList.Count - 1;
 
        SetWorkPage(workList[currentIndex], Current);
+       goldText.text = workList[currentIndex].gold.ToString("N0");
+       staminaText.text = workList[currentIndex].stamina.ToString();
+       TimeText.text = ((int)(workList[currentIndex].turn * Constants.HOUR_SPENT)).ToString();
     }
 
     public void OnOK()
