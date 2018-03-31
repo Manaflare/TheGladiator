@@ -111,6 +111,7 @@ public static class Constants
         DATA_ENEMY,
         DATA_ITEM,
         DATA_ENVIRONMENT,
+        DATA_WORK,
     }
 
     public delegate void CallbackFunction();

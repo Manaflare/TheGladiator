@@ -8,6 +8,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     private ListEnemiesInfo enemiesDataInfo;
     private ListItemsInfo itemDataInfo;
     private EnvironmentData envData;
+    private ListWorkInfo workData;
 
     public void Initialize()
     {
@@ -36,13 +37,13 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         enemiesDataInfo = Utility.ReadDataFromJSON<ListEnemiesInfo>(Constants.JSONIndex.DATA_ENEMY);
         itemDataInfo = Utility.ReadDataFromJSON<ListItemsInfo>(Constants.JSONIndex.DATA_ITEM);
         envData = Utility.ReadDataFromJSON<EnvironmentData>(Constants.JSONIndex.DATA_ENVIRONMENT);
+        workData = Utility.ReadDataFromJSON<ListWorkInfo>(Constants.JSONIndex.DATA_WORK);
         //Debug.Log(playerStatus.spriteList[0].FaceHairIndex);
         //Debug.Log(enemiesStatus[0].statsList[0].Agility);
     }
 
     public void SaveEnvData()
     {
-        
         Utility.WriteDataToJSON<EnvironmentData>(Constants.JSONIndex.DATA_ENVIRONMENT, ref envData);
     }
     public void NewGame()
@@ -102,6 +103,11 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     public EnvironmentData GetEnvData()
     {
         return envData;
+    }
+
+    public ListWorkInfo GetAllWorkData()
+    {
+        return workData;
     }
 
 }
