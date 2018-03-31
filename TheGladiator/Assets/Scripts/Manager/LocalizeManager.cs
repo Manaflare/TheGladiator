@@ -69,7 +69,9 @@ public class LocalizeManager : MonoBehaviour, IManager {
         //start from index 1 because first string is the key value
         for(int i = 1; i < arr_string.Length; ++i)
         {
-            value_string += arr_string[i];
+            //check for special character;
+            string checkedString = arr_string[i].Replace("\\n", "\n"); 
+            value_string += checkedString;
 
             //ignore last space
             if(i < arr_string.Length - 1)
