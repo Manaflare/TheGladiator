@@ -42,7 +42,7 @@ public class WorkPanel : MonoBehaviour
     public Text goldText;
     public Text staminaText;
     public Text TimeText;
-    void Start()
+    void Awake()
     {
         ResetWork();
         bMoving = false;
@@ -82,20 +82,21 @@ public class WorkPanel : MonoBehaviour
         }
 
         //current work page setup
-       SetWorkPage(workList[currentIndex], Current);
-       goldText.text = workList[currentIndex].gold.ToString("N0");
-       staminaText.text = workList[currentIndex].stamina.ToString();
-       TimeText.text = ((int)(workList[currentIndex].turn * Constants.HOUR_SPENT)).ToString();
+        SetCurrentWork();
     }
 
     private void OnEnable()
     {
-        //set up current work
+        //check if there isn't work in the work list
+        if(workList.Count == 0)
+        {
+            MasterManager.ManagerPopup.ShowMessageBox("Hey!", "Don't have work this week\nWait until next weekend", Constants.PopupType.POPUP_NO, OnCloseWindow);
+        }
     }
 
     public void OnNext()
     {
-        if (bMoving)
+        if (bMoving || workList.Count == 1)
             return;
 
         //set previous page
@@ -112,7 +113,7 @@ public class WorkPanel : MonoBehaviour
 
     public void OnPrevious()
     {
-        if (bMoving)
+        if (bMoving || workList.Count == 1)
             return;
 
         int nextIndex = currentIndex + 1;
@@ -163,10 +164,7 @@ public class WorkPanel : MonoBehaviour
         if (currentIndex >= workList.Count)
             currentIndex = 0;
 
-        SetWorkPage(workList[currentIndex], Current);
-        goldText.text = workList[currentIndex].gold.ToString("N0");
-        staminaText.text = workList[currentIndex].stamina.ToString();
-        TimeText.text = ((int)(workList[currentIndex].turn * Constants.HOUR_SPENT)).ToString();
+        SetCurrentWork();
     }
 
     IEnumerator IE_MoveToRight()
@@ -202,10 +200,7 @@ public class WorkPanel : MonoBehaviour
         if (currentIndex < 0)
             currentIndex = workList.Count - 1;
 
-       SetWorkPage(workList[currentIndex], Current);
-       goldText.text = workList[currentIndex].gold.ToString("N0");
-       staminaText.text = workList[currentIndex].stamina.ToString();
-       TimeText.text = ((int)(workList[currentIndex].turn * Constants.HOUR_SPENT)).ToString();
+        SetCurrentWork();
     }
 
     public void OnOK()
@@ -253,7 +248,28 @@ public class WorkPanel : MonoBehaviour
        
         MasterManager.ManagerPopup.ShowMessageBox("Hey!", "You made " + earnedGold.ToString() + " gold", Constants.PopupType.POPUP_SYSTEM);
 
-        //take our the work from the list
+        //update player ui
+        TownManager.Instance.UpdatePlayerUI();
+
+        //take out the work from the list
         workList.RemoveAt(currentIndex);
+        
+        //only if there is still work availiable in the work list
+        if(workList.Count > 0)
+        {
+            currentIndex = 0;
+            SetCurrentWork();
+        }
+    }
+
+    private void SetCurrentWork()
+    {
+        if(workList.Count > 0)
+        {
+            SetWorkPage(workList[currentIndex], Current);
+            goldText.text = workList[currentIndex].gold.ToString("N0");
+            staminaText.text = workList[currentIndex].stamina.ToString();
+            TimeText.text = ((int)(workList[currentIndex].turn * Constants.HOUR_SPENT)).ToString();
+        }
     }
 }

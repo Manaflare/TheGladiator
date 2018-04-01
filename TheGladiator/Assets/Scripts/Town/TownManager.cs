@@ -28,7 +28,7 @@ public class TownManager : MonoBehaviour {
 
     public GameObject[] Objects;
     public GameObject[] Panels;
-    public Text goldText;
+   
     private int selectedIndex = 0;
     private long gold;
 
@@ -41,6 +41,7 @@ public class TownManager : MonoBehaviour {
     public Text AGI;
     public Text DEX;
     public Text STA;
+    public Text goldText;
 
     // declare variable for BGM
     public AudioClip backgroundMusic;
@@ -131,9 +132,6 @@ public class TownManager : MonoBehaviour {
             MasterManager.ManagerPopup.ShowMessageBox("TEST", "This is a test", Constants.PopupType.POPUP_NO, TEST, test);
             //for rest button
         }
-
-
-        UpdateUI();
     }
 
     public void SelectPanel(int index)
@@ -165,13 +163,7 @@ public class TownManager : MonoBehaviour {
         }
     }
 
-        private void UpdateUI()
-    {
-        //"1,234,567"
-        goldText.text = gold.ToString("N0");
-
-       
-    }
+    
 
     public void GoBackToMusic()
     {
@@ -204,8 +196,15 @@ public class TownManager : MonoBehaviour {
         MaxSTA.text = playerData.statsList[0].MaxStamina.ToString();
 
         Character.GetComponent<CharacterSpriteManager>().UpdateSprites();
+
+        UpdateEnvUI();
     }
 
+    private void UpdateEnvUI()
+    {
+        //"1,234,567"
+        goldText.text = MasterManager.ManagerGlobalData.GetEnvData().gold.ToString("N0");
+    }
     //exmaple code
     public void TEST(object[] asd)
     {
