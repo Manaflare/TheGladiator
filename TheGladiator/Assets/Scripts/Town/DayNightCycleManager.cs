@@ -176,6 +176,7 @@ public class DayNightCycleManager : MonoBehaviour {
 
         //popup message and
         MasterManager.ManagerPopup.ShowMessageBox("System", "Next Week Started", Constants.PopupType.POPUP_SYSTEM);
+        TownManager.Instance.WorkForNextWeek();
     }
 
     public void SpendTime(float hourMultiPlier = 1.0f, Constants.CallbackFunction callbackFunc = null)

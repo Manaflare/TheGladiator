@@ -253,12 +253,19 @@ public class WorkPanel : MonoBehaviour
 
         //take out the work from the list
         workList.RemoveAt(currentIndex);
-        
+        currentIndex = 0;
+
         //only if there is still work availiable in the work list
-        if(workList.Count > 0)
+        if (workList.Count > 0)
         {
-            currentIndex = 0;
             SetCurrentWork();
+        }
+        else
+        {
+            Current.GetComponentInChildren<WorkWindow>().SetWorkWindow("", "", "");
+            goldText.text = "";
+            staminaText.text = "";
+            TimeText.text = "";
         }
     }
 
