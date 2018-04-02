@@ -15,7 +15,12 @@ public class WorkWindow : MonoBehaviour
     {
         workTitle.text = Utility.GetLocalizedString(title);
         workDesc.text = Utility.GetLocalizedString(desc);
-        workImage.sprite = Resources.Load<Sprite>("Sprites/Work/" + imageName);
+        Sprite sprite = Resources.Load<Sprite>("Sprites/Work/" + imageName);
+        if(sprite == null)
+        {
+            sprite = Resources.Load<Sprite>("Sprites/Work/no");
+        }
+        workImage.sprite = sprite;
         scrollbar.value = 1;
     }
 }
