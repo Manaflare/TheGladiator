@@ -2,8 +2,11 @@
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 public class LocalizeManager : MonoBehaviour, IManager {
+
+
 
     private Dictionary<string, string> stringList = new Dictionary<string, string>();
     private Constants.LOCALE_TYPE locale_type;
@@ -13,30 +16,31 @@ public class LocalizeManager : MonoBehaviour, IManager {
     {
         stringList.Clear();
 
-        StreamReader reader = new StreamReader(Constants.CONFIG_PATH + "locale.slc");
-        string current_locale = reader.ReadLine().ToUpper();
-
+        // StreamReader reader = new StreamReader(Constants.CONFIG_PATH + "locale.slc");
+        //  string current_locale = reader.ReadLine().ToUpper();
+        string current_locale = MasterManager.ManagerGlobalData.GetConfiguration().lang.ToUpper();
         locale_type = (Constants.LOCALE_TYPE)System.Enum.Parse(typeof(Constants.LOCALE_TYPE), current_locale);
 
         //make name of the local file
-        string locale_file_path = Constants.LOCALE_PATH;
+        string locale_file_path = Constants.LOCALE_NAME_PATH;
         locale_file_path += locale_type.ToString().ToLower();
-        locale_file_path += ".txt";
+        //locale_file_path += ".txt";
 
-        StreamReader locale_reader = new StreamReader(locale_file_path);
+        // StreamReader locale_reader = new StreamReader(locale_file_path);
+        //string line = locale_reader.ReadLine();
 
-        string line = locale_reader.ReadLine();
-        while(line != null)
+        TextAsset file = Resources.Load<TextAsset>(locale_file_path);
+        string[] line = Regex.Split(file.text, "\n|\r|\r\n");
+        for (int i = 0; i < line.Length; i++)
         {
-            Parse(line);
-            line = locale_reader.ReadLine();
+            Parse(line[i]);
         }
 
         string temp = GetValue("#TEXT_HOME_MESSAGE");
         Debug.Log(temp);
 
-        locale_reader.Close();
-        reader.Close();
+       // locale_reader.Close();
+       // reader.Close();
     }
 
     public Constants.LOCALE_TYPE GetLocaleType()
@@ -47,9 +51,11 @@ public class LocalizeManager : MonoBehaviour, IManager {
     public void ChangeLanguage(Constants.LOCALE_TYPE type)
     {
         //overwrite
-        StreamWriter writer = new StreamWriter(Constants.CONFIG_PATH + "locale.slc", false);
-        writer.WriteLine(type.ToString().ToLower());
-        writer.Close();
+        // StreamWriter writer = new StreamWriter(Constants.CONFIG_PATH + "locale.slc", false);
+        //  writer.WriteLine(type.ToString().ToLower());
+        //  writer.Close();
+        MasterManager.ManagerGlobalData.GetConfiguration().lang = type.ToString().ToLower();
+        MasterManager.ManagerGlobalData.SaveConfig();
 
         //intialize
         Initialize();

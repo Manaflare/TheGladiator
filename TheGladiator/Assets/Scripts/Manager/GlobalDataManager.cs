@@ -8,6 +8,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     private ListEnemiesInfo enemiesDataInfo;
     private ListItemsInfo itemDataInfo;
     private EnvironmentData envData;
+    private Configuration config;
     private ListWorkInfo workData;
 
     public void Initialize()
@@ -29,6 +30,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         Utility.WriteDataToJSON<ListEnemiesInfo>(Constants.JSONIndex.DATA_ENEMY, ref enemiesDataInfo);
         Utility.WriteDataToJSON<ListItemsInfo>(Constants.JSONIndex.DATA_ITEM, ref itemDataInfo);
         Utility.WriteDataToJSON<EnvironmentData>(Constants.JSONIndex.DATA_ENVIRONMENT, ref envData);
+        Utility.WriteDataToJSON<Configuration>(Constants.JSONIndex.DATA_CONFIG, ref config);
     }
 
     public void LoadallData()
@@ -38,6 +40,8 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         itemDataInfo = Utility.ReadDataFromJSON<ListItemsInfo>(Constants.JSONIndex.DATA_ITEM);
         envData = Utility.ReadDataFromJSON<EnvironmentData>(Constants.JSONIndex.DATA_ENVIRONMENT);
         workData = Utility.ReadDataFromJSON<ListWorkInfo>(Constants.JSONIndex.DATA_WORK);
+        config = Utility.ReadDataFromJSON<Configuration>(Constants.JSONIndex.DATA_CONFIG);
+
         //Debug.Log(playerStatus.spriteList[0].FaceHairIndex);
         //Debug.Log(enemiesStatus[0].statsList[0].Agility);
     }
@@ -45,6 +49,10 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     public void SaveEnvData()
     {
         Utility.WriteDataToJSON<EnvironmentData>(Constants.JSONIndex.DATA_ENVIRONMENT, ref envData);
+    }
+    public void SaveConfig()
+    {
+        Utility.WriteDataToJSON<Configuration>(Constants.JSONIndex.DATA_CONFIG, ref config);
     }
     public void NewGame()
     {
@@ -100,6 +108,10 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         return itemDataInfo;
     }
 
+    public Configuration GetConfiguration()
+    {
+        return config;
+    }
     public EnvironmentData GetEnvData()
     {
         return envData;

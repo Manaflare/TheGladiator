@@ -2,6 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class Configuration
+{
+    public string lang;
+    Configuration()
+    {
+        lang = "en_ca";
+    }
+}
+
 [RequireComponent(typeof(LoadSceneManager))]
 [RequireComponent(typeof(GlobalDataManager))]
 [RequireComponent(typeof(SoundManager))]
@@ -25,6 +36,24 @@ public class MasterManager : MonoBehaviour {
 
     private void Awake()
     {
+        //If mobileCreate a copy of the data json
+        if (Application.platform == RuntimePlatform.Android ||
+               Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+
+            TextAsset _jsonString = (TextAsset)Resources.Load("JSON/EnemyData", typeof(TextAsset));
+            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_ENEMY], _jsonString.text);
+
+            _jsonString = (TextAsset)Resources.Load("JSON/ItemData", typeof(TextAsset));
+            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_ITEM], _jsonString.text);
+
+            _jsonString = (TextAsset)Resources.Load("JSON/WorkData", typeof(TextAsset));
+            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_WORK], _jsonString.text);
+
+            _jsonString = (TextAsset)Resources.Load("JSON/Config", typeof(TextAsset));
+            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_CONFIG], _jsonString.text);
+        }
+
         QualitySettings.vSyncCount = 0;
         ManagerLoadScene = GetComponent<LoadSceneManager>();
         ManagerGlobalData = GetComponent<GlobalDataManager>();
@@ -43,6 +72,9 @@ public class MasterManager : MonoBehaviour {
         managerList.Add(ManagerPopup);
         managerList.Add(ManagerLocalize);
         StartCoroutine(IE_BootAllManager());
+
+       
+        
 
         //keep this gameobject the entire project
         DontDestroyOnLoad(gameObject);

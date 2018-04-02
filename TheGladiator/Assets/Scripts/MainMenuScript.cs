@@ -60,7 +60,7 @@ public class MainMenuScript : MonoBehaviour
     void toCharacterCreation()
     {
         //Application.LoadLevel("CharacterCreator");
-        MasterManager.ManagerLoadScene.LoadScene("CharacterCreator", false);
+        MasterManager.ManagerLoadScene.LoadScene("CharacterCreator");
     }
 
     void continueFile()

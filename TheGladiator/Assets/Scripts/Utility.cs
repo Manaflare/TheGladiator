@@ -13,13 +13,14 @@ public static class Utility
     }
 
     //example
-    static Dictionary<Constants.JSONIndex, string> JsonFileList = new Dictionary<Constants.JSONIndex, string>()
+   public static Dictionary<Constants.JSONIndex, string> JsonFileList = new Dictionary<Constants.JSONIndex, string>()
     {
-        {Constants.JSONIndex.DATA_PLAYER,       "/JSON/playerData.json"},
-        {Constants.JSONIndex.DATA_ENEMY,        "/JSON/EnemyData.json" },
-        {Constants.JSONIndex.DATA_ITEM,         "/JSON/ItemData.json" },
-        {Constants.JSONIndex.DATA_ENVIRONMENT,  "/JSON/EnvData.json" },
-        {Constants.JSONIndex.DATA_WORK,         "/JSON/WorkData.json" },
+        {Constants.JSONIndex.DATA_PLAYER,       "/Resources/JSON/playerData.json"},
+        {Constants.JSONIndex.DATA_ENEMY,        "/Resources/JSON/EnemyData.json" },
+        {Constants.JSONIndex.DATA_ITEM,         "/Resources/JSON/ItemData.json" },
+        {Constants.JSONIndex.DATA_ENVIRONMENT,  "/Resources/JSON/EnvData.json" },
+        {Constants.JSONIndex.DATA_WORK,         "/Resources/JSON/WorkData.json" },
+        {Constants.JSONIndex.DATA_CONFIG,       "/Resources/JSON/Config.json" },
     };
 
     public static void writeListToFile(List<Move> moves)
@@ -94,6 +95,11 @@ public static class Utility
                 System.IO.Directory.CreateDirectory(directory);
             }
             string jsonFolder = '/' + fileName.Split('/')[1];
+            if (!System.IO.Directory.Exists(directory + jsonFolder))
+            {
+                System.IO.Directory.CreateDirectory(directory + jsonFolder);
+            }
+            jsonFolder = '/' + fileName.Split('/')[1] + '/' + fileName.Split('/')[2];
             if (!System.IO.Directory.Exists(directory + jsonFolder))
             {
                 System.IO.Directory.CreateDirectory(directory + jsonFolder);

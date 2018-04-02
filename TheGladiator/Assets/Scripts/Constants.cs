@@ -112,6 +112,7 @@ public static class Constants
         DATA_ITEM,
         DATA_ENVIRONMENT,
         DATA_WORK,
+        DATA_CONFIG,
     }
 
     public delegate void CallbackFunction();
@@ -180,6 +181,7 @@ public static class Constants
 
     public static string CONFIG_PATH = "Assets/Resources/Config/";
     public static string LOCALE_PATH = "Assets/Resources/Locale/localText_";
+    public static string LOCALE_NAME_PATH = "Locale/localText_";
 
     public enum LOCALE_TYPE
     {
