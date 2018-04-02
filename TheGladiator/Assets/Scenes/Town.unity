@@ -2780,6 +2780,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 397237194}
+--- !u!114 &427054891 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114071515772888526, guid: 9a4fbec6cfb5b02438caf1ad23ce4b4d,
+    type: 2}
+  m_PrefabInternal: {fileID: 2094913582}
+  m_Script: {fileID: -2061169968, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &427275282
 GameObject:
   m_ObjectHideFlags: 0
@@ -3818,7 +3824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &536644360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4380,6 +4386,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 567851150}
+--- !u!114 &571939763 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114071515772888526, guid: 9a4fbec6cfb5b02438caf1ad23ce4b4d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1846266255}
+  m_Script: {fileID: -2061169968, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &576961949 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114071515772888526, guid: 9a4fbec6cfb5b02438caf1ad23ce4b4d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1592823723}
+  m_Script: {fileID: -2061169968, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &580034864 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1357202856676068, guid: 677d08acb69d96848ab37206797da7d3,
@@ -9069,6 +9087,11 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: -213.55
       objectReference: {fileID: 0}
+    - target: {fileID: 114364094887487152, guid: 9a4fbec6cfb5b02438caf1ad23ce4b4d,
+        type: 2}
+      propertyPath: scrollbar
+      value: 
+      objectReference: {fileID: 576961949}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a4fbec6cfb5b02438caf1ad23ce4b4d, type: 2}
   m_IsPrefabParent: 0
@@ -11115,6 +11138,11 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: -213.55
       objectReference: {fileID: 0}
+    - target: {fileID: 114364094887487152, guid: 9a4fbec6cfb5b02438caf1ad23ce4b4d,
+        type: 2}
+      propertyPath: scrollbar
+      value: 
+      objectReference: {fileID: 571939763}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a4fbec6cfb5b02438caf1ad23ce4b4d, type: 2}
   m_IsPrefabParent: 0
@@ -14617,6 +14645,11 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: -213.55
       objectReference: {fileID: 0}
+    - target: {fileID: 114364094887487152, guid: 9a4fbec6cfb5b02438caf1ad23ce4b4d,
+        type: 2}
+      propertyPath: scrollbar
+      value: 
+      objectReference: {fileID: 427054891}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9a4fbec6cfb5b02438caf1ad23ce4b4d, type: 2}
   m_IsPrefabParent: 0

@@ -212,6 +212,12 @@ public class TownManager : MonoBehaviour {
             
     }
 
+    public void WorkForNextWeek()
+    {
+        //work panel
+        Panels[0].GetComponentInChildren<WorkPanel>().ResetWork();
+    }
+
     void DecideSelectedObject(int increment)
     {
         /*

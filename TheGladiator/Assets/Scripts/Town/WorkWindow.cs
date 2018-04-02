@@ -8,6 +8,7 @@ public class WorkWindow : MonoBehaviour
     public Text workTitle;
     public Image workImage;
     public Text workDesc;
+    public Scrollbar scrollbar;
     // Use this for initialization
 
     public void SetWorkWindow(string title, string desc, string imageName)
@@ -15,5 +16,6 @@ public class WorkWindow : MonoBehaviour
         workTitle.text = Utility.GetLocalizedString(title);
         workDesc.text = Utility.GetLocalizedString(desc);
         workImage.sprite = Resources.Load<Sprite>("Sprites/Work/" + imageName);
+        scrollbar.value = 1;
     }
 }
