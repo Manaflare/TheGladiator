@@ -51,9 +51,18 @@ public class AIManager : MonoBehaviour
     private Stats player2Stats;
     private Dictionary<C.PlayerType, Animator> animators;
 
+    // declare variables for BGM
+    public AudioClip introMusic;
+    public AudioClip backgroundMusic;
+    public AudioClip victoryMusic;
+    public AudioClip defeatMusic;
+
 
     private void Start()
     {
+        // call BGM intro Music
+        MasterManager.ManagerSound.PlayBackgroundMusic(introMusic);
+
         Random.InitState(100);
         Battle = new List<Move>();
 
@@ -89,9 +98,22 @@ public class AIManager : MonoBehaviour
                 animators[m.AttackerStats.PlayerType].Play("Miss");
                 break;
             case Constants.MoveType.DEATH:
+
+                // call SFX charcater die
+                MasterManager.ManagerSound.PlaySingleSound("Character dies");
+                if (m.AttackerStats.PlayerType == C.PlayerType.PLAYER)
+                    
+                    // call BGM Victory Music
+                    MasterManager.ManagerSound.PlayBackgroundMusic(victoryMusic);
+
+                else
+                    // call BGM Victory Music
+                    MasterManager.ManagerSound.PlayBackgroundMusic(defeatMusic);
+
                 GameObject reff = Instantiate(WinnerPopup);
                 reff.GetComponent<BattleResultScript>().winner = m.DefenderStats;
                 animators[m.AttackerStats.PlayerType].gameObject.GetComponent<Attribute>().onDeath();
+
                 break;
         }
     }
@@ -308,6 +330,9 @@ public class AIManager : MonoBehaviour
         {
             doOnce = false;
             StartCoroutine(animateBattle());
+
+            // call BGM Background Music
+            MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
         }
         else if (doOnce)
         {
