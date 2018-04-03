@@ -56,6 +56,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     }
     public void NewGame()
     {
+        config = new Configuration();
         envData = new EnvironmentData();
         playerDataInfo = new ListDataInfo();
     }

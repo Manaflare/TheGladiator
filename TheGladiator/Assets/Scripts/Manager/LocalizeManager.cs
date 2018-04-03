@@ -89,6 +89,9 @@ public class LocalizeManager : MonoBehaviour, IManager {
 
     public string GetValue(string keyValue)
     {
+        if (keyValue == "")
+            return "";
+
         if (keyValue[0] != '#')
             return null;
 

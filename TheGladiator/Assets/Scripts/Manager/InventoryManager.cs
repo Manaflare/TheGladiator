@@ -86,7 +86,7 @@ public class InventoryManager : MonoBehaviour
        
     }
     // plays music when the Inventory is opened
-    protected void OnEnable()
+    void OnEnable()
     {
         Start();
         // call BGM
