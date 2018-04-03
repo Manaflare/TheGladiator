@@ -53,6 +53,10 @@ public class TownManager : MonoBehaviour {
     {
         // call BGM
         MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
+        if (!MasterManager.ManagerGlobalData.GetConfiguration().hasReadTutorial)
+        {
+            Panels[9].SetActive(true);
+        }
 
         gold = MasterManager.ManagerGlobalData.GetEnvData().gold;
         //Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();

@@ -32,6 +32,7 @@ public class BattleResultScript : MonoBehaviour {
     }
 	void battleEnd()
     {
+        MasterManager.ManagerLoadScene.LoadScene("Town");
         Destroy(this.transform.root.gameObject);
     }
 	// Update is called once per frame

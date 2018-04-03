@@ -12,7 +12,6 @@ public class BattleCharacterDisplay : CharacterSpriteManager {
         {
             try
             {
-
                 playerData = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[0];
             }
             catch { }

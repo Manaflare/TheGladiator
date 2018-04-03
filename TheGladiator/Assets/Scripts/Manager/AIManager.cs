@@ -40,10 +40,12 @@ public class AIManager : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
 
+    [Header("Battle Start Delay")]
+    [Range(0.0f, 10.0f)]
+    public float Delay;
+
     [HideInInspector]
     public bool CanAttack = true;
-
-
     private List<Move> Battle;
     private Stats player1Stats;
     private Stats player2Stats;
@@ -66,8 +68,8 @@ public class AIManager : MonoBehaviour
 
         Battle = BattleSimulator(player1Stats, player2Stats);
 
-        StartCoroutine(animateBattle());
         //writeListToFile(Battle);
+        //Utility.writeListToFile(Battle);
 
 
     }
@@ -297,9 +299,19 @@ public class AIManager : MonoBehaviour
         }
         return moves;
     }
-
+    float time = 0.0f;
+    bool doOnce = true;
     void Update()
     {
-
+        
+        if (doOnce && time > Delay)
+        {
+            doOnce = false;
+            StartCoroutine(animateBattle());
+        }
+        else if (doOnce)
+        {
+            time += Time.deltaTime;
+        }
     }
 }

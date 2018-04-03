@@ -57,6 +57,7 @@ public class ListDataInfo
         equipedItensId.Clear();
     }
 
+
     public List<Stats> statsList;
     public List<SpriteInfo> spriteList;
     public List<ItemDataInfo> itemList;
