@@ -68,6 +68,7 @@ public class AIManager : MonoBehaviour
 
         StartCoroutine(animateBattle());
         //writeListToFile(Battle);
+        Utility.writeListToFile(Battle);
 
 
     }

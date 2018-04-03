@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using UnityEngine;
 
 //this scripts is expected to be used for common function that we can have an access to this anywhere
@@ -25,7 +26,7 @@ public static class Utility
 
     public static void writeListToFile(List<Move> moves)
     {
-        string fn = "log.txt";
+        string fn = "BattleLog.txt";
         if (File.Exists(fn))
         {
             File.Delete(fn);
@@ -51,6 +52,18 @@ public static class Utility
         Process.Start("notepad.exe", fn);
         File.WriteAllLines(fn, lines.ToArray());
 
+    }
+
+    public static void writeToLog(string message, string outputfile = "ErrorLog.txt", bool open = true)
+    {
+        if (!File.Exists(outputfile))
+            File.Create(outputfile);
+
+        using (FileStream fs = File.Open(outputfile, FileMode.Append))
+        {
+            byte[] byteStr = Encoding.ASCII.GetBytes(message);
+            fs.Write(byteStr, 0, byteStr.Length);
+        }
     }
 
     public static T ReadDataFromJSON<T>(Constants.JSONIndex fileIndex)
