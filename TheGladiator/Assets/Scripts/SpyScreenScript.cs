@@ -21,7 +21,9 @@ public class SpyScreenScript : MonoBehaviour
     public Text enemyDEX;
     public Text enemySTA;
 
-    public Image enemySprite;
+    public Image bodySprite;
+    public Image hairSprite;
+    public Image facialHairSprite;
 
     // Use this for initialization
     void Start()
@@ -66,6 +68,26 @@ public class SpyScreenScript : MonoBehaviour
         enemyAGI.text = enemyData[enemyID].statsList[0].Agility.ToString();
         enemyDEX.text = enemyData[enemyID].statsList[0].Dexterity.ToString();
         enemySTA.text = enemyData[enemyID].statsList[0].MaxStamina.ToString();
+
+        bodySprite.sprite = MasterManager.ManagerSprite.BodyList[enemyData[enemyID].spriteList[0].BodyIndex];
+        hairSprite.sprite = MasterManager.ManagerSprite.HairList[enemyData[enemyID].spriteList[0].HairIndex];
+        facialHairSprite.sprite = MasterManager.ManagerSprite.FacialHairList[enemyData[enemyID].spriteList[0].FaceHairIndex];
+        if (enemyData[enemyID].spriteList[0].HairIndex == 0)
+        {
+            hairSprite.color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            hairSprite.color = new Color(1, 1, 1, 1);
+        }
+        if (enemyData[enemyID].spriteList[0].FaceHairIndex == 0)
+        {
+            facialHairSprite.color = new Color(1, 1, 1, 0);
+        }
+        else
+        {
+            hairSprite.color = new Color(1, 1, 1, 1);
+        }
     }
     
     void showSprite()
