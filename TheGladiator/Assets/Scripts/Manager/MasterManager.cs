@@ -6,14 +6,9 @@ using UnityEngine;
 [System.Serializable]
 public class Configuration
 {
-    public string lang;
-    public bool hasReadTutorial;
-    Configuration()
-    {
-        lang = "en_ca";
-        hasReadTutorial = false;
-    }
-}
+    public string lang = "en_ca";
+    public bool hasReadTutorial = false;
+ }
 
 [RequireComponent(typeof(LoadSceneManager))]
 [RequireComponent(typeof(GlobalDataManager))]
