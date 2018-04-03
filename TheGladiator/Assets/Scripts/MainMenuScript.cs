@@ -29,7 +29,7 @@ public class MainMenuScript : MonoBehaviour
     {
         // call BGM and SFX
         MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
-        MasterManager.ManagerSound.PlaySingleSound("Attack Sword");
+        MasterManager.ManagerSound.PlaySingleSound("Sword Clash");
 
         Button ngb = newGameButton.GetComponent<Button>();
         ngb.onClick.AddListener(toCharacterCreation);
