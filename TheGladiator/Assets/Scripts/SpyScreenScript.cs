@@ -25,6 +25,8 @@ public class SpyScreenScript : MonoBehaviour
     public Image hairSprite;
     public Image facialHairSprite;
 
+    public GameObject result;
+    public GameObject popUp;
     // Use this for initialization
     void Start()
     {
@@ -34,15 +36,39 @@ public class SpyScreenScript : MonoBehaviour
         enemyDataInfo = MasterManager.ManagerGlobalData.GetEnemyDataInfo();
         enemyData = new List<ListDataInfo>();
 
-        Button btn = test.GetComponent<Button>();
-        btn.onClick.AddListener(findRandomEnemyData);
+        //Button btn = test.GetComponent<Button>();
+        //btn.onClick.AddListener(findRandomEnemyData);
+        findRandomEnemyData();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void Cancel()
     {
-
+        TownManager.Instance.CloseCurrentWindow(false);
     }
+    public void Continue()
+    {
+        TownManager.Instance.CloseCurrentWindow(true);
+    }
+    public void OnEnable()
+    {
+        result.SetActive(false);
+        popUp.SetActive(true);
+    }
+    public void SpendGold()
+    {
+        if (MasterManager.ManagerGlobalData.GetEnvData().gold >= 5)
+        {
+            MasterManager.ManagerGlobalData.GetEnvData().gold -= 5;
+            MasterManager.ManagerGlobalData.SaveEnvData();
+            result.SetActive(true);
+            popUp.SetActive(false);
+            Start();
+        }
+        else
+        {
+            MasterManager.ManagerPopup.ShowMessageBox("Oh No!","Sorry you don't have enough gold for this",Constants.PopupType.POPUP_NO);
+        }
+    }
+
 
     void continueButtonClick()
     {
@@ -63,7 +89,7 @@ public class SpyScreenScript : MonoBehaviour
 
         enemyName.text = enemyData[enemyID].statsList[0].Name.ToString();
             
-        enemyHP.text = enemyData[enemyID].statsList[0].MAXHP.ToString();
+        enemyHP.text = (enemyData[enemyID].statsList[0].MAXHP * Constants.HP_MULTIPLIER).ToString();
         enemySTR.text = enemyData[enemyID].statsList[0].Strength.ToString();
         enemyAGI.text = enemyData[enemyID].statsList[0].Agility.ToString();
         enemyDEX.text = enemyData[enemyID].statsList[0].Dexterity.ToString();
