@@ -16,6 +16,7 @@ public class TutorialManager : MonoBehaviour {
         }
         else
         {
+            this.transform.parent.gameObject.SetActive(true);
             currentItem = 0;
         }
     }
