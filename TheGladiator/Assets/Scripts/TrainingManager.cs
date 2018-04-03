@@ -65,7 +65,8 @@ public class TrainingManager : MonoBehaviour
        
          ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
          int agil = playerDataInfo.statsList[0].Agility;
-         text_agil.text = agil.ToString();
+         text_agil.text = NewAgility.text = agil.ToString();
+        
          if(agil == byte.MaxValue)
         {
             Agi_btn.gameObject.SetActive(false);
@@ -76,7 +77,7 @@ public class TrainingManager : MonoBehaviour
         }
 
          int Maxstam = playerDataInfo.statsList[0].MaxStamina;
-         text_MaxStam.text = Maxstam.ToString();
+         text_MaxStam.text = NewMaxStam.text = Maxstam.ToString();
          if(Maxstam == byte.MaxValue)
         {
             Sta_btn.gameObject.SetActive(false);
@@ -87,7 +88,7 @@ public class TrainingManager : MonoBehaviour
         }
 
          int str = playerDataInfo.statsList[0].Strength;
-         text_str.text = str.ToString();
+         text_str.text = NewStr.text = str.ToString();
         if(str == byte.MaxValue)
         {
             Str_btn.gameObject.SetActive(false);
@@ -99,7 +100,7 @@ public class TrainingManager : MonoBehaviour
 
 
          int dex = playerDataInfo.statsList[0].Dexterity;
-         text_dex.text = dex.ToString();
+         text_dex.text = NewDexterity.text = dex.ToString();
          if(dex == byte.MaxValue)
         {
             Dex_btn.gameObject.SetActive(false);
@@ -111,7 +112,7 @@ public class TrainingManager : MonoBehaviour
 
 
          int MaxHp = playerDataInfo.statsList[0].MAXHP * HpMultiplier;
-         text_MaxHp.text = MaxHp.ToString();
+         text_MaxHp.text = NewMaxHP.text = MaxHp.ToString();
          if(MaxHp == byte.MaxValue)
         {
             MHp_btn.gameObject.SetActive(false);
@@ -132,10 +133,11 @@ public class TrainingManager : MonoBehaviour
     {
         ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         playerDataInfo.statsList[0].Stamina -= 5;
-
+        NewStam.text = playerDataInfo.statsList[0].Stamina.ToString();
 
         EnvironmentData envData = MasterManager.ManagerGlobalData.GetEnvData();
         envData.gold -= 25;
+        NewGold.text = envData.gold.ToString("N0");
     }
 
     bool canTrain()
