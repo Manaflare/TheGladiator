@@ -21,6 +21,6 @@ public class WorkWindow : MonoBehaviour
             sprite = Resources.Load<Sprite>("Sprites/Work/no");
         }
         workImage.sprite = sprite;
-        scrollbar.value = 1;
+      //  scrollbar.value = 1;
     }
 }

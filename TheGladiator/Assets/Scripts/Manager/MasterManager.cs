@@ -7,9 +7,11 @@ using UnityEngine;
 public class Configuration
 {
     public string lang;
+    public bool hasReadTutorial;
     Configuration()
     {
         lang = "en_ca";
+        hasReadTutorial = false;
     }
 }
 

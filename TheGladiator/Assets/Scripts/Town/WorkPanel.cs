@@ -92,6 +92,10 @@ public class WorkPanel : MonoBehaviour
         {
             MasterManager.ManagerPopup.ShowMessageBox("Hey!", "Don't have work this week\nWait until next weekend", Constants.PopupType.POPUP_NO, OnCloseWindow);
         }
+        else
+        {
+            SetCurrentWork();
+        }
     }
 
     public void OnNext()
@@ -275,7 +279,7 @@ public class WorkPanel : MonoBehaviour
         {
             SetWorkPage(workList[currentIndex], Current);
             goldText.text = workList[currentIndex].gold.ToString("N0");
-            staminaText.text = workList[currentIndex].stamina.ToString();
+            staminaText.text = workList[currentIndex].stamina.ToString() + "  [" + MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Stamina.ToString() + "]";
             TimeText.text = ((int)(workList[currentIndex].turn * Constants.HOUR_SPENT)).ToString();
         }
     }
