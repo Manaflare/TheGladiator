@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using UnityEngine;
 
 using C = Constants;
@@ -33,6 +31,7 @@ public class Move
 
 public class AIManager : MonoBehaviour
 {
+    #region Battle Variables
     [Header("Battle Result")]
     public GameObject WinnerPopup;
 
@@ -43,6 +42,8 @@ public class AIManager : MonoBehaviour
     [Header("Battle Start Delay")]
     [Range(0.0f, 10.0f)]
     public float Delay;
+    private float time = 0.0f;
+    private bool doOnce = true;
 
     [HideInInspector]
     public bool CanAttack = true;
@@ -50,12 +51,17 @@ public class AIManager : MonoBehaviour
     private Stats player1Stats;
     private Stats player2Stats;
     private Dictionary<C.PlayerType, Animator> animators;
+    #endregion
 
+    int playerCurrentOpponent;
 
     private void Start()
     {
         Random.InitState(100);
-        Battle = new List<Move>();
+
+        Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[playerCurrentOpponent].statsList[0]);
+
+        //Finals();
 
         animators = new Dictionary<C.PlayerType, Animator>()
         {
@@ -65,12 +71,28 @@ public class AIManager : MonoBehaviour
 
         player1Stats = player1.GetComponent<Attribute>().getSTATS();
         player2Stats = player2.GetComponent<Attribute>().getSTATS();
+    }
 
-        Battle = BattleSimulator(player1Stats, player2Stats);
+    private List<int> getAllEnemies()
+    {
+        List<int> result = new List<int>();
+        int index = 0;
+        int max = 0;
 
-        //writeListToFile(Battle);
-        //Utility.writeListToFile(Battle);
+        foreach (var a in MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData)
+        {
+            if (a.playerTier == MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier)
+            {
+                result.Add(index);
+                max++;
+            }
+            index++;
+        }
+        return result;
+    }
 
+    private void getCurrentEnemy()
+    {
 
     }
 
@@ -299,8 +321,7 @@ public class AIManager : MonoBehaviour
         }
         return moves;
     }
-    float time = 0.0f;
-    bool doOnce = true;
+    
     void Update()
     {
         

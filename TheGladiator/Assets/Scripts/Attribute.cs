@@ -49,6 +49,34 @@ public class ListDataInfo
         statsList.Add(stats);
         spriteList.Add(sprites);
     }
+
+    public ListDataInfo(ListDataInfo ldf)
+    {
+        statsList = new List<Stats>();
+        spriteList = new List<SpriteInfo>();
+        itemList = new List<ItemDataInfo>();
+        equipedItensId = new List<int>();
+
+        playerTier = ldf.playerTier;
+        foreach (var a in ldf.equipedItensId)
+        {
+            equipedItensId.Add(a);
+        }
+        foreach (var a in ldf.itemList)
+        {
+            itemList.Add(a);
+        }
+        foreach( var a in ldf.spriteList)
+        {
+            spriteList.Add(a);
+        }
+        foreach (var a in ldf.statsList)
+        {
+            statsList.Add(a);
+        }
+
+    }
+
     public void Clear()
     {
         statsList.Clear();

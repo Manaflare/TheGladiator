@@ -33,23 +33,7 @@ public class MasterManager : MonoBehaviour {
 
     private void Awake()
     {
-        //If mobileCreate a copy of the data json
-        if (Application.platform == RuntimePlatform.Android ||
-               Application.platform == RuntimePlatform.IPhonePlayer)
-        {
-
-            TextAsset _jsonString = (TextAsset)Resources.Load("JSON/EnemyData", typeof(TextAsset));
-            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_ENEMY], _jsonString.text);
-
-            _jsonString = (TextAsset)Resources.Load("JSON/ItemData", typeof(TextAsset));
-            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_ITEM], _jsonString.text);
-
-            _jsonString = (TextAsset)Resources.Load("JSON/WorkData", typeof(TextAsset));
-            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_WORK], _jsonString.text);
-
-            _jsonString = (TextAsset)Resources.Load("JSON/Config", typeof(TextAsset));
-            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_CONFIG], _jsonString.text);
-        }
+       
 
         QualitySettings.vSyncCount = 0;
         ManagerLoadScene = GetComponent<LoadSceneManager>();
@@ -70,8 +54,25 @@ public class MasterManager : MonoBehaviour {
         managerList.Add(ManagerLocalize);
         StartCoroutine(IE_BootAllManager());
 
-       
-        
+        //If mobileCreate a copy of the data json
+        if (Application.platform == RuntimePlatform.Android ||
+               Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+
+            TextAsset _jsonString = (TextAsset)Resources.Load("JSON/EnemyData", typeof(TextAsset));
+            Debug.Log(_jsonString);
+            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_ENEMY], _jsonString.text);
+
+            _jsonString = (TextAsset)Resources.Load("JSON/ItemData", typeof(TextAsset));
+            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_ITEM], _jsonString.text);
+
+            _jsonString = (TextAsset)Resources.Load("JSON/WorkData", typeof(TextAsset));
+            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_WORK], _jsonString.text);
+
+            _jsonString = (TextAsset)Resources.Load("JSON/Config", typeof(TextAsset));
+            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_CONFIG], _jsonString.text);
+        }
+
 
         //keep this gameobject the entire project
         DontDestroyOnLoad(gameObject);
