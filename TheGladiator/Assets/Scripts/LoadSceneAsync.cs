@@ -36,10 +36,6 @@ public class LoadSceneAsync : MonoBehaviour {
         {
             throw new System.Exception("Scene Name is null : check the scene Name");
         }
-        else if (next_scene_name == nextSceneName)
-        {
-            throw new System.Exception("Isn't that a same name as the name of the current scene? " + nextSceneName);
-        }
         else
         {
             next_scene_name = nextSceneName;
