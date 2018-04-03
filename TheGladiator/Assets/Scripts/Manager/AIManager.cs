@@ -57,7 +57,6 @@ public class AIManager : MonoBehaviour
     public AudioClip victoryMusic;
     public AudioClip defeatMusic;
 
-
     private void Start()
     {
         // call BGM intro Music
@@ -88,27 +87,40 @@ public class AIManager : MonoBehaviour
         switch (m.typeOfMove)
         {
             case Constants.MoveType.ATTACK:
+
+                // call SFX random Attacks
+                MasterManager.ManagerSound.PlayRandomSound("Attack Knife", "Attack Shield", "Attack Sword", "Whip Crack");
+
                 animators[m.AttackerStats.PlayerType].Play("Attack");
                 break;
             case Constants.MoveType.DODGE:
                 animators[m.AttackerStats.PlayerType].Play("Attack");
+
+                // call SFX Dodge
+                MasterManager.ManagerSound.PlaySingleSound("Quick Swinging Swish");
+
                 animators[m.DefenderStats.PlayerType].Play("Dodge");
                 break;
             case Constants.MoveType.MISS:
+                
+                // call SFX Miss
+                MasterManager.ManagerSound.PlaySingleSound("Fast Whoosh By");
+
                 animators[m.AttackerStats.PlayerType].Play("Miss");
+
                 break;
             case Constants.MoveType.DEATH:
 
-                // call SFX charcater die
+                // call SFX characater dies
                 MasterManager.ManagerSound.PlaySingleSound("Character dies");
-                if (m.AttackerStats.PlayerType == C.PlayerType.PLAYER)
+                if (m.DefenderStats.PlayerType == C.PlayerType.PLAYER)
                     
                     // call BGM Victory Music
-                    MasterManager.ManagerSound.PlayBackgroundMusic(victoryMusic);
+                    MasterManager.ManagerSound.PlayBackgroundMusic(victoryMusic, false);
 
                 else
                     // call BGM Victory Music
-                    MasterManager.ManagerSound.PlayBackgroundMusic(defeatMusic);
+                    MasterManager.ManagerSound.PlayBackgroundMusic(defeatMusic, false);
 
                 GameObject reff = Instantiate(WinnerPopup);
                 reff.GetComponent<BattleResultScript>().winner = m.DefenderStats;
