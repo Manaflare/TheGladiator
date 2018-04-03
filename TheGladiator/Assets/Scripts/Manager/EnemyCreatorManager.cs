@@ -97,7 +97,7 @@ public class EnemyCreatorManager : CreateCharacterManager
         HairArrowPressed("NONE");
         FaceHairArrowPressed("NONE");
 
-        this.HPPoints = playerData.statsList[0].HP;
+        this.HPPoints = playerData.statsList[0].MAXHP;
         this.StrPoints = playerData.statsList[0].Strength;
         this.AgiPoints = playerData.statsList[0].Agility;
         this.DexPoints = playerData.statsList[0].Dexterity;
