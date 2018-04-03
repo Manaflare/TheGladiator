@@ -88,6 +88,8 @@ public class AIManager : MonoBehaviour
             }
             index++;
         }
+
+
         return result;
     }
 
