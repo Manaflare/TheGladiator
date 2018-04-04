@@ -52,7 +52,8 @@ public class AIManager : MonoBehaviour
     private Stats player2Stats;
     private Dictionary<C.PlayerType, Animator> animators;
     #endregion
-
+    public GameObject PlayerHud;
+    
     Dictionary<string, int> ValidEnemies;
     public GameObject bracket;
     List<int> first = new List<int>();
@@ -70,20 +71,22 @@ public class AIManager : MonoBehaviour
     private void Start()
     {
         BracketController.layers = 1;
+        animators = new Dictionary<C.PlayerType, Animator>()
+        {
+            {C.PlayerType.PLAYER, player1.GetComponent<Animator>() },
+            {C.PlayerType.ENEMY, player2.GetComponent<Animator>() }
+        };
         ValidEnemies = new Dictionary<string, int>();
 
         PopulateEnemies();
         findAutoOpponents();
         displayBracket();
         drawPlayers(first[0]);
+        PlayerHud.GetComponent<ScaleBar>().UpdateBar(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0]);
 
 
 
-        animators = new Dictionary<C.PlayerType, Animator>()
-        {
-            {C.PlayerType.PLAYER, player1.GetComponent<Animator>() },
-            {C.PlayerType.ENEMY, player2.GetComponent<Animator>() }
-        };
+
     }
 
     public void play()
@@ -214,8 +217,13 @@ public class AIManager : MonoBehaviour
 
     void playMove(Move m)
     {
+        if (m.AttackerStats.PlayerType == C.PlayerType.PLAYER)
+        {
+            PlayerHud.GetComponent<ScaleBar>().UpdateBar(m.AttackerStats);
+        }
         switch (m.typeOfMove)
         {
+            
             case Constants.MoveType.ATTACK:
 
                 // call SFX random Attacks
