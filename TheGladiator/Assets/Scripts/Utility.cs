@@ -22,6 +22,7 @@ public static class Utility
         {Constants.JSONIndex.DATA_ENVIRONMENT,  "/Resources/JSON/EnvData.json" },
         {Constants.JSONIndex.DATA_WORK,         "/Resources/JSON/WorkData.json" },
         {Constants.JSONIndex.DATA_CONFIG,       "/Resources/JSON/Config.json" },
+        {Constants.JSONIndex.DATA_CREDIT,       "/Resources/JSON/Credit.json" },
     };
 
     public static void writeListToFile(List<Move> moves)

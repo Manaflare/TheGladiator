@@ -10,6 +10,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     private EnvironmentData envData;
     private Configuration config;
     private ListWorkInfo workData;
+    private ListCreditInfo creditData;
 
     public void Initialize()
     {
@@ -41,6 +42,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         envData = Utility.ReadDataFromJSON<EnvironmentData>(Constants.JSONIndex.DATA_ENVIRONMENT);
         workData = Utility.ReadDataFromJSON<ListWorkInfo>(Constants.JSONIndex.DATA_WORK);
         config = Utility.ReadDataFromJSON<Configuration>(Constants.JSONIndex.DATA_CONFIG);
+        creditData = Utility.ReadDataFromJSON<ListCreditInfo>(Constants.JSONIndex.DATA_CREDIT);
 
         //Debug.Log(playerStatus.spriteList[0].FaceHairIndex);
         //Debug.Log(enemiesStatus[0].statsList[0].Agility);
@@ -121,6 +123,11 @@ public class GlobalDataManager : MonoBehaviour, IManager {
     public ListWorkInfo GetAllWorkData()
     {
         return workData;
+    }
+
+    public ListCreditInfo GetAllCreditData()
+    {
+        return creditData;
     }
 
 }
