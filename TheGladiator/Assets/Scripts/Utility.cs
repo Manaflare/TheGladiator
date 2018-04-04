@@ -37,14 +37,14 @@ public static class Utility
             lines.Add("=======================================[" + m.typeOfMove + "]============================================================");
             lines.Add("Delay time: " + m.delayTime);
             lines.Add(
-                "Attacker Name: " + m.AttackerStats.PlayerType + " HP: " + m.AttackerStats.HP + "/" + m.AttackerStats.MAXHP +
+                "Attacker Name: " + m.AttackerStats.PlayerType + " HP: " + m.AttackerStats.HP + "/" + m.AttackerStats.MAXHP * 5 +
                 " Strength: " + m.AttackerStats.Strength + " Agility: " + m.AttackerStats.Agility + " Dexterity " + m.AttackerStats.Dexterity +
-                " Stamina: " + m.AttackerStats.Stamina + "/" + m.AttackerStats.MaxStamina
+                " Stamina: " + m.AttackerStats.Stamina + "/" + m.AttackerStats.MaxStamina * 5
                 );
             lines.Add(
-                 "Defender Name: " + m.DefenderStats.PlayerType + " HP: " + m.DefenderStats.HP + "/" + m.DefenderStats.MAXHP +
+                 "Defender Name: " + m.DefenderStats.PlayerType + " HP: " + m.DefenderStats.HP + "/" + m.DefenderStats.MAXHP * 5+
                  " Strength: " + m.DefenderStats.Strength + " Agility: " + m.DefenderStats.Agility + " Dexterity " + m.DefenderStats.Dexterity +
-                 " Stamina: " + m.DefenderStats.Stamina + "/" + m.DefenderStats.MaxStamina
+                 " Stamina: " + m.DefenderStats.Stamina + "/" + m.DefenderStats.MaxStamina * 5
                  );
 
         }

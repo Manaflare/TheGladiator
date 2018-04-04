@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BracketCharacterDisplay : CharacterSpriteManager {
-
-	// Use this for initialization
-	protected override void Start () {
-        //base.Start();
-            //loadImages();
-            //playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+    protected override void Start()
+    {
         
-            //applySettings();
-	}
-	public void Draw(ListDataInfo draw)
+    }
+    public void Draw(ListDataInfo draw)
     {
         loadImages();
         playerData = new ListDataInfo(draw);

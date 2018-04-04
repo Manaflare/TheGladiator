@@ -33,8 +33,8 @@ public class MasterManager : MonoBehaviour {
 
     private void Awake()
     {
-       
 
+        //Random.InitState(100);
         QualitySettings.vSyncCount = 0;
         ManagerLoadScene = GetComponent<LoadSceneManager>();
         ManagerGlobalData = GetComponent<GlobalDataManager>();

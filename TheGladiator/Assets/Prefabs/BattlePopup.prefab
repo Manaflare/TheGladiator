@@ -506,7 +506,9 @@ MonoBehaviour:
   - {fileID: 114717041170606436}
   - {fileID: 114409459361134080}
   - {fileID: 114010332276445976}
+  enemyDrawIndex: 0
   WinnerName: {fileID: 114032025868553490}
+  title: {fileID: 114632118446738798}
   duration: 5
 --- !u!114 &114364568151174552
 MonoBehaviour:
@@ -935,7 +937,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 7
   m_TargetDisplay: 0
 --- !u!224 &224094547386652052
 RectTransform:

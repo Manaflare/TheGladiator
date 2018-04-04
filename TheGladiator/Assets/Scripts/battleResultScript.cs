@@ -8,9 +8,9 @@ public class BattleResultScript : MonoBehaviour {
     public Stats winner;
 
     public Text[] winnerStats;
-
+    public int enemyDrawIndex;
     public Text WinnerName;
-
+    public Text title;
 
     [Range(0.0f, 10.0f)]
     public float duration;
@@ -26,14 +26,31 @@ public class BattleResultScript : MonoBehaviour {
     }
     void Start ()
     {
+        
         WinnerName.text = winner.Name;
         setStatValues(winnerStats, winner);
-
+        if  (winner.PlayerType == Constants.PlayerType.PLAYER)
+        {
+            title.text = "You won!";
+            GetComponentInChildren<BattlePopupCharacterDsiplay>().Draw(MasterManager.ManagerGlobalData.GetPlayerDataInfo());
+        }
+        else
+        {
+            title.text = "You lost to!";
+            GetComponentInChildren<BattlePopupCharacterDsiplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[enemyDrawIndex]);
+        }
     }
 	void battleEnd()
     {
-        MasterManager.ManagerLoadScene.LoadScene("Town");
-        Destroy(this.transform.root.gameObject);
+        if (winner.PlayerType == Constants.PlayerType.ENEMY)
+        {
+            MasterManager.ManagerLoadScene.LoadScene("Town");
+        }
+        else
+        {
+            Destroy(this.transform.root.gameObject);
+            GameObject.FindGameObjectWithTag("aimanager").GetComponent<AIManager>().displayBracket();
+        }
     }
 	// Update is called once per frame
 	void Update () {
