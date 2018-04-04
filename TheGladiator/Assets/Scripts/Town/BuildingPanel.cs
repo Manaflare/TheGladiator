@@ -39,6 +39,13 @@ public class BuildingPanel : MonoBehaviour {
             MasterManager.ManagerPopup.ShowMessageBox("System", "This building is not available now", Constants.PopupType.POPUP_NO);
         }
 
+        if (BuildingStatus == Constants.BuildingPanel_Status.ONLY_SUNDAY && MasterManager.ManagerGlobalData.GetEnvData().days != Constants.DayType.SUNDAY)
+        {
+            MasterManager.ManagerPopup.ShowMessageBox("Not Open Yet", "This building is only open on Sundays", Constants.PopupType.POPUP_NO);
+        }else if (BuildingStatus == Constants.BuildingPanel_Status.ONLY_SUNDAY && MasterManager.ManagerGlobalData.GetEnvData().days == Constants.DayType.SUNDAY)
+        {
+            return (BuildingStatus == Constants.BuildingPanel_Status.ONLY_SUNDAY);
+        }
         return (BuildingStatus == Constants.BuildingPanel_Status.AVAILABLE);
     }
 
