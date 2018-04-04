@@ -49,7 +49,7 @@ public class CreditText : MonoBehaviour {
             return;
 
         RectTransform rt = GetComponent<RectTransform>();
-        if(rt.anchoredPosition.y <= -10)
+        if(rt.anchoredPosition.y <= 30)
            GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y + speed);
         else
         {
@@ -75,7 +75,7 @@ public class CreditText : MonoBehaviour {
     public void GoBackToIntro()
     {
         MasterManager.ManagerSound.StopBackgroundMusic();
-        MasterManager.ManagerLoadScene.LoadScene("Intro");
+        MasterManager.ManagerLoadScene.LoadScene("MainMenu",false);
     }
 
 }
