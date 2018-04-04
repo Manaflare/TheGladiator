@@ -45,14 +45,16 @@ public class BattleResultScript : MonoBehaviour {
         if (winner.PlayerType == Constants.PlayerType.ENEMY)
         {
             MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].HP = 1;
-
+            MasterManager.ManagerGlobalData.GetEnvData().gold += 20 * MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier;
             MasterManager.ManagerLoadScene.LoadScene("Town");
         }
         else
         {
+            MasterManager.ManagerGlobalData.GetEnvData().gold += 5 * MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier;
             Destroy(this.transform.root.gameObject);
             GameObject.FindGameObjectWithTag("aimanager").GetComponent<AIManager>().displayBracket();
         }
+        MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Stamina = 0;
     }
     // Update is called once per frame
     void Update()

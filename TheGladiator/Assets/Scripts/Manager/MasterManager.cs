@@ -71,7 +71,11 @@ public class MasterManager : MonoBehaviour {
 
             _jsonString = (TextAsset)Resources.Load("JSON/Credit", typeof(TextAsset));
             System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_CREDIT], _jsonString.text);
+
+            ManagerGlobalData.LoadallData();
+
         }
+
 
 
 

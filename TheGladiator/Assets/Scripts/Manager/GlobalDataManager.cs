@@ -36,6 +36,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
 
     public void LoadallData()
     {
+        
         playerDataInfo = Utility.ReadDataFromJSON<ListDataInfo>(Constants.JSONIndex.DATA_PLAYER);
         enemiesDataInfo = Utility.ReadDataFromJSON<ListEnemiesInfo>(Constants.JSONIndex.DATA_ENEMY);
         itemDataInfo = Utility.ReadDataFromJSON<ListItemsInfo>(Constants.JSONIndex.DATA_ITEM);
@@ -44,7 +45,7 @@ public class GlobalDataManager : MonoBehaviour, IManager {
         config = Utility.ReadDataFromJSON<Configuration>(Constants.JSONIndex.DATA_CONFIG);
         creditData = Utility.ReadDataFromJSON<ListCreditInfo>(Constants.JSONIndex.DATA_CREDIT);
 
-        //Debug.Log(playerStatus.spriteList[0].FaceHairIndex);
+        Debug.Log("All Data Loaded");
         //Debug.Log(enemiesStatus[0].statsList[0].Agility);
     }
 

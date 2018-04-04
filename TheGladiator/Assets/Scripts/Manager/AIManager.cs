@@ -104,11 +104,16 @@ public class AIManager : MonoBehaviour
         {
             Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0]);
             animators[C.PlayerType.ENEMY].gameObject.GetComponent<BattleCharacterDisplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]]);
+
         }
         else if ( wins == 2)
         {
             Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[final[0]].statsList[0]);
             animators[C.PlayerType.ENEMY].gameObject.GetComponent<BattleCharacterDisplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[final[0]]);
+            if (Battle[Battle.Count - 1].DefenderStats.PlayerType == C.PlayerType.PLAYER)
+            {
+                MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier++;
+            }
         }
         StartCoroutine(animateBattle());
     }
