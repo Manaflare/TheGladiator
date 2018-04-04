@@ -44,6 +44,8 @@ public class BattleResultScript : MonoBehaviour {
     {
         if (winner.PlayerType == Constants.PlayerType.ENEMY)
         {
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].HP = 1;
+
             MasterManager.ManagerLoadScene.LoadScene("Town");
         }
         else
