@@ -26,12 +26,14 @@ public class CreditText : MonoBehaviour {
     [SerializeField]
     private Text descText;
 
+    [SerializeField]
+    private AudioClip backgroundMusic;
     private Vector2 originPos;
     private Credit[] creditData;
     private int index_count;
     private bool bMoving = false;
     void Start () {
-        MasterManager.ManagerSound.StopBackgroundMusic();
+        MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
         index_count = -1;
         originPos = GetComponent<RectTransform>().anchoredPosition;
         creditData = MasterManager.ManagerGlobalData.GetAllCreditData().creditList.ToArray();
@@ -72,6 +74,7 @@ public class CreditText : MonoBehaviour {
 
     public void GoBackToIntro()
     {
+        MasterManager.ManagerSound.StopBackgroundMusic();
         MasterManager.ManagerLoadScene.LoadScene("Intro");
     }
 
