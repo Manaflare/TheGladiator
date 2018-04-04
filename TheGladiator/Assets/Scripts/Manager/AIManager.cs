@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using UnityEngine;
-
+using UnityEngine.UI;
 using C = Constants;
 
 public class Move
@@ -33,6 +31,7 @@ public class Move
 
 public class AIManager : MonoBehaviour
 {
+    #region Battle Variables
     [Header("Battle Result")]
     public GameObject WinnerPopup;
 
@@ -43,6 +42,8 @@ public class AIManager : MonoBehaviour
     [Header("Battle Start Delay")]
     [Range(0.0f, 10.0f)]
     public float Delay;
+    private float time = 0.0f;
+    private bool doOnce = true;
 
     [HideInInspector]
     public bool CanAttack = true;
@@ -50,6 +51,14 @@ public class AIManager : MonoBehaviour
     private Stats player1Stats;
     private Stats player2Stats;
     private Dictionary<C.PlayerType, Animator> animators;
+    #endregion
+
+    Dictionary<string, int> ValidEnemies;
+    public GameObject bracket;
+    List<int> first = new List<int>();
+    List<int> nextThree = new List<int>();
+    List<int> final = new List<int>();
+    public int wins = 0;
 
     // declare variables for BGM
     public AudioClip introMusic;
@@ -57,29 +66,150 @@ public class AIManager : MonoBehaviour
     public AudioClip victoryMusic;
     public AudioClip defeatMusic;
 
+
     private void Start()
     {
-        // call BGM intro Music
-        MasterManager.ManagerSound.PlayBackgroundMusic(introMusic);
+        BracketController.layers = 1;
+        ValidEnemies = new Dictionary<string, int>();
 
-        Random.InitState(100);
-        Battle = new List<Move>();
+        PopulateEnemies();
+        findAutoOpponents();
+        displayBracket();
+        drawPlayers(first[0]);
+
+
 
         animators = new Dictionary<C.PlayerType, Animator>()
         {
             {C.PlayerType.PLAYER, player1.GetComponent<Animator>() },
             {C.PlayerType.ENEMY, player2.GetComponent<Animator>() }
         };
+    }
 
-        player1Stats = player1.GetComponent<Attribute>().getSTATS();
-        player2Stats = player2.GetComponent<Attribute>().getSTATS();
+    public void play()
+    {
+        animators[C.PlayerType.ENEMY].gameObject.SetActive(true);
+        foreach(var a in animators[C.PlayerType.ENEMY].gameObject.GetComponentsInChildren<Image>())
+        {
+            Destroy(a.gameObject);
+        }
+        
+        Battle = new List<Move>();
+        if (wins == 0)
+        {
+            Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[0]].statsList[0]);
+            animators[C.PlayerType.ENEMY].gameObject.GetComponent<BattleCharacterDisplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[0]]);
+        }
+        else if (wins == 1)
+        {
+            Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0]);
+            animators[C.PlayerType.ENEMY].gameObject.GetComponent<BattleCharacterDisplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]]);
+        }
+        else if ( wins == 2)
+        {
+            Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[final[0]].statsList[0]);
+            animators[C.PlayerType.ENEMY].gameObject.GetComponent<BattleCharacterDisplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[final[0]]);
+        }
+        StartCoroutine(animateBattle());
+    }
 
-        Battle = BattleSimulator(player1Stats, player2Stats);
+    void drawPlayers(int index)
+    {
+        foreach (var a in FindObjectsOfType<BattleCharacterDisplay>())
+        {
+            if (a.name == "Player1")
+            {
+                a.Draw(MasterManager.ManagerGlobalData.GetPlayerDataInfo());
+            }
+            else
+            {
+                a.Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[index]);
+            }
+        }
+    }
 
-        //writeListToFile(Battle);
-        //Utility.writeListToFile(Battle);
+    void findAutoOpponents()
+    {
+        first = firstSeven();
 
+        List<Move> battle1 = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[1]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[2]].statsList[0]);
+        List<Move> battle2 = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[3]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[4]].statsList[0]);
+        List<Move> battle3 = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[5]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[6]].statsList[0]);
 
+        nextThree.Add(ValidEnemies[battle1[battle1.Count - 1].DefenderStats.Name]);
+        nextThree.Add(ValidEnemies[battle2[battle2.Count - 1].DefenderStats.Name]);
+        nextThree.Add(ValidEnemies[battle3[battle3.Count - 1].DefenderStats.Name]);
+
+        List<Move> lastNPB = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[1]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[2]].statsList[0]);
+
+        final.Add(ValidEnemies[lastNPB[lastNPB.Count - 1].DefenderStats.Name]);
+
+    }
+
+    void PopulateEnemies()
+    {
+        int index = 0;
+        foreach (var a in MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData)
+        {
+            if (a.playerTier == MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier)
+            {
+                ValidEnemies.Add(a.statsList[0].Name, index);
+            }
+            index++;
+        }
+    }
+
+    public void displayBracket(/*List<int> first, List<int> nextThree, List<int> final*/)
+    {
+        Instantiate(bracket);
+
+        GameObject[] Bracket = GameObject.FindGameObjectsWithTag("islayer");
+
+        foreach (var a in Bracket)
+        {
+            if (a.name == "Bottom Layer" && BracketController.layers >= 1)
+            {
+                a.GetComponent<BracketLayer>().drawLayer(first);
+            }
+            if (a.name == "Second Layer" && BracketController.layers >= 2)
+            {
+                a.GetComponent<BracketLayer>().drawLayer(nextThree);
+
+                //MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].HP += ((MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP * 5) / 3);
+                //MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP += ((MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP * 5) / 2);
+                //MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].HP = (MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].HP > MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP * 5) ? MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP : MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].HP;
+                //MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP = (MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP > MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].MAXHP * 5) ? MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].MAXHP : MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP;
+                //Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0]);
+                //StartCoroutine(animateBattle());
+            }
+            if (a.name == "Third Layer" && BracketController.layers >= 3)
+            {
+                a.GetComponent<BracketLayer>().drawLayer(final);
+            }
+            if (a.name == "Winner" && BracketController.layers >= 4)
+            {
+                a.GetComponent<BracketLayer>().drawLayer(final);
+            }
+        }
+        doOnce = true;
+        BracketController.layers++;
+    }
+
+    List<int> firstSeven()
+    {
+        List<int> res = new List<int>();
+        List<int> Valid = new List<int>();
+        foreach(var a in ValidEnemies)
+        {
+            Valid.Add(a.Value);
+        }
+        while (res.Count < 7)
+        {
+            int ran = Random.Range(0, Valid.Count);
+            res.Add(Valid[ran]);
+            Valid.RemoveAt(ran);
+        }
+        return res;
     }
 
     void playMove(Move m)
@@ -106,7 +236,7 @@ public class AIManager : MonoBehaviour
                 break;
 
             case Constants.MoveType.MISS:
-                
+
                 // call SFX Miss
                 MasterManager.ManagerSound.PlaySingleSound("Fast Whoosh By");
 
@@ -116,31 +246,39 @@ public class AIManager : MonoBehaviour
                 break;
 
             case Constants.MoveType.DEATH:
-
-                // call SFX characater dies
-                MasterManager.ManagerSound.PlaySingleSound("Character dies");
+                GameObject reff = Instantiate(WinnerPopup);
                 if (m.DefenderStats.PlayerType == C.PlayerType.PLAYER)
                 {
-                    // call BGM Victory Music
-                    MasterManager.ManagerSound.PlayBackgroundMusic(victoryMusic, false);
-
-                    // call SFX Crowd Victory
-                    MasterManager.ManagerSound.PlayRandomSound("Crowd Victory", "Crowd Angry");
+                    wins++;
+                    CanAttack = true;
                 }
-
                 else
                 {
-                    // call BGM Victory Music
-                    MasterManager.ManagerSound.PlayBackgroundMusic(defeatMusic, false);
+                    reff.GetComponent<BattleResultScript>().enemyDrawIndex = ValidEnemies[m.DefenderStats.Name];
+                    // call SFX characater dies
+                    MasterManager.ManagerSound.PlaySingleSound("Character dies");
+                    if (m.DefenderStats.PlayerType == C.PlayerType.PLAYER)
+                    {
+                        // call BGM Victory Music
+                        MasterManager.ManagerSound.PlayBackgroundMusic(victoryMusic, false);
 
-                    // call SFX Crowd Boo on Defeat
-                    MasterManager.ManagerSound.PlaySingleSound("Crowd Boo");
+                        // call SFX Crowd Victory
+                        MasterManager.ManagerSound.PlayRandomSound("Crowd Victory", "Crowd Angry");
+                    }
+
+                    else
+                    {
+                        // call BGM Victory Music
+                        MasterManager.ManagerSound.PlayBackgroundMusic(defeatMusic, false);
+
+                        // call SFX Crowd Boo on Defeat
+                        MasterManager.ManagerSound.PlaySingleSound("Crowd Boo");
+                    }
+
                 }
-
-                GameObject reff = Instantiate(WinnerPopup);
                 reff.GetComponent<BattleResultScript>().winner = m.DefenderStats;
                 animators[m.AttackerStats.PlayerType].gameObject.GetComponent<Attribute>().onDeath();
-
+                StopCoroutine(animateBattle());
                 break;
         }
     }
@@ -168,6 +306,10 @@ public class AIManager : MonoBehaviour
                 playMove(CurrentMove);
                 if (moveQueue.Count > 0)
                     CurrentMove = moveQueue.Dequeue();
+            }
+            if (GameObject.FindGameObjectWithTag("battlepopup") != null)
+            {
+                break;
             }
             yield return new WaitForFixedUpdate();
         }
@@ -348,22 +490,9 @@ public class AIManager : MonoBehaviour
         }
         return moves;
     }
-    float time = 0.0f;
-    bool doOnce = true;
+    
     void Update()
     {
-        
-        if (doOnce && time > Delay)
-        {
-            doOnce = false;
-            StartCoroutine(animateBattle());
 
-            // call BGM Background Music
-            MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
-        }
-        else if (doOnce)
-        {
-            time += Time.deltaTime;
-        }
     }
 }
