@@ -6,10 +6,15 @@ public class BracketController : MonoBehaviour {
     float time;
     public float delayTime;
     public static int layers = 1;
-	// Use this for initialization
-	void Start () {
+    // declare variables for BGM
+    public AudioClip introMusic;
+    public AudioClip backgroundMusic;
+    // Use this for initialization
+    void Start () {
         time = 0.0f;
-	}
+        // call BGM intro Music
+        MasterManager.ManagerSound.PlayBackgroundMusic(introMusic);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -27,6 +32,8 @@ public class BracketController : MonoBehaviour {
         }
         else
         {
+            // call BGM Background Music
+            MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
             GameObject.FindGameObjectWithTag("aimanager").GetComponent<AIManager>().play();
         }
     }
