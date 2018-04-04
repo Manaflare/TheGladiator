@@ -126,6 +126,12 @@ public class AIManager : MonoBehaviour
             }
             else
             {
+                //MasterManager.ManagerSprite.ArmorList[Random.Range(0, MasterManager.ManagerSprite.ArmorList.Count)];
+                //MasterManager.ManagerSprite.HelmetList[Random.Range(0, MasterManager.ManagerSprite.HelmetList.Count)];
+                //MasterManager.ManagerSprite.RightHandList[Random.Range(0, MasterManager.ManagerSprite.RightHandList.Count)];
+                //MasterManager.ManagerSprite.LeftHandList[Random.Range(0, MasterManager.ManagerSprite.LeftHandList.Count)];
+                //asterManager.ManagerSprite.ShoesList[Random.Range(0, MasterManager.ManagerSprite.ShoesList.Count)];
+                //MasterManager.ManagerSprite.PantsList[Random.Range(0, MasterManager.ManagerSprite.BodyList.Count)];
                 a.Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[index]);
             }
         }
@@ -152,10 +158,51 @@ public class AIManager : MonoBehaviour
     void PopulateEnemies()
     {
         int index = 0;
+        Debug.Log(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData.Count);
         foreach (var a in MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData)
         {
+                Debug.Log(a.itemList.Count);
             if (a.playerTier == MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier)
             {
+                a.itemList.Clear();
+                ItemDataInfo idf = new ItemDataInfo();
+                idf.Item_type = C.ItemIndex.ARMOR;
+                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.ArmorList.Count);
+                a.itemList.Add(idf);
+
+                idf = new ItemDataInfo();
+                idf.Item_type = C.ItemIndex.HELMET;
+                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.HelmetList.Count);
+                a.itemList.Add(idf);
+
+                idf = new ItemDataInfo();
+                idf.Item_type = C.ItemIndex.LEFT_HAND;
+                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.LeftHandList.Count);
+                a.itemList.Add(idf);
+
+                 idf = new ItemDataInfo();
+                idf.Item_type = C.ItemIndex.PANTS;
+                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.PantsList.Count);
+                a.itemList.Add(idf);
+
+                idf = new ItemDataInfo();
+                idf.Item_type = C.ItemIndex.RIGHT_HAND;
+                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.RightHandList.Count);
+                a.itemList.Add(idf);
+
+                idf = new ItemDataInfo();
+                idf.Item_type = C.ItemIndex.SHOES;
+                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.ShoesList.Count);
+                a.itemList.Add(idf);
+                
+                for (int i = 0; i < a.itemList.Count; i++)
+                {
+                    if (Random.value >= 0.5)
+                    {
+                        a.equipedItensId.Add(i);
+                    }
+                }
+
                 ValidEnemies.Add(a.statsList[0].Name, index);
             }
             index++;
