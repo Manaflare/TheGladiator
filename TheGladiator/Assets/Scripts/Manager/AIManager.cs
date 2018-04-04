@@ -52,7 +52,6 @@ public class AIManager : MonoBehaviour
     private Stats player2Stats;
     private Dictionary<C.PlayerType, Animator> animators;
     #endregion
-    public GameObject PlayerHud;
     
     Dictionary<string, int> ValidEnemies;
     public GameObject bracket;
@@ -82,8 +81,6 @@ public class AIManager : MonoBehaviour
         findAutoOpponents();
         displayBracket();
         drawPlayers(first[0]);
-        PlayerHud.GetComponent<ScaleBar>().UpdateBar(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0]);
-
 
 
 
@@ -158,10 +155,8 @@ public class AIManager : MonoBehaviour
     void PopulateEnemies()
     {
         int index = 0;
-        Debug.Log(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData.Count);
         foreach (var a in MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData)
         {
-                Debug.Log(a.itemList.Count);
             if (a.playerTier == MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier)
             {
                 a.itemList.Clear();
@@ -264,10 +259,7 @@ public class AIManager : MonoBehaviour
 
     void playMove(Move m)
     {
-        if (m.AttackerStats.PlayerType == C.PlayerType.PLAYER)
-        {
-            PlayerHud.GetComponent<ScaleBar>().UpdateBar(m.AttackerStats);
-        }
+
         switch (m.typeOfMove)
         {
             
