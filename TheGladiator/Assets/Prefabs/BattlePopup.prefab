@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 223360352380203974}
   - component: {fileID: 114364568151174552}
   - component: {fileID: 114400665702669200}
-  - component: {fileID: 114354099519951744}
+  - component: {fileID: 114169511784371720}
   m_Layer: 5
   m_Name: BattlePopup
   m_TagString: battlepopup
@@ -385,6 +385,36 @@ MonoBehaviour:
   m_Text: 'Winner
 
 '
+--- !u!114 &114169511784371720
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1787027793309568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a57dd206d4c284aac0a9e41ecca752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winner:
+    Name: 
+    PlayerType: 0
+    HP: 0
+    MAXHP: 0
+    Strength: 0
+    Agility: 0
+    Dexterity: 0
+    Stamina: 0
+    MaxStamina: 0
+  winnerStats:
+  - {fileID: 114231863020555538}
+  - {fileID: 114717041170606436}
+  - {fileID: 114409459361134080}
+  - {fileID: 114010332276445976}
+  enemyDrawIndex: 0
+  WinnerName: {fileID: 114032025868553490}
+  title: {fileID: 114632118446738798}
+  duration: 5
 --- !u!114 &114217271790379704
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -480,36 +510,6 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 'HP:'
---- !u!114 &114354099519951744
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1787027793309568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 643c2781546ec404b96c9e4ea4ecc0f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  winner:
-    Name: 
-    PlayerType: 0
-    HP: 0
-    MAXHP: 0
-    Strength: 0
-    Agility: 0
-    Dexterity: 0
-    Stamina: 0
-    MaxStamina: 0
-  winnerStats:
-  - {fileID: 114231863020555538}
-  - {fileID: 114717041170606436}
-  - {fileID: 114409459361134080}
-  - {fileID: 114010332276445976}
-  enemyDrawIndex: 0
-  WinnerName: {fileID: 114032025868553490}
-  title: {fileID: 114632118446738798}
-  duration: 5
 --- !u!114 &114364568151174552
 MonoBehaviour:
   m_ObjectHideFlags: 1
