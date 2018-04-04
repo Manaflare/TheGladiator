@@ -9,6 +9,7 @@ public class MainMenuScript : MonoBehaviour
     public Button newGameButton;
     public Button continueButton;
     public Button settingsButton;
+    public Button creditButton;
 
     public GameObject dataBlock;
     public Text playerName;
@@ -29,7 +30,7 @@ public class MainMenuScript : MonoBehaviour
     {
         // call BGM and SFX
         MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
-        MasterManager.ManagerSound.PlaySingleSound("Attack Sword");
+        MasterManager.ManagerSound.PlaySingleSound("Sword Clash");
 
         Button ngb = newGameButton.GetComponent<Button>();
         ngb.onClick.AddListener(toCharacterCreation);
@@ -39,6 +40,10 @@ public class MainMenuScript : MonoBehaviour
 
         Button setb = settingsButton.GetComponent<Button>();
         setb.onClick.AddListener(loadSettingsMenu);
+
+        Button creditb = creditButton.GetComponent<Button>();
+        creditb.onClick.AddListener(loadCredit);
+
         playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         if (playerData.spriteList.Count == 0)
         {
@@ -66,6 +71,11 @@ public class MainMenuScript : MonoBehaviour
     void continueFile()
     {
         MasterManager.ManagerLoadScene.LoadScene("Town");
+    }
+
+    void loadCredit()
+    {
+        MasterManager.ManagerLoadScene.LoadScene("Credits");
     }
 
     void loadSettingsMenu()

@@ -12,7 +12,7 @@ public class SoundManager : MonoBehaviour, IManager {
     public float lowPitch = 0.95f;
     public float HighPitch = 1.05f;
 
-
+    [SerializeField]
     private Dictionary<string, AudioClip> mapAudioFiles;
 
     // Use this for initialization
@@ -34,7 +34,7 @@ public class SoundManager : MonoBehaviour, IManager {
 
 	}
 
-    public void PlayBackgroundMusic(AudioClip backgroundMusic)
+    public void PlayBackgroundMusic(AudioClip backgroundMusic, bool looping = true)
     {
         if(musicSource == null)
         {
@@ -43,8 +43,16 @@ public class SoundManager : MonoBehaviour, IManager {
         if (musicSource.isPlaying == true)
             musicSource.Stop();
 
+        musicSource.loop = looping;
+
         musicSource.clip = backgroundMusic;
         musicSource.Play();
+    }
+
+    public void StopBackgroundMusic()
+    {
+        if (musicSource.isPlaying == true)
+            musicSource.Stop();
     }
 
     public void ChangeBackgroundMusic(AudioClip music)

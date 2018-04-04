@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 122960714}
   - component: {fileID: 122960713}
   - component: {fileID: 122960712}
+  - component: {fileID: 122960715}
   m_Layer: 5
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -305,7 +306,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 122960713}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 122960715}
+        m_MethodName: PlayButtonSound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Menu Confirm
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &122960713
@@ -341,6 +353,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 122960710}
+--- !u!114 &122960715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 122960710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aea70a06c0f0d54388e8b57dbd171c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &150632830
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507802c60dfd7af48b02110dee31b41c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyValue: '#TEXT_SETTINGS'
+  keyValue: '#TEXT_CREDITS'
 --- !u!114 &160095030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -674,6 +697,7 @@ GameObject:
   - component: {fileID: 314198316}
   - component: {fileID: 314198315}
   - component: {fileID: 314198314}
+  - component: {fileID: 314198317}
   m_Layer: 5
   m_Name: NewGameButton
   m_TagString: Untagged
@@ -738,7 +762,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 314198315}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 314198317}
+        m_MethodName: PlayButtonSound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Menu Confirm
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &314198315
@@ -774,6 +809,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 314198312}
+--- !u!114 &314198317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 314198312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aea70a06c0f0d54388e8b57dbd171c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &493008085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,8 +1064,9 @@ GameObject:
   - component: {fileID: 578448683}
   - component: {fileID: 578448682}
   - component: {fileID: 578448681}
+  - component: {fileID: 578448684}
   m_Layer: 5
-  m_Name: SettingsButton (1)
+  m_Name: CreditsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1094,6 +1141,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 578448684}
+        m_MethodName: PlayButtonSound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Menu Confirm
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &578448682
@@ -1129,6 +1187,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 578448679}
+--- !u!114 &578448684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 578448679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aea70a06c0f0d54388e8b57dbd171c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &587419440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1842,6 +1911,7 @@ GameObject:
   - component: {fileID: 1017221851}
   - component: {fileID: 1017221850}
   - component: {fileID: 1017221849}
+  - component: {fileID: 1017221852}
   m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -1918,6 +1988,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1017221852}
+        m_MethodName: PlayButtonSound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Menu Select
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1017221850
@@ -1953,6 +2034,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1017221847}
+--- !u!114 &1017221852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1017221847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aea70a06c0f0d54388e8b57dbd171c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1131085669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2359,6 +2451,7 @@ MonoBehaviour:
   newGameButton: {fileID: 314198314}
   continueButton: {fileID: 122960712}
   settingsButton: {fileID: 1017221849}
+  creditButton: {fileID: 578448681}
   dataBlock: {fileID: 1631192116}
   playerName: {fileID: 1496005578}
   HP: {fileID: 1887442984}
@@ -2536,6 +2629,21 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 706394355}
     m_Modifications:
+    - target: {fileID: 114247488967316620, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114877802023410022, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114725257586229194, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4953319096983260, guid: 908a5214d8c758449bfe08a94653ae3c, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2620,7 +2728,7 @@ Prefab:
     - target: {fileID: 224200986247335726, guid: 908a5214d8c758449bfe08a94653ae3c,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.26623565
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224075946269825104, guid: 908a5214d8c758449bfe08a94653ae3c,
         type: 2}
@@ -2797,9 +2905,157 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: -262.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114247488967316620, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114247488967316620, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114247488967316620, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114247488967316620, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1490049263}
+    - target: {fileID: 114247488967316620, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayButtonSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 114247488967316620, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114247488967316620, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Menu Confirm
+      objectReference: {fileID: 0}
+    - target: {fileID: 114877802023410022, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114877802023410022, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114877802023410022, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114877802023410022, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1490049262}
+    - target: {fileID: 114877802023410022, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayButtonSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 114877802023410022, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114877802023410022, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Menu Select
+      objectReference: {fileID: 0}
+    - target: {fileID: 114725257586229194, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114725257586229194, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114725257586229194, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1490049265}
+    - target: {fileID: 114725257586229194, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayButtonSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 114725257586229194, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114725257586229194, guid: 908a5214d8c758449bfe08a94653ae3c,
+        type: 2}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Menu Select
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 908a5214d8c758449bfe08a94653ae3c, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1490049260 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1195090262021398, guid: 908a5214d8c758449bfe08a94653ae3c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1490049259}
+--- !u!1 &1490049261 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1121166498019802, guid: 908a5214d8c758449bfe08a94653ae3c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1490049259}
+--- !u!114 &1490049262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1490049260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aea70a06c0f0d54388e8b57dbd171c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1490049263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1490049261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aea70a06c0f0d54388e8b57dbd171c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1490049264 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1413815480302264, guid: 908a5214d8c758449bfe08a94653ae3c,
+    type: 2}
+  m_PrefabInternal: {fileID: 1490049259}
+--- !u!114 &1490049265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1490049264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aea70a06c0f0d54388e8b57dbd171c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1496005576
 GameObject:
   m_ObjectHideFlags: 0

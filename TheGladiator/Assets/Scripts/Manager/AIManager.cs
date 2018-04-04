@@ -60,6 +60,13 @@ public class AIManager : MonoBehaviour
     List<int> final = new List<int>();
     public int wins = 0;
 
+    // declare variables for BGM
+    public AudioClip introMusic;
+    public AudioClip backgroundMusic;
+    public AudioClip victoryMusic;
+    public AudioClip defeatMusic;
+
+
     private void Start()
     {
         BracketController.layers = 1;
@@ -210,15 +217,34 @@ public class AIManager : MonoBehaviour
         switch (m.typeOfMove)
         {
             case Constants.MoveType.ATTACK:
+
+                // call SFX random Attacks
+                MasterManager.ManagerSound.PlayRandomSound("Sword Clash Short", "Attack Knife", "Whip Crack", "Attack Shield", "Attack Sword");
+
                 animators[m.AttackerStats.PlayerType].Play("Attack");
                 break;
+
             case Constants.MoveType.DODGE:
                 animators[m.AttackerStats.PlayerType].Play("Attack");
+
+                // call SFX Dodge
+                MasterManager.ManagerSound.PlaySingleSound("Quick Swinging Swish");
+                // call SFX Wow
+                MasterManager.ManagerSound.PlayRandomSound("People Saying Wow", "People Saying Ahh");
+
                 animators[m.DefenderStats.PlayerType].Play("Dodge");
                 break;
+
             case Constants.MoveType.MISS:
+
+                // call SFX Miss
+                MasterManager.ManagerSound.PlaySingleSound("Fast Whoosh By");
+
+                // call SFX Oohhh on Miss
+                MasterManager.ManagerSound.PlaySingleSound("People Saying Oohhh");
                 animators[m.AttackerStats.PlayerType].Play("Miss");
                 break;
+
             case Constants.MoveType.DEATH:
                 GameObject reff = Instantiate(WinnerPopup);
                 if (m.DefenderStats.PlayerType == C.PlayerType.PLAYER)
@@ -229,6 +255,25 @@ public class AIManager : MonoBehaviour
                 else
                 {
                     reff.GetComponent<BattleResultScript>().enemyDrawIndex = ValidEnemies[m.DefenderStats.Name];
+                    // call SFX characater dies
+                    MasterManager.ManagerSound.PlaySingleSound("Character dies");
+                    if (m.DefenderStats.PlayerType == C.PlayerType.PLAYER)
+                    {
+                        // call BGM Victory Music
+                        MasterManager.ManagerSound.PlayBackgroundMusic(victoryMusic, false);
+
+                        // call SFX Crowd Victory
+                        MasterManager.ManagerSound.PlayRandomSound("Crowd Victory", "Crowd Angry");
+                    }
+
+                    else
+                    {
+                        // call BGM Victory Music
+                        MasterManager.ManagerSound.PlayBackgroundMusic(defeatMusic, false);
+
+                        // call SFX Crowd Boo on Defeat
+                        MasterManager.ManagerSound.PlaySingleSound("Crowd Boo");
+                    }
 
                 }
                 reff.GetComponent<BattleResultScript>().winner = m.DefenderStats;

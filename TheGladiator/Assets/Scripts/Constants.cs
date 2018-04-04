@@ -113,6 +113,7 @@ public static class Constants
         DATA_ENVIRONMENT,
         DATA_WORK,
         DATA_CONFIG,
+        DATA_CREDIT,
     }
 
     public delegate void CallbackFunction();

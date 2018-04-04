@@ -9,9 +9,11 @@ public class TrainingManager : MonoBehaviour
 {
     public Text text_MaxHp;
     public Text text_agil;
-    public Text text_stam;
+    public Text text_MaxStam;
     public Text text_str;
     public Text text_dex;
+    public Text text_stam;
+    public Text text_gold;
 
     public Text ShowCost;
 
@@ -21,7 +23,7 @@ public class TrainingManager : MonoBehaviour
     protected byte StrPoints;
     protected byte AgiPoints;
     protected byte DexPoints;
-    protected short StaPoints;
+    protected short MaxStaPoints;
 
     public Image faceHairImage;
     public Text faceHairText;
@@ -36,16 +38,14 @@ public class TrainingManager : MonoBehaviour
     protected int bodyIndex;
 
     [Header("Training Completion Stat Change")]
-    public Text OldAgility;
+
     public Text NewAgility;
-    public Text OldDexterity;
     public Text NewDexterity;
-    public Text OldMaxHP;
     public Text NewMaxHP;
-    public Text OldStr;
     public Text NewStr;
-    public Text OldStam;
+    public Text NewMaxStam;
     public Text NewStam;
+    public Text NewGold;
 
     [Header("Training Effectivness Settings")]
     public int minChange;
@@ -57,7 +57,7 @@ public class TrainingManager : MonoBehaviour
     public Button Str_btn;
     public Button Agi_btn;
     public Button Dex_btn;
-    public Button Stam_btn;
+    public Button Sta_btn;
 
     // Use this for initialization
     void OnEnable()
@@ -65,7 +65,8 @@ public class TrainingManager : MonoBehaviour
        
          ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
          int agil = playerDataInfo.statsList[0].Agility;
-         text_agil.text = agil.ToString();
+         text_agil.text = NewAgility.text = agil.ToString();
+        
          if(agil == byte.MaxValue)
         {
             Agi_btn.gameObject.SetActive(false);
@@ -75,19 +76,19 @@ public class TrainingManager : MonoBehaviour
             Agi_btn.enabled = true;
         }
 
-         int stam = playerDataInfo.statsList[0].MaxStamina;
-         text_stam.text = stam.ToString();
-         if(stam == byte.MaxValue)
+         int Maxstam = playerDataInfo.statsList[0].MaxStamina;
+         text_MaxStam.text = NewMaxStam.text = Maxstam.ToString();
+         if(Maxstam == byte.MaxValue)
         {
-            Stam_btn.gameObject.SetActive(false);
+            Sta_btn.gameObject.SetActive(false);
         }
         else
         {
-            Stam_btn.enabled = true;
+            Sta_btn.enabled = true;
         }
 
          int str = playerDataInfo.statsList[0].Strength;
-         text_str.text = str.ToString();
+         text_str.text = NewStr.text = str.ToString();
         if(str == byte.MaxValue)
         {
             Str_btn.gameObject.SetActive(false);
@@ -99,7 +100,7 @@ public class TrainingManager : MonoBehaviour
 
 
          int dex = playerDataInfo.statsList[0].Dexterity;
-         text_dex.text = dex.ToString();
+         text_dex.text = NewDexterity.text = dex.ToString();
          if(dex == byte.MaxValue)
         {
             Dex_btn.gameObject.SetActive(false);
@@ -111,7 +112,7 @@ public class TrainingManager : MonoBehaviour
 
 
          int MaxHp = playerDataInfo.statsList[0].MAXHP * HpMultiplier;
-         text_MaxHp.text = MaxHp.ToString();
+         text_MaxHp.text = NewMaxHP.text = MaxHp.ToString();
          if(MaxHp == byte.MaxValue)
         {
             MHp_btn.gameObject.SetActive(false);
@@ -130,51 +131,100 @@ public class TrainingManager : MonoBehaviour
 
     void TrainingCost()
     {
+        ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+        playerDataInfo.statsList[0].Stamina -= 5;
+        NewStam.text = playerDataInfo.statsList[0].Stamina.ToString();
 
+        EnvironmentData envData = MasterManager.ManagerGlobalData.GetEnvData();
+        envData.gold -= 25;
+        NewGold.text = envData.gold.ToString("N0");
+    }
+
+    bool canTrain()
+    {
+        bool Result = true;
+        ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+        if (playerDataInfo.statsList[0].Stamina < 5)
+        {
+            MasterManager.ManagerPopup.ShowMessageBox("System", "You don't have enough Stamina!", Constants.PopupType.POPUP_SYSTEM);
+            Result = false;
+        }
+        else
+        {
+            EnvironmentData envData = MasterManager.ManagerGlobalData.GetEnvData();
+            if (envData.gold < 25)
+            {
+                MasterManager.ManagerPopup.ShowMessageBox("System", "You don't have enough Gold!", Constants.PopupType.POPUP_SYSTEM);
+                Result = false;
+                
+            }
+        }
+
+        return Result;
     }
 
     private void TrainStat(Text originText, Text newText, int multiplier = 1)
     {
         //for variables in train complete window
-        OldMaxHP.text = NewMaxHP.text =  text_MaxHp.text;
-        OldStr.text = NewStr.text =  text_str.text;
-        OldAgility.text = NewAgility.text =  text_agil.text;
-        OldDexterity.text = NewDexterity.text =  text_dex.text;
-        OldStam.text = NewStam.text = text_stam.text;
 
         int oldStat = int.Parse(originText.text);
         int newStat = oldStat + ((Random.Range(1, 4) * multiplier));
+
+        
 
         newText.text = newStat.ToString();
         ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         playerDataInfo.statsList[0].Agility = byte.Parse(NewAgility.text);
         playerDataInfo.statsList[0].Dexterity = byte.Parse(NewDexterity.text);
-        playerDataInfo.statsList[0].MaxStamina = short.Parse(NewStam.text);
+        playerDataInfo.statsList[0].MaxStamina = short.Parse(NewMaxStam.text);
         playerDataInfo.statsList[0].Strength = byte.Parse(NewStr.text);
         playerDataInfo.statsList[0].MAXHP = int.Parse(NewMaxHP.text) / HpMultiplier;
+        
+
+
+
+
+
+
 
         MasterManager.ManagerGlobalData.SavePlayerData();
     }
 
+    private void RedText(Text redText)
+    {
+        ResetAllColor();
+        redText.color = new Color(0.0f, 0.62f, 0.0f);
+
+    }
     private void TextColor(Text newText)
     {
         ResetAllColor();
         newText.color = new Color(0.0f, 0.39f, 0.0f);
+        
+
     }
 
     private void ResetAllColor()
     {
-        NewStam.color = new Color(0.0f, 0.0f, 0.0f);
+        NewMaxStam.color = new Color(0.0f, 0.0f, 0.0f);
         NewStr.color = new Color(0.0f, 0.0f, 0.0f);
         NewAgility.color = new Color(0.0f, 0.0f, 0.0f);
         NewDexterity.color = new Color(0.0f, 0.0f, 0.0f);
         NewMaxHP.color = new Color(0.0f, 0.0f, 0.0f);
+        NewStam.color = new Color(0.0f, 0.0f, 0.0f);
+        NewGold.color = new Color(0.0f, 0.0f, 0.0f);
+        
 
     }
 
 
     public void TrainStrength()
     {
+        if (canTrain() == false)
+        {
+            return;
+        }
+
         byte ammountAdd = (byte) Random.Range(minChange, maxChange);
         int expectedStr = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Strength + ammountAdd;
 
@@ -196,6 +246,11 @@ public class TrainingManager : MonoBehaviour
 
     public void TrainMaxHP()
     {
+        if (canTrain() == false)
+        {
+            return;
+        }
+
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
         int expectedMaxHp = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP + ammountAdd;
 
@@ -216,8 +271,23 @@ public class TrainingManager : MonoBehaviour
 
     }
 
+    public void Stamina()
+    {
+
+    }
+
+    public void GoldAmmount()
+    {
+        RedText(NewGold);
+    }
+
     public void TrainAgility()
     {
+        if (canTrain() == false)
+        {
+            return;
+        }
+
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
         int expectedAgi = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Agility + ammountAdd;
 
@@ -239,6 +309,11 @@ public class TrainingManager : MonoBehaviour
 
     public void TrainDexterity()
     {
+        if (canTrain() == false)
+        {
+            return;
+        }
+
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
         int expectedDex = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Dexterity + ammountAdd;
 
@@ -259,8 +334,13 @@ public class TrainingManager : MonoBehaviour
         
     }
 
-    public void TrainStamina()
+    public void TrainMaxStamina()
     {
+        if (canTrain() == false)
+        {
+            return;
+        }
+
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
         int expectedStam = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MaxStamina + ammountAdd;
 
@@ -275,8 +355,8 @@ public class TrainingManager : MonoBehaviour
         
         ShowTrainingCompletion();
 
-        TrainStat(text_stam, NewStam);
-        TextColor(NewStam);
+        TrainStat(text_MaxStam, NewMaxStam);
+        TextColor(NewMaxStam);
      
     }
     
@@ -285,11 +365,12 @@ public class TrainingManager : MonoBehaviour
     {
         TrainingCompletionPrefab.SetActive(true);
         ResetAllColor();
+        TrainingCost();
     }
 
     public void CloseWindow(bool Spendtime)
     {
-        TownManager.Instance.CloseCurrentWindow(Spendtime, CallBackShowTraining);
+        TownManager.Instance.CloseCurrentWindow(Spendtime);
     }
 
     public void CallBackShowTraining()

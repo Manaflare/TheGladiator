@@ -225,8 +225,8 @@ public class ItemCreationManager : MonoBehaviour {
         if (clearName)
         {
             NameText.text = "";
+            PriceText.text = "";
         }
-        PriceText.text = "";
 
         UpdateStatusText();
     }
