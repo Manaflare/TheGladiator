@@ -33,6 +33,25 @@ public class MasterManager : MonoBehaviour {
 
     private void Awake()
     {
+        QualitySettings.vSyncCount = 0;
+        ManagerLoadScene = GetComponent<LoadSceneManager>();
+        ManagerGlobalData = GetComponent<GlobalDataManager>();
+        ManagerSound = GetComponent<SoundManager>();
+        ManagerInput = GetComponent<InputManager>();
+        ManagerSprite = GetComponent<SpriteManager>();
+        ManagerPopup = GetComponent<PopupManager>();
+        ManagerLocalize = GetComponent<LocalizeManager>();
+
+        //added all manager in the manager list
+        managerList.Add(ManagerLoadScene);
+        managerList.Add(ManagerGlobalData);
+        managerList.Add(ManagerSound);
+        managerList.Add(ManagerSprite);
+        managerList.Add(ManagerInput);
+        managerList.Add(ManagerPopup);
+        managerList.Add(ManagerLocalize);
+        StartCoroutine(IE_BootAllManager());
+
         //If mobileCreate a copy of the data json
         if (Application.platform == RuntimePlatform.Android ||
                Application.platform == RuntimePlatform.IPhonePlayer)
@@ -54,27 +73,8 @@ public class MasterManager : MonoBehaviour {
             System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_CREDIT], _jsonString.text);
         }
 
-        QualitySettings.vSyncCount = 0;
-        ManagerLoadScene = GetComponent<LoadSceneManager>();
-        ManagerGlobalData = GetComponent<GlobalDataManager>();
-        ManagerSound = GetComponent<SoundManager>();
-        ManagerInput = GetComponent<InputManager>();
-        ManagerSprite = GetComponent<SpriteManager>();
-        ManagerPopup = GetComponent<PopupManager>();
-        ManagerLocalize = GetComponent<LocalizeManager>();
 
-        //added all manager in the manager list
-        managerList.Add(ManagerLoadScene);
-        managerList.Add(ManagerGlobalData);
-        managerList.Add(ManagerSound);
-        managerList.Add(ManagerSprite);
-        managerList.Add(ManagerInput);
-        managerList.Add(ManagerPopup);
-        managerList.Add(ManagerLocalize);
-        StartCoroutine(IE_BootAllManager());
 
-       
-        
 
         //keep this gameobject the entire project
         DontDestroyOnLoad(gameObject);
