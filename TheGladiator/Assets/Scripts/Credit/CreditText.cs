@@ -49,7 +49,7 @@ public class CreditText : MonoBehaviour {
             return;
 
         RectTransform rt = GetComponent<RectTransform>();
-        if(rt.anchoredPosition.y <= 30)
+        if(rt.anchoredPosition.y <= -10)
            GetComponent<RectTransform>().anchoredPosition = new Vector2(rt.anchoredPosition.x, rt.anchoredPosition.y + speed);
         else
         {
