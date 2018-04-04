@@ -278,6 +278,9 @@ public class WorkPanel : MonoBehaviour
     {
         if(workList.Count > 0)
         {
+            if(playerData == null)
+                playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+
             SetWorkPage(workList[currentIndex], Current);
             goldText.text = (workList[currentIndex].gold * playerData.playerTier).ToString("N0");
             staminaText.text = (workList[currentIndex].stamina * playerData.playerTier).ToString() + "  [" + MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Stamina.ToString() + "]";
