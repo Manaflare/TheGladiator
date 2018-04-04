@@ -264,7 +264,7 @@ public class ShopManager : InventoryManager {
         if(selectedItemID > -1 )
         {
             ItemDataInfo item = filteredItemList[selectedItemID];
-            if (envData.gold > item.price)
+            if (envData.gold >= item.price)
             {
                 envData.gold -= item.price;
                 playerData.itemList.Add(item);

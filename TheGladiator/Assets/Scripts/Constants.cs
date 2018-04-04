@@ -96,6 +96,7 @@ public static class Constants
     {
         NOT_AVAILABLE = 0,
         AVAILABLE,
+        ONLY_SUNDAY,
     }
 
     public const float SECOND_FOR_DAY = 86400.0f;

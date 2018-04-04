@@ -44,8 +44,13 @@ public class TrainingManager : MonoBehaviour
     public Text NewMaxHP;
     public Text NewStr;
     public Text NewMaxStam;
-    public Text NewStam;
-    public Text NewGold;
+    public Text CostStaminaText;
+    public Text CostGoldText;
+    public int CostStaminaBase;
+    public int CostGoldBase;
+    public int CostBase;
+    int CostStamina;
+    int CostGold;
 
     [Header("Training Effectivness Settings")]
     public int minChange;
@@ -120,9 +125,16 @@ public class TrainingManager : MonoBehaviour
          else
         {
             MHp_btn.enabled = true;
-        }     
+        }
 
-         TrainingCompletionPrefab.SetActive(false);
+        int totalPoints = playerDataInfo.statsList[0].MAXHP + playerDataInfo.statsList[0].Strength + playerDataInfo.statsList[0].Agility + playerDataInfo.statsList[0].Dexterity + playerDataInfo.statsList[0].MaxStamina;
+        CostStamina = Mathf.RoundToInt((totalPoints / CostBase) * CostStaminaBase);
+        CostGold = Mathf.RoundToInt((totalPoints / CostBase) * CostGoldBase);
+        CostStaminaText.text = CostStamina.ToString();
+        CostGoldText.text = CostGold.ToString();
+
+
+        TrainingCompletionPrefab.SetActive(false);
         //Stats playerStats = new Stats(NameText.text, Constants.PlayerType.PLAYER, HPPoints, StrPoints, AgiPoints, DexPoints, StaPoints);
         //SpriteInfo playerSpriteInfo = new SpriteInfo(faceHairIndex, hairIndex, bodyIndex);
         //MasterManager.ManagerGlobalData.SetPlayerDataInfo(playerStats, playerSpriteInfo, true);
@@ -132,19 +144,19 @@ public class TrainingManager : MonoBehaviour
     void TrainingCost()
     {
         ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
-        playerDataInfo.statsList[0].Stamina -= 5;
-        NewStam.text = playerDataInfo.statsList[0].Stamina.ToString();
+        playerDataInfo.statsList[0].Stamina -= (short)(CostStamina);
+        //NewStam.text = playerDataInfo.statsList[0].Stamina.ToString();
 
         EnvironmentData envData = MasterManager.ManagerGlobalData.GetEnvData();
-        envData.gold -= 25;
-        NewGold.text = envData.gold.ToString("N0");
+        envData.gold -= CostGold;
+        //NewGold.text = envData.gold.ToString("N0");
     }
 
     bool canTrain()
     {
         bool Result = true;
         ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
-        if (playerDataInfo.statsList[0].Stamina < 5)
+        if (playerDataInfo.statsList[0].Stamina < CostStamina)
         {
             MasterManager.ManagerPopup.ShowMessageBox("System", "You don't have enough Stamina!", Constants.PopupType.POPUP_SYSTEM);
             Result = false;
@@ -152,7 +164,7 @@ public class TrainingManager : MonoBehaviour
         else
         {
             EnvironmentData envData = MasterManager.ManagerGlobalData.GetEnvData();
-            if (envData.gold < 25)
+            if (envData.gold < CostGold)
             {
                 MasterManager.ManagerPopup.ShowMessageBox("System", "You don't have enough Gold!", Constants.PopupType.POPUP_SYSTEM);
                 Result = false;
@@ -211,8 +223,8 @@ public class TrainingManager : MonoBehaviour
         NewAgility.color = new Color(0.0f, 0.0f, 0.0f);
         NewDexterity.color = new Color(0.0f, 0.0f, 0.0f);
         NewMaxHP.color = new Color(0.0f, 0.0f, 0.0f);
-        NewStam.color = new Color(0.0f, 0.0f, 0.0f);
-        NewGold.color = new Color(0.0f, 0.0f, 0.0f);
+        //NewStam.color = new Color(0.0f, 0.0f, 0.0f);
+        //NewGold.color = new Color(0.0f, 0.0f, 0.0f);
         
 
     }
@@ -278,7 +290,7 @@ public class TrainingManager : MonoBehaviour
 
     public void GoldAmmount()
     {
-        RedText(NewGold);
+       // RedText(NewGold);
     }
 
     public void TrainAgility()
@@ -363,6 +375,7 @@ public class TrainingManager : MonoBehaviour
 
     void ShowTrainingCompletion()
     {
+        this.gameObject.SetActive(false);
         TrainingCompletionPrefab.SetActive(true);
         ResetAllColor();
         TrainingCost();
@@ -370,6 +383,8 @@ public class TrainingManager : MonoBehaviour
 
     public void CloseWindow(bool Spendtime)
     {
+        TrainingCompletionPrefab.SetActive(false);
+        this.gameObject.SetActive(true);
         TownManager.Instance.CloseCurrentWindow(Spendtime);
     }
 

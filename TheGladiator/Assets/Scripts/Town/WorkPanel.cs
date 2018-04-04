@@ -42,8 +42,10 @@ public class WorkPanel : MonoBehaviour
     public Text goldText;
     public Text staminaText;
     public Text TimeText;
+    ListDataInfo playerData;
     void Awake()
     {
+        playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         ResetWork();
         bMoving = false;
     }
@@ -210,8 +212,7 @@ public class WorkPanel : MonoBehaviour
     public void OnOK()
     {
         //check stamina
-        ListDataInfo playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
-        if (playerData.statsList[0].Stamina < workList[currentIndex].stamina)
+        if (playerData.statsList[0].Stamina < workList[currentIndex].stamina * playerData.playerTier)
         {
             MasterManager.ManagerPopup.ShowMessageBox("Hey!", "Not Enough Stamina", Constants.PopupType.POPUP_NO);
         }
@@ -241,13 +242,13 @@ public class WorkPanel : MonoBehaviour
     public void CallBackEndWork()
     {
         //make money
-        long earnedGold = workList[currentIndex].gold;
+        long earnedGold = workList[currentIndex].gold * playerData.playerTier;
         MasterManager.ManagerGlobalData.GetEnvData().gold += earnedGold;
         MasterManager.ManagerGlobalData.SaveEnvData();
 
         //reduce stamina
-        ListDataInfo playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
-        playerData.statsList[0].Stamina -= workList[currentIndex].stamina;
+        //ListDataInfo playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+        playerData.statsList[0].Stamina -= (short)(workList[currentIndex].stamina * playerData.playerTier);
         MasterManager.ManagerGlobalData.SavePlayerData();
        
         MasterManager.ManagerPopup.ShowMessageBox("Hey!", "You made " + earnedGold.ToString() + " gold", Constants.PopupType.POPUP_SYSTEM);
@@ -278,8 +279,8 @@ public class WorkPanel : MonoBehaviour
         if(workList.Count > 0)
         {
             SetWorkPage(workList[currentIndex], Current);
-            goldText.text = workList[currentIndex].gold.ToString("N0");
-            staminaText.text = workList[currentIndex].stamina.ToString() + "  [" + MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Stamina.ToString() + "]";
+            goldText.text = (workList[currentIndex].gold * playerData.playerTier).ToString("N0");
+            staminaText.text = (workList[currentIndex].stamina * playerData.playerTier).ToString() + "  [" + MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Stamina.ToString() + "]";
             TimeText.text = ((int)(workList[currentIndex].turn * Constants.HOUR_SPENT)).ToString();
         }
     }
