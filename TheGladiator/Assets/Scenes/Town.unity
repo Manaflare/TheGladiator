@@ -1247,6 +1247,134 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 115479173}
+--- !u!1 &128173051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 128173052}
+  - component: {fileID: 128173055}
+  - component: {fileID: 128173054}
+  - component: {fileID: 128173053}
+  m_Layer: 5
+  m_Name: Intro_11
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &128173052
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 128173051}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 962544435}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 376.935, y: -20.796463}
+  m_SizeDelta: {x: 445.25, y: 127.47}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &128173053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 128173051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 128173054}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1043015320}
+        m_MethodName: NextItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &128173054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 128173051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 685872fe39d33604c9fa4ba9a50a4f73, type: 3}
+    m_FontSize: 35
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Gold -> Mostly to buy better equipment and improve stats. Obtained from
+    performing at the arena or from guildwork
+--- !u!222 &128173055
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 128173051}
 --- !u!1 &136518146
 GameObject:
   m_ObjectHideFlags: 0
@@ -2645,7 +2773,7 @@ GameObject:
   - component: {fileID: 186412369}
   - component: {fileID: 186412368}
   m_Layer: 5
-  m_Name: Intro_13
+  m_Name: Intro_14
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2662,7 +2790,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 962544435}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -2753,11 +2881,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '...
+  m_Text: 'I know, I know... Too much info, but I promise it is not that bad.
 
-    I know, I know... Too much info, but I promise is not that bad.
-
-    Now let''s stop the chit-chat and go train!'
+    Now, get out of here and go train!'
 --- !u!222 &186412370
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3312,9 +3438,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Time -> Almost every action you takes time to complete.
-
-    Gold -> Mostly to buy better equipment.'
+  m_Text: "Time -> Almost every action you takes time to complete. \n"
 --- !u!222 &266900060
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7445,7 +7569,7 @@ MonoBehaviour:
     teach you.
 
 
-    Remember it will consume time and stamina.
+    Takes time and stamina.
 
 '
 --- !u!222 &605004563
@@ -8884,7 +9008,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "I will introduce you to our town, it is very straight forward.\r\n\r\nJust
+  m_Text: "Since you will be here for the next while, \nlet me show you around.\r\n\r\nJust
     follow the signs."
 --- !u!222 &731601878
 CanvasRenderer:
@@ -10063,6 +10187,7 @@ RectTransform:
   - {fileID: 1613386064}
   - {fileID: 1925722621}
   - {fileID: 266900061}
+  - {fileID: 128173052}
   - {fileID: 1974327849}
   - {fileID: 1831620486}
   - {fileID: 186412367}
@@ -12872,10 +12997,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Smith -> You can buy equipment here. What? Do you think I will spend more
-    money with you? HAHAHAHAHAH!!
+  m_Text: 'Smith -> You can buy equipment here. You''ll have to spend your own funds;
+    whether you win or lose I get money.
 
-    Remember it will consume time.'
+
+    Takes time and gold.'
 --- !u!222 &1345291091
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14858,6 +14984,11 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
       value: Menu Confirm
       objectReference: {fileID: 0}
+    - target: {fileID: 114107098215415774, guid: c8a5e7a6501cb0f4d8e1ea49c52e9273,
+        type: 2}
+      propertyPath: m_Text
+      value: Do you want to spend 5 gold to buy some information on one of your enemies?
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c8a5e7a6501cb0f4d8e1ea49c52e9273, type: 2}
   m_IsPrefabParent: 0
@@ -15355,10 +15486,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Spy -> It is always be safe then sorry. When spying on your enemies you
-    learn about theirs stats.
+  m_Text: 'Spy -> Better safe than sorry. The Local Eyes will give up some of their
+    information on the fighters, for a small fee.
 
-    Remember it will gold and time.
+
+    Takes gold and time.
 
 '
 --- !u!222 &1613386066
@@ -15713,7 +15845,7 @@ MonoBehaviour:
   m_Text: 'Home -> You can rest and recover stamina and health.
 
 
-    Remember it will consume time to use it.'
+    Takes time to use it.'
 --- !u!222 &1666910489
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17217,8 +17349,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "What? Didn't you like my plan?\r\nWell, next time don't get caught stealing.\r\nBut
-    let's make a deal, if you beat the tier 10 champion, I will give you your freedom"
+  m_Text: "What? You don't like it?\nWell, next time don't get caught stealing.\r\nHere,
+    let's make a deal, if you beat The Champ, I will give you your freedom."
 --- !u!222 &1778014860
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17917,7 +18049,7 @@ GameObject:
   - component: {fileID: 1831620484}
   - component: {fileID: 1831620483}
   m_Layer: 5
-  m_Name: Intro_12
+  m_Name: Intro_13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18007,10 +18139,12 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'And finally, the Arena -> Every Sunday you will battle against several
-    enemies untill you manage to beat your current tier.
+  m_Text: 'And finally...
 
-    You can skip the week and advance to battle.'
+    Arena -> Every Sunday you will battle against several enemies untill you manage
+    to beat your current tier.
+
+    You can skip to Sunday and advance to battle.'
 --- !u!222 &1831620485
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18028,7 +18162,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 962544435}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -19594,8 +19728,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "As you could realize by now, you have 3 main resources to manage by yourself:\r\nTime,
-    Stamina and Gold"
+  m_Text: 'As you should realise by now, you have 3 main resources to manage: Time,
+    Stamina and Gold.'
 --- !u!222 &1925722623
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19725,7 +19859,7 @@ MonoBehaviour:
   m_Text: 'Guild -> You can do some extra work and earn some gold.
 
 
-    Remember it will consume time and stamina '
+    Takes time and stamina. '
 --- !u!222 &1935309143
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20341,7 +20475,7 @@ GameObject:
   - component: {fileID: 1974327847}
   - component: {fileID: 1974327846}
   m_Layer: 5
-  m_Name: Intro_11
+  m_Name: Intro_12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20431,8 +20565,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Stamina -> If you get low on stamina you will be slower during battle and
-    \r\nwill not be able to perform some actions.\r\n"
+  m_Text: 'Stamina -> Required to do Work or to Train.
+
+    Additionally, Stamina affects your performance
+
+    in the Arena.'
 --- !u!222 &1974327848
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20450,7 +20587,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 962544435}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -23446,8 +23583,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Ok! Listen here, I just bought you.\r\nYou know the rules:\r\nYou fight,
-    I got money and if you don't die you get your freedom, maybe..."
+  m_Text: "Okay! Now listen here, I own you.\r\nHere's the rules:\r\nYou fight, I
+    get money and if you don't die you might get your freedom... maybe..."
 --- !u!222 &2106842822
 CanvasRenderer:
   m_ObjectHideFlags: 0
