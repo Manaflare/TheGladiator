@@ -11,8 +11,8 @@ public class ShopManager : InventoryManager {
     public Text price;
     private EnvironmentData envData;
     List<ItemDataInfo> playerItens;
-    int selectedItemID;
-    int sellItemId;
+    int selectedItemID = -1;
+    int sellItemId = -1;
     List<GameObject> ItemBlocks;
 
     public GameObject inventoryHolder;
@@ -20,6 +20,7 @@ public class ShopManager : InventoryManager {
     public Color buySelectionColor;
     public Color sellSelectionColor;
     public Text actionText;
+    bool hasUsedShop;
 
     // Use this for initialization
     protected override void Start()
@@ -67,7 +68,7 @@ public class ShopManager : InventoryManager {
         coins.text = envData.gold.ToString();
 
         filteredItemList = itemList;
-
+        hasUsedShop = false;
         UpdateItemArea();
     }
     protected override void UpdateText(int id)
@@ -273,13 +274,14 @@ public class ShopManager : InventoryManager {
                 selectedItemID = -1;
                 ResetText();
                 Start();
+                hasUsedShop = true;
             }
             else
             {
                 MasterManager.ManagerPopup.ShowMessageBox("Oh No!", "You don't have enougth gold to buy this Item", Constants.PopupType.POPUP_NO);
             }
         }
-        else
+        else if(sellItemId > -1)
         {
             ItemDataInfo item = playerItens[sellItemId];
             envData.gold += (long)(Math.Round((double)item.price / 3));
@@ -289,15 +291,21 @@ public class ShopManager : InventoryManager {
             sellItemId = -1;
             ResetText();
             Start();
-
+            hasUsedShop = true;
         }
-       
+        else
+        {
+            MasterManager.ManagerPopup.ShowMessageBox("Oh No!", "You must select an item before clicking here", Constants.PopupType.POPUP_NO);
+        }
+
     }
     private void CleanSelection() {
         for (int i = 0; i < ItemBlocks.Count; i++)
         {
             ItemBlocks[i].GetComponentsInChildren<Image>()[0].color = activeColor;
         }
+        selectedItemID = -1;
+        sellItemId = -1;
     }
 
     private void ResetText()
@@ -317,6 +325,10 @@ public class ShopManager : InventoryManager {
         itemDEX.color = equalsColor;
         itemSTA.color = equalsColor;
     }
-    
-    
+
+    public override void CloseWindow(bool Spendtime)
+    {
+        TownManager.Instance.GoBackToMusic();
+        TownManager.Instance.CloseCurrentWindow(hasUsedShop);
+    }
 }

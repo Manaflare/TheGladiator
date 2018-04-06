@@ -356,7 +356,7 @@ public class InventoryManager : MonoBehaviour
         itemDEX.text = filteredItemList[id].Stats.Dexterity.ToString();
         itemSTA.text = filteredItemList[id].Stats.Stamina.ToString();
     }
-    public void CloseWindow(bool Spendtime)
+    public virtual void CloseWindow(bool Spendtime)
     {
         SavePlayerData();
         TownManager.Instance.GoBackToMusic();
