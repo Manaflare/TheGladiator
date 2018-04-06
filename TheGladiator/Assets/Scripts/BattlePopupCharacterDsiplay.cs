@@ -7,13 +7,22 @@ public class BattlePopupCharacterDsiplay : CharacterSpriteManager
     // Use this for initialization
     protected override void Start()
     {
-
+        //Stats s = GetComponentInParent<BattleResultScript>().winner;
+        //if (s.PlayerType != Constants.PlayerType.PLAYER)
+        //{
+        //    loadImages();
+        //    playerData = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[0];
+        //    applySettings();
+        //}
+        //else
+        //{
+        //    base.Start();
+        //}        
     }
-
-    public void SetSprite(SpriteInfo _spriteInfo)
+    public void Draw(ListDataInfo draw)
     {
         loadImages();
-        spriteInfo = _spriteInfo;
+        playerData = new ListDataInfo(draw);
         applySettings();
     }
 }

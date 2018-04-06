@@ -3,27 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleCharacterDisplay : CharacterSpriteManager {
-	// Use this for initialization
+    // Use this for initialization
+    public int indexToDraw = 0;
 	protected override void Start () {
-        loadImages();
-        Attribute player1 = GetComponent<PlayerAttribute>();
+        //loadImages();
+        //Attribute player1 = GetComponent<PlayerAttribute>();
+        //if (player1 == null)
+        //{
+        //    try
+        //    {
+        //        playerData = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[indexToDraw];
+        //    }
+        //    catch { }
+        //}
+        //else
+        //{
+        //    try
+        //    {
 
-        if (player1 == null)
-        {
-            spriteInfo = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[0].spriteList[0];
-        }
-        else
-        {
-            spriteInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo().spriteList[0];
-        }
+        //    playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+        //    }
+        //    catch { }
+        //}
 
-        applySettings();
+        //applySettings();
 
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+    public void Draw(ListDataInfo draw)
+    {
+        loadImages();
+        playerData = new ListDataInfo(draw);
+        applySettings();
+    }
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }
