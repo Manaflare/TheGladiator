@@ -30,9 +30,23 @@ public class MasterManager : MonoBehaviour {
     public static LocalizeManager    ManagerLocalize       { get; private set; }
     public static InputManager ManagerInput { get; private set; }
 
-
+    private static int instance_index = 0;
     private void Awake()
     {
+        if(instance_index > 0)
+        {
+            return;
+        }
+
+        MasterManager instance = GameObject.FindObjectOfType<MasterManager>();
+        if(instance != null)
+        {
+            
+            instance_index++;
+        }
+
+        
+
         QualitySettings.vSyncCount = 0;
         ManagerLoadScene = GetComponent<LoadSceneManager>();
         ManagerGlobalData = GetComponent<GlobalDataManager>();
