@@ -10,7 +10,7 @@ public class EnvironmentData
     public long gold;
     public Constants.DayType days;
     public byte weeks = 1;
-    public float times;
+    public float times = Constants.TIME_GAMESTART; //game start at 8 am
 }
 
 public class DayNightCycleManager : MonoBehaviour {
@@ -73,6 +73,15 @@ public class DayNightCycleManager : MonoBehaviour {
         //money, current time
         //set current data to UI
         envData = MasterManager.ManagerGlobalData.GetEnvData();
+
+        if(MasterManager.ManagerLoadScene.AfterBattle == true)
+        {
+            MasterManager.ManagerLoadScene.AfterBattle = false;
+
+            StartNextWeek();
+            //After Battle goes to Monday 8 am 
+            envData.times = Constants.TIME_GAMESTART;
+        }
     }
 	
 	// Update is called once per frame
