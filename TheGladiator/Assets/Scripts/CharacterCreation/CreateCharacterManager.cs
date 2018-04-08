@@ -48,6 +48,8 @@ public class CreateCharacterManager : MonoBehaviour {
 
     void Start ()
     {
+        PlayerPrefs.SetInt("Ending", 0);
+
         // call BGM
         MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
 

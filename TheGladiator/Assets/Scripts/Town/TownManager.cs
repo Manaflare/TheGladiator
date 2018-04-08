@@ -60,7 +60,12 @@ public class TownManager : MonoBehaviour {
 
         gold = MasterManager.ManagerGlobalData.GetEnvData().gold;
         //Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
-        UpdatePlayerUI();        
+        UpdatePlayerUI();
+
+        if (PlayerPrefs.GetInt("Ending", 0) == 1)
+        {
+            Panels[10].SetActive(true);
+        }
     }
 	
 	// Update is called once per frame
