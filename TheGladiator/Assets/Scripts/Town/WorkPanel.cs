@@ -212,7 +212,7 @@ public class WorkPanel : MonoBehaviour
     public void OnOK()
     {
         //check stamina
-        if (playerData.statsList[0].Stamina < workList[currentIndex].stamina * playerData.playerTier)
+        if (playerData.GetActualStats().Stamina < workList[currentIndex].stamina * playerData.playerTier)
         {
             MasterManager.ManagerPopup.ShowMessageBox("Hey!", "Not Enough Stamina", Constants.PopupType.POPUP_NO);
         }
@@ -283,7 +283,7 @@ public class WorkPanel : MonoBehaviour
 
             SetWorkPage(workList[currentIndex], Current);
             goldText.text = (workList[currentIndex].gold * playerData.playerTier).ToString("N0");
-            staminaText.text = (workList[currentIndex].stamina * playerData.playerTier).ToString() + "  [" + MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].Stamina.ToString() + "]";
+            staminaText.text = (workList[currentIndex].stamina * playerData.playerTier).ToString() + "  [" + MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().Stamina.ToString() + "]";
             TimeText.text = ((int)(workList[currentIndex].turn * Constants.HOUR_SPENT)).ToString();
         }
     }

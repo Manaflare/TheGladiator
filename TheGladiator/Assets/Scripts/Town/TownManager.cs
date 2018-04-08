@@ -190,14 +190,15 @@ public class TownManager : MonoBehaviour {
     public void UpdatePlayerUI()
     {
         ListDataInfo playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+        Stats actStat = playerData.GetActualStats();
         playerName.text = playerData.statsList[0].Name;
-        MaxHP.text = (playerData.statsList[0].MAXHP * Constants.HP_MULTIPLIER).ToString();
-        HP.text = playerData.statsList[0].HP.ToString();
-        STR.text = playerData.statsList[0].Strength.ToString();
-        AGI.text = playerData.statsList[0].Agility.ToString();
-        DEX.text = playerData.statsList[0].Dexterity.ToString();
-        STA.text = playerData.statsList[0].Stamina.ToString();
-        MaxSTA.text = playerData.statsList[0].MaxStamina.ToString();
+        MaxHP.text = (actStat.MAXHP * Constants.HP_MULTIPLIER).ToString();
+        HP.text = actStat.HP.ToString();
+        STR.text = actStat.Strength.ToString();
+        AGI.text = actStat.Agility.ToString();
+        DEX.text = actStat.Dexterity.ToString();
+        STA.text = actStat.Stamina.ToString();
+        MaxSTA.text = actStat.MaxStamina.ToString();
 
         Character.GetComponent<CharacterSpriteManager>().UpdateSprites();
 
