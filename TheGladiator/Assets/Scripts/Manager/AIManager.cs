@@ -299,33 +299,28 @@ public class AIManager : MonoBehaviour
 
             case Constants.MoveType.DEATH:
                 GameObject reff = Instantiate(WinnerPopup);
+
+                // call SFX characater dies
+                MasterManager.ManagerSound.PlaySingleSound("Character dies");
                 if (m.DefenderStats.PlayerType == C.PlayerType.PLAYER)
                 {
                     wins++;
                     CanAttack = true;
+                    // call BGM Victory Music
+                    MasterManager.ManagerSound.PlayBackgroundMusic(victoryMusic, false);
+
+                    // call SFX Crowd Victory
+                    MasterManager.ManagerSound.PlayRandomSound("Crowd Victory", "Crowd Angry");
                 }
                 else
                 {
                     reff.GetComponent<BattleResultScript>().enemyDrawIndex = ValidEnemies[m.DefenderStats.Name];
-                    // call SFX characater dies
-                    MasterManager.ManagerSound.PlaySingleSound("Character dies");
-                    if (m.DefenderStats.PlayerType == C.PlayerType.PLAYER)
-                    {
-                        // call BGM Victory Music
-                        MasterManager.ManagerSound.PlayBackgroundMusic(victoryMusic, false);
+                   
+                    // call BGM Victory Music
+                    MasterManager.ManagerSound.PlayBackgroundMusic(defeatMusic, false);
 
-                        // call SFX Crowd Victory
-                        MasterManager.ManagerSound.PlayRandomSound("Crowd Victory", "Crowd Angry");
-                    }
-
-                    else
-                    {
-                        // call BGM Victory Music
-                        MasterManager.ManagerSound.PlayBackgroundMusic(defeatMusic, false);
-
-                        // call SFX Crowd Boo on Defeat
-                        MasterManager.ManagerSound.PlaySingleSound("Crowd Boo");
-                    }
+                    // call SFX Crowd Boo on Defeat
+                    MasterManager.ManagerSound.PlaySingleSound("Crowd Boo");
 
                 }
                 reff.GetComponent<BattleResultScript>().winner = m.DefenderStats;

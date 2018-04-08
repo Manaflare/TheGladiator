@@ -350,13 +350,13 @@ public class InventoryManager : MonoBehaviour
 
         itemSlot.text = itemPos;
 
-        itemHP.text = (Constants.HP_MULTIPLIER * filteredItemList[id].Stats.HP).ToString();
+        itemHP.text = (Constants.HP_MULTIPLIER * filteredItemList[id].Stats.MAXHP).ToString();
         itemSTR.text = filteredItemList[id].Stats.Strength.ToString();
         itemAGI.text = filteredItemList[id].Stats.Agility.ToString();
         itemDEX.text = filteredItemList[id].Stats.Dexterity.ToString();
         itemSTA.text = filteredItemList[id].Stats.Stamina.ToString();
     }
-    public void CloseWindow(bool Spendtime)
+    public virtual void CloseWindow(bool Spendtime)
     {
         SavePlayerData();
         TownManager.Instance.GoBackToMusic();

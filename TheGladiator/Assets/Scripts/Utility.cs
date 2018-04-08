@@ -145,4 +145,22 @@ public static class Utility
     {
         return MasterManager.ManagerLocalize.GetValue(keyValue);
     }
+
+    public static byte GetMaxValue(byte originValue, byte amountAdd)
+    {
+        int expectedStam = originValue + amountAdd;
+        if (expectedStam >= byte.MaxValue)
+            return byte.MaxValue;
+        else
+            return (byte)expectedStam;
+    }
+
+    public static short GetMaxValue(short originValue, short amountAdd)
+    {
+        int expectedStam = originValue + amountAdd;
+        if (expectedStam >= short.MaxValue)
+            return short.MaxValue;
+        else
+            return (short)expectedStam;
+    }
 }
