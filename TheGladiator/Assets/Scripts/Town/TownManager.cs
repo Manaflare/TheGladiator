@@ -258,4 +258,10 @@ public class TownManager : MonoBehaviour {
         if (Objects[selectedIndex] == null)
             selectedIndex = oldIndex;
     }
+
+
+    public void OnGoBackToMainMenu()
+    {
+        MasterManager.ManagerLoadScene.LoadScene("MainMenu");
+    }
 }
