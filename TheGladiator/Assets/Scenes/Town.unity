@@ -16624,6 +16624,7 @@ MonoBehaviour:
     times: 0
   speed: 10
   speedMutiplier: 3000
+  ClockImage: {fileID: 1849888405}
   TownImage: {fileID: 1313924335}
   fogDay: {r: 1, g: 1, b: 1, a: 1}
   fogSunset: {r: 1, g: 0.5019608, b: 0.5019608, a: 1}
@@ -18498,7 +18499,7 @@ GameObject:
   - component: {fileID: 1849888407}
   - component: {fileID: 1849888409}
   m_Layer: 5
-  m_Name: SleepImage
+  m_Name: ClockImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18519,7 +18520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -314.7681, y: -95.903824}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 170.46, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1849888407
@@ -18564,7 +18565,7 @@ Animator:
   m_GameObject: {fileID: 1849888405}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4d424f7522ac82b4fadd3c2705eaff9b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 33ae50133eb4799459c47fb020b94a20, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

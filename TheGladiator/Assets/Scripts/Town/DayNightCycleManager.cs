@@ -40,6 +40,10 @@ public class DayNightCycleManager : MonoBehaviour {
     private int speed = 10;
     [SerializeField]
     private int speedMutiplier = 3000;
+
+    [SerializeField]
+    private GameObject ClockImage;
+
     private TimeSpan currentTime;
 
 
@@ -210,6 +214,7 @@ public class DayNightCycleManager : MonoBehaviour {
         }
 
         Blocker.SetActive(true);
+        ClockImage.SetActive(true);
 
 
     }
@@ -217,6 +222,7 @@ public class DayNightCycleManager : MonoBehaviour {
     private void EndExpectedTime()
     {
         Blocker.SetActive(false);
+        ClockImage.SetActive(false);
         if (expectHandler != null)
         {
             expectHandler();
