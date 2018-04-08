@@ -25,7 +25,7 @@ public class SoundManager : MonoBehaviour, IManager {
             mapAudioFiles.Add(audio.name, audio);
         }
 
-        //PlayBackgroundMusic(ac[0]);
+        Debug.Log("boot Done " + typeof(SoundManager));
         ApplyToAllSettings();
     }
 
@@ -129,7 +129,7 @@ public class SoundManager : MonoBehaviour, IManager {
 
     public void ApplyToSetting(string keyValue)
     {
-        const float default_value = 0.0f;
+        const float default_value = 100.0f;
 
         float VolumeValue = PlayerPrefs.GetFloat(keyValue, default_value);
         float valueForMixer = Mathf.Log10(VolumeValue);
