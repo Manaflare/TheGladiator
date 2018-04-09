@@ -40,7 +40,7 @@ public class HomePanel : MonoBehaviour {
          */
         playerDataInfo.statsList[0].Stamina = playerDataInfo.statsList[0].MaxStamina;
         //Refills HP to 100 %;
-        playerDataInfo.statsList[0].HP = (int)(playerDataInfo.statsList[0].MAXHP * Constants.HP_MULTIPLIER);
+        playerDataInfo.statsList[0].HP = (int)(playerDataInfo.GetActualStats().MAXHP * Constants.HP_MULTIPLIER);
         MasterManager.ManagerGlobalData.SavePlayerData();
         TownManager.Instance.UpdatePlayerUI();
         

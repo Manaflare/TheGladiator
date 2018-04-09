@@ -43,6 +43,14 @@ public class TownManager : MonoBehaviour {
     public Text STA;
     public Text goldText;
 
+    public Text Tier;
+    public Slider HPBar;
+    public Text barMaxHP;
+    public Text barCurHP;
+    public Slider StaminaBar;
+    public Text barMaxSTA;
+    public Text barCurSTA;
+
     // declare variable for BGM
     public AudioClip backgroundMusic;
 
@@ -198,14 +206,34 @@ public class TownManager : MonoBehaviour {
         Stats actStat = playerData.GetActualStats();
         playerName.text = playerData.statsList[0].Name;
         MaxHP.text = (actStat.MAXHP * Constants.HP_MULTIPLIER).ToString();
-        HP.text = actStat.HP.ToString();
+       // HP.text = actStat.HP.ToString();
         STR.text = actStat.Strength.ToString();
         AGI.text = actStat.Agility.ToString();
         DEX.text = actStat.Dexterity.ToString();
-        STA.text = actStat.Stamina.ToString();
+       // STA.text = actStat.Stamina.ToString();
         MaxSTA.text = actStat.MaxStamina.ToString();
-
+        Tier.text = playerData.playerTier.ToString();
         Character.GetComponent<CharacterSpriteManager>().UpdateSprites();
+
+        if (actStat.HP > actStat.MAXHP)
+        {
+            actStat.HP = (int)(actStat.MAXHP * Constants.HP_MULTIPLIER);
+            playerData.statsList[0].HP = actStat.HP;
+            MasterManager.ManagerGlobalData.SavePlayerData();
+        }
+        
+        barMaxHP.text = MaxHP.text;
+        barCurHP.text = actStat.HP.ToString();
+        HPBar.maxValue = actStat.MAXHP;
+        HPBar.minValue = 1;
+        HPBar.value = actStat.HP;
+
+        barMaxSTA.text = MaxSTA.text;
+        barCurSTA.text = actStat.Stamina.ToString();
+        StaminaBar.maxValue = actStat.MaxStamina;
+        StaminaBar.minValue = 1;
+        StaminaBar.value = actStat.Stamina ;
+
 
         UpdateEnvUI();
     }

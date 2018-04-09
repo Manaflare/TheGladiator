@@ -95,7 +95,7 @@ public class ListDataInfo
                 if (itemList[p].id == equipedItensId[i])
                 {
                     ItemDataInfo tempItem = itemList[p];
-                    actualStat.HP += (int)(tempItem.Stats.MAXHP * Constants.HP_MULTIPLIER);
+                    //actualStat.HP += (int)(tempItem.Stats.HP);
                     actualStat.MAXHP += tempItem.Stats.MAXHP;
                     actualStat.Stamina = Utility.GetMaxValue(actualStat.Stamina, tempItem.Stats.MaxStamina);
                     actualStat.MaxStamina = Utility.GetMaxValue(actualStat.MaxStamina, tempItem.Stats.MaxStamina);
