@@ -62,7 +62,7 @@ public class TownManager : MonoBehaviour {
         //Objects[selectedIndex].GetComponent<GlowButton>().StartGlow();
         UpdatePlayerUI();
 
-        if (PlayerPrefs.GetInt("Ending", 0) == 1)
+        if (MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier > Constants.MAX_ENEMY_RANK)
         {
             Panels[10].SetActive(true);
         }

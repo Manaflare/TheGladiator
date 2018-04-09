@@ -13,17 +13,18 @@ public class EnvironmentData
     public float times = Constants.TIME_GAMESTART; //game start at 8 am
 }
 
-public class DayNightCycleManager : MonoBehaviour {
+public class DayNightCycleManager : MonoBehaviour
+{
 
     private static DayNightCycleManager instance;
     public static DayNightCycleManager Instance
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = GameObject.FindObjectOfType<DayNightCycleManager>();
-                if(instance == null)
+                if (instance == null)
                 {
                     GameObject container = new GameObject("DayNightCycleManager");
                     instance = container.AddComponent<DayNightCycleManager>();
@@ -71,14 +72,14 @@ public class DayNightCycleManager : MonoBehaviour {
     private Constants.CallbackFunction expectHandler;
 
     public GameObject Blocker;
-    void Start ()
+    void Start()
     {
         //get time data from json
         //money, current time
         //set current data to UI
         envData = MasterManager.ManagerGlobalData.GetEnvData();
 
-        if(MasterManager.ManagerLoadScene.AfterBattle == true)
+        if (MasterManager.ManagerLoadScene.AfterBattle == true)
         {
             MasterManager.ManagerLoadScene.AfterBattle = false;
 
@@ -87,9 +88,9 @@ public class DayNightCycleManager : MonoBehaviour {
             envData.times = Constants.TIME_GAMESTART;
         }
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         //update
         UpdateTime();
@@ -106,20 +107,20 @@ public class DayNightCycleManager : MonoBehaviour {
                 EndExpectedTime();
             }
         }
-        
+
         if (envData.times > Constants.SECOND_FOR_DAY)
         {
             StartNextDay();
         }
 
-        if((int)envData.days > (int)Constants.DayType.SUNDAY)
+        if ((int)envData.days > (int)Constants.DayType.SUNDAY)
         {
             StartNextWeek();
         }
 
         currentTime = TimeSpan.FromSeconds(envData.times);
 
-        
+
         if (envData.times < Constants.TIME_DAWN)       // dawn
         {
             colourSource = fogNight;
@@ -144,7 +145,7 @@ public class DayNightCycleManager : MonoBehaviour {
             ColourDest = fogNight;
             intensity = (envData.times - Constants.TIME_SUNSET) / Constants.PER_TIME;
         }
-            
+
         //intensity = 1 - ((43200 - time) / 43200 * -1);
 
         //TownImage.color =  Color.Lerp(fogNight, fogDay, intensity * intensity);
@@ -155,7 +156,7 @@ public class DayNightCycleManager : MonoBehaviour {
     {
         uiText_Week.text = envData.weeks.ToString();
         string[] tempTime = currentTime.ToString().Split(":"[0]);
-        uiText_Day.text = envData.days.ToString()[0] + envData.days.ToString().Remove(0,1).ToLower() + "\n " + tempTime[0] + ":" + tempTime[1];
+        uiText_Day.text = envData.days.ToString()[0] + envData.days.ToString().Remove(0, 1).ToLower() + "\n " + tempTime[0] + ":" + tempTime[1];
         uiText_RemainDays.text = GetRemainDayForBattle().ToString();
     }
 
@@ -175,7 +176,7 @@ public class DayNightCycleManager : MonoBehaviour {
         envData.days++;
         envData.times = 0;
 
-        if(IsDayForBattle())
+        if (IsDayForBattle())
         {
             MasterManager.ManagerPopup.ShowMessageBox("System", "Time to Fight", Constants.PopupType.POPUP_SYSTEM);
         }
@@ -186,9 +187,11 @@ public class DayNightCycleManager : MonoBehaviour {
     {
         envData.weeks++;
         envData.days = 0;
-
-        //popup message and
-        MasterManager.ManagerPopup.ShowMessageBox("System", "Next Week Started", Constants.PopupType.POPUP_SYSTEM);
+        if (MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier <= Constants.MAX_ENEMY_RANK)
+        {
+            //popup message and
+            MasterManager.ManagerPopup.ShowMessageBox("System", "Next Week Started", Constants.PopupType.POPUP_SYSTEM);
+        }
         TownManager.Instance.WorkForNextWeek();
     }
 
@@ -206,7 +209,7 @@ public class DayNightCycleManager : MonoBehaviour {
         {
             expectingTime -= Constants.SECOND_FOR_DAY;
             expectingdDay = envData.days + 1;
-            if(expectingdDay > Constants.DayType.SUNDAY)
+            if (expectingdDay > Constants.DayType.SUNDAY)
             {
                 expectingdDay = 0;
                 expectingWeek = envData.weeks + 1;

@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialManager : MonoBehaviour {
+public class TutorialManager : MonoBehaviour
+{
 
     public GameObject[] steps;
     int currentItem;
+    public string nextScene;
+    public bool isTutorial;
     Configuration config;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
+
         config = MasterManager.ManagerGlobalData.GetConfiguration();
-        if (config.hasReadTutorial)
+        if (isTutorial && config.hasReadTutorial)
         {
             this.transform.parent.gameObject.SetActive(false);
         }
@@ -20,13 +25,20 @@ public class TutorialManager : MonoBehaviour {
             currentItem = 0;
         }
     }
-	
+
     public void NextItem()
     {
-        if(currentItem == steps.Length-1)
+        if (currentItem == steps.Length - 1)
         {
-            config.hasReadTutorial = true;
-            MasterManager.ManagerGlobalData.SaveConfig();
+            if (nextScene != null && nextScene != "")
+            {
+                MasterManager.ManagerLoadScene.LoadScene(nextScene,false);
+            }
+            if (isTutorial)
+            {
+                config.hasReadTutorial = true;
+                MasterManager.ManagerGlobalData.SaveConfig();
+            }
             this.transform.parent.gameObject.SetActive(false);
             return;
         }
