@@ -66,33 +66,30 @@ public class MasterManager : MonoBehaviour {
         managerList.Add(ManagerLocalize);
         StartCoroutine(IE_BootAllManager());
 
+        string path = Application.dataPath;
         //If mobileCreate a copy of the data json
         if (Application.platform == RuntimePlatform.Android ||
                Application.platform == RuntimePlatform.IPhonePlayer)
         {
-
-            TextAsset _jsonString = (TextAsset)Resources.Load("JSON/EnemyData", typeof(TextAsset));
-            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_ENEMY], _jsonString.text);
-
-            _jsonString = (TextAsset)Resources.Load("JSON/ItemData", typeof(TextAsset));
-            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_ITEM], _jsonString.text);
-
-            _jsonString = (TextAsset)Resources.Load("JSON/WorkData", typeof(TextAsset));
-            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_WORK], _jsonString.text);
-
-            _jsonString = (TextAsset)Resources.Load("JSON/Config", typeof(TextAsset));
-            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_CONFIG], _jsonString.text);
-
-            _jsonString = (TextAsset)Resources.Load("JSON/Credit", typeof(TextAsset));
-            System.IO.File.WriteAllText(Application.persistentDataPath + Utility.JsonFileList[Constants.JSONIndex.DATA_CREDIT], _jsonString.text);
-
-            ManagerGlobalData.LoadallData();
-
+            path = Application.persistentDataPath;
         }
+            
+        TextAsset _jsonString = (TextAsset)Resources.Load("JSON/EnemyData", typeof(TextAsset));
+        System.IO.File.WriteAllText(path + Utility.JsonFileList[Constants.JSONIndex.DATA_ENEMY], _jsonString.text);
 
+        _jsonString = (TextAsset)Resources.Load("JSON/ItemData", typeof(TextAsset));
+        System.IO.File.WriteAllText(path + Utility.JsonFileList[Constants.JSONIndex.DATA_ITEM], _jsonString.text);
 
+        _jsonString = (TextAsset)Resources.Load("JSON/WorkData", typeof(TextAsset));
+        System.IO.File.WriteAllText(path + Utility.JsonFileList[Constants.JSONIndex.DATA_WORK], _jsonString.text);
 
+        _jsonString = (TextAsset)Resources.Load("JSON/Config", typeof(TextAsset));
+        System.IO.File.WriteAllText(path + Utility.JsonFileList[Constants.JSONIndex.DATA_CONFIG], _jsonString.text);
 
+        _jsonString = (TextAsset)Resources.Load("JSON/Credit", typeof(TextAsset));
+        System.IO.File.WriteAllText(path + Utility.JsonFileList[Constants.JSONIndex.DATA_CREDIT], _jsonString.text);
+
+        ManagerGlobalData.LoadallData();
 
         //keep this gameobject the entire project
         DontDestroyOnLoad(gameObject);

@@ -85,6 +85,30 @@ public class ListDataInfo
         equipedItensId.Clear();
     }
 
+    public Stats GetActualStats()
+    {
+        Stats actualStat = Stats.copy(statsList[0]);
+        for (int i = 0; i < equipedItensId.Count; i++)
+        {
+            for (int p = 0; p < itemList.Count; p++)
+            {
+                if (itemList[p].id == equipedItensId[i])
+                {
+                    ItemDataInfo tempItem = itemList[p];
+                    actualStat.HP += (int)(tempItem.Stats.MAXHP * Constants.HP_MULTIPLIER);
+                    actualStat.MAXHP += tempItem.Stats.MAXHP;
+                    actualStat.Stamina = Utility.GetMaxValue(actualStat.Stamina, tempItem.Stats.MaxStamina);
+                    actualStat.MaxStamina = Utility.GetMaxValue(actualStat.MaxStamina, tempItem.Stats.MaxStamina);
+                    actualStat.Dexterity = Utility.GetMaxValue(actualStat.Dexterity, tempItem.Stats.Dexterity);
+                    actualStat.Agility = Utility.GetMaxValue(actualStat.Agility, tempItem.Stats.Agility);
+                    actualStat.Strength = Utility.GetMaxValue(actualStat.Strength, tempItem.Stats.Strength);
+                }
+            }
+        }
+
+        //max stat check
+        return actualStat;
+    }
 
     public List<Stats> statsList;
     public List<SpriteInfo> spriteList;
@@ -118,6 +142,10 @@ public class ItemInfo
 [System.Serializable]
 public class Stats
 {
+    public Stats()
+    {
+
+    }
     public Stats(string name, Constants.PlayerType playerType, int maxHp, byte str, byte agi, byte dex, short maxStamina, short stamina = short.MinValue, int hp = int.MinValue)
     {
         Name = name;

@@ -104,7 +104,7 @@ public static class Constants
     public const float TIME_SUNSET = 64800.0f;
     public const float TIME_DAWN = 21600.0f;
     public const float PER_TIME = 21600.0f;
-
+    public const float TIME_GAMESTART = 28800.0f;
 
     public enum JSONIndex : int 
     {
@@ -133,6 +133,9 @@ public static class Constants
         TIER_3,
 
     }
+
+    public static int MAX_ENEMY_RANK = 10;
+
     public static  float HOUR_SPENT = 8.0f;
     public static float STAMINA_REGEN_INTERVAL = 1.0f;
 

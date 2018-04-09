@@ -6,9 +6,16 @@ using UnityEngine.SceneManagement;
 public class LoadSceneManager : MonoBehaviour, IManager {
 
     // Use this for initialization
+    private bool afterBattle = false;
+    public bool AfterBattle
+    {
+        get { return afterBattle; }
+        set { afterBattle = value; }
+    }
+
     public void Initialize()
     {
-
+        afterBattle = false;
     }
 
     // Update is called once per frame
@@ -26,6 +33,11 @@ public class LoadSceneManager : MonoBehaviour, IManager {
             SceneManager.LoadScene(sceneName);
         }
 
+        if (SceneManager.GetActiveScene().name == "Arena")
+        {
+            afterBattle = true;
+        }
+    
         MasterManager.ManagerGlobalData.SaveAllData();
 
     }

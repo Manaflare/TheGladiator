@@ -51,12 +51,14 @@ public class MainMenuScript : MonoBehaviour
             dataBlock.SetActive(false);
         }else
         {
-            playerName.text = playerData.statsList[0].Name;
-            HP.text = (playerData.statsList[0].MAXHP * Constants.HP_MULTIPLIER).ToString();
-            STR.text = playerData.statsList[0].Strength.ToString();
-            AGI.text = playerData.statsList[0].Agility.ToString();
-            DEX.text = playerData.statsList[0].Dexterity.ToString();
-            STA.text = playerData.statsList[0].MaxStamina.ToString();
+            Stats actualStat = playerData.GetActualStats();
+
+            playerName.text = actualStat.Name;
+            HP.text = (actualStat.MAXHP * Constants.HP_MULTIPLIER).ToString();
+            STR.text = actualStat.Strength.ToString();
+            AGI.text = actualStat.Agility.ToString();
+            DEX.text = actualStat.Dexterity.ToString();
+            STA.text = actualStat.MaxStamina.ToString();
         }
 
 

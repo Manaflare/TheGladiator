@@ -128,7 +128,7 @@ public class TrainingManager : MonoBehaviour
         }
 
         int totalPoints = playerDataInfo.statsList[0].MAXHP + playerDataInfo.statsList[0].Strength + playerDataInfo.statsList[0].Agility + playerDataInfo.statsList[0].Dexterity + playerDataInfo.statsList[0].MaxStamina;
-        CostStamina = Mathf.RoundToInt((totalPoints / CostBase) * CostStaminaBase);
+        CostStamina = Mathf.RoundToInt(playerDataInfo.statsList[0].MaxStamina * 0.3f);
         CostGold = Mathf.RoundToInt((totalPoints / CostBase) * CostGoldBase);
         CostStaminaText.text = CostStamina.ToString();
         CostGoldText.text = CostGold.ToString();
@@ -156,7 +156,7 @@ public class TrainingManager : MonoBehaviour
     {
         bool Result = true;
         ListDataInfo playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
-        if (playerDataInfo.statsList[0].Stamina < CostStamina)
+        if (playerDataInfo.GetActualStats().Stamina < CostStamina)
         {
             MasterManager.ManagerPopup.ShowMessageBox("System", "You don't have enough Stamina!", Constants.PopupType.POPUP_SYSTEM);
             Result = false;
@@ -356,9 +356,9 @@ public class TrainingManager : MonoBehaviour
         byte ammountAdd = (byte)Random.Range(minChange, maxChange);
         int expectedStam = MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MaxStamina + ammountAdd;
 
-        if (expectedStam >= byte.MaxValue)
+        if (expectedStam >= short.MaxValue)
         {
-            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MaxStamina = byte.MaxValue;
+            MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MaxStamina = short.MaxValue;
         }
         else
         {
