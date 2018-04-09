@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabPart: {fileID: 1442431399199412, guid: c1eb34b4b87eafd48aa1a528c28f2879, type: 2}
+  indexToDraw: 0
 --- !u!222 &615698083
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -468,6 +469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabPart: {fileID: 1442431399199412, guid: c1eb34b4b87eafd48aa1a528c28f2879, type: 2}
+  indexToDraw: 0
 --- !u!222 &1053256179
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -645,7 +647,14 @@ MonoBehaviour:
     type: 2}
   player1: {fileID: 615698080}
   player2: {fileID: 1053256176}
+  Delay: 0
   CanAttack: 1
+  bracket: {fileID: 0}
+  wins: 0
+  introMusic: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  victoryMusic: {fileID: 0}
+  defeatMusic: {fileID: 0}
 --- !u!4 &1743952558
 Transform:
   m_ObjectHideFlags: 0
