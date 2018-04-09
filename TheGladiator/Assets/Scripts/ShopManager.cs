@@ -270,6 +270,7 @@ public class ShopManager : InventoryManager {
                 envData.gold -= item.price;
                 playerData.itemList.Add(item);
                 MasterManager.ManagerGlobalData.SaveAllData();
+                TownManager.Instance.UpdatePlayerUI();
                 //@Todo PLAY CASH SOUND
                 selectedItemID = -1;
                 ResetText();
@@ -287,6 +288,7 @@ public class ShopManager : InventoryManager {
             envData.gold += (long)(Math.Round((double)item.price / 3));
             playerData.itemList.Remove(item);
             MasterManager.ManagerGlobalData.SaveAllData();
+            TownManager.Instance.UpdatePlayerUI();
             //@Todo PLAY CASH SOUND
             sellItemId = -1;
             ResetText();

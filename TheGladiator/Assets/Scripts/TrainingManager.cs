@@ -128,7 +128,8 @@ public class TrainingManager : MonoBehaviour
         }
 
         int totalPoints = playerDataInfo.statsList[0].MAXHP + playerDataInfo.statsList[0].Strength + playerDataInfo.statsList[0].Agility + playerDataInfo.statsList[0].Dexterity + playerDataInfo.statsList[0].MaxStamina;
-        CostStamina = Mathf.RoundToInt(playerDataInfo.statsList[0].MaxStamina * 0.3f);
+        CostStamina = Mathf.RoundToInt(playerDataInfo.GetActualStats().MaxStamina * 0.3f);
+
         CostGold = Mathf.RoundToInt((totalPoints / CostBase) * CostGoldBase);
         CostStaminaText.text = CostStamina.ToString();
         CostGoldText.text = CostGold.ToString();
@@ -190,7 +191,7 @@ public class TrainingManager : MonoBehaviour
         playerDataInfo.statsList[0].Dexterity = byte.Parse(NewDexterity.text);
         playerDataInfo.statsList[0].MaxStamina = short.Parse(NewMaxStam.text);
         playerDataInfo.statsList[0].Strength = byte.Parse(NewStr.text);
-        playerDataInfo.statsList[0].MAXHP = int.Parse(NewMaxHP.text);// / HpMultiplier;
+        playerDataInfo.statsList[0].MAXHP = int.Parse(NewMaxHP.text) / HpMultiplier;
         
 
         MasterManager.ManagerGlobalData.SavePlayerData();

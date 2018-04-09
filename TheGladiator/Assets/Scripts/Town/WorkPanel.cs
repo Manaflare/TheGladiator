@@ -283,7 +283,7 @@ public class WorkPanel : MonoBehaviour
 
             SetWorkPage(workList[currentIndex], Current);
             goldText.text = (workList[currentIndex].gold * playerData.playerTier).ToString("N0");
-            staminaText.text = (workList[currentIndex].stamina * playerData.playerTier).ToString() + "  [" + MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().Stamina.ToString() + "]";
+            staminaText.text = (workList[currentIndex].stamina * playerData.playerTier).ToString();// + "  [" + MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().Stamina.ToString() + "]";
             TimeText.text = ((int)(workList[currentIndex].turn * Constants.HOUR_SPENT)).ToString();
         }
     }
