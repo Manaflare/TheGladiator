@@ -7,19 +7,30 @@ public class DamageDisplayScript : MonoBehaviour {
     public Texture2D numbersImage;
     public GameObject NumberPrefab;
     Dictionary<string, Sprite> numbers;
-
+    public float value;
 	// Use this for initialization
 	void Start () {
+        
+        foreach(Transform o in transform)
+        {
+            Destroy(o.gameObject);
+        }
+
         numbers = new Dictionary<string, Sprite>();
         foreach (Object o in Resources.LoadAll<Sprite>("UI\\" + numbersImage.name))
         {
             numbers.Add(numbers.Count.ToString(), o as Sprite);
         }
-        Display(100);
+        this.GetComponent<Rigidbody2D>().AddForce(new Vector3(3500, 12500));
+        Display(value);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnEnable()
+    {
+        Start();
+    }
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
