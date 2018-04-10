@@ -97,18 +97,18 @@ public class AIManager : MonoBehaviour
         Battle = new List<Move>();
         if (wins == 0)
         {
-            Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[0]].statsList[0]);
+            Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats(), MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[0]].GetActualStats());
             animators[C.PlayerType.ENEMY].gameObject.GetComponent<BattleCharacterDisplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[0]]);
         }
         else if (wins == 1)
         {
-            Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0]);
+            Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats(), MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].GetActualStats());
             animators[C.PlayerType.ENEMY].gameObject.GetComponent<BattleCharacterDisplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]]);
 
         }
         else if ( wins == 2)
         {
-            Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[final[0]].statsList[0]);
+            Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats(), MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[final[0]].GetActualStats());
             animators[C.PlayerType.ENEMY].gameObject.GetComponent<BattleCharacterDisplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[final[0]]);
             if (Battle[Battle.Count - 1].DefenderStats.PlayerType == C.PlayerType.PLAYER)
             {
@@ -128,12 +128,6 @@ public class AIManager : MonoBehaviour
             }
             else
             {
-                //MasterManager.ManagerSprite.ArmorList[Random.Range(0, MasterManager.ManagerSprite.ArmorList.Count)];
-                //MasterManager.ManagerSprite.HelmetList[Random.Range(0, MasterManager.ManagerSprite.HelmetList.Count)];
-                //MasterManager.ManagerSprite.RightHandList[Random.Range(0, MasterManager.ManagerSprite.RightHandList.Count)];
-                //MasterManager.ManagerSprite.LeftHandList[Random.Range(0, MasterManager.ManagerSprite.LeftHandList.Count)];
-                //asterManager.ManagerSprite.ShoesList[Random.Range(0, MasterManager.ManagerSprite.ShoesList.Count)];
-                //MasterManager.ManagerSprite.PantsList[Random.Range(0, MasterManager.ManagerSprite.BodyList.Count)];
                 a.Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[index]);
             }
         }
@@ -143,15 +137,15 @@ public class AIManager : MonoBehaviour
     {
         first = firstSeven();
 
-        List<Move> battle1 = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[1]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[2]].statsList[0]);
-        List<Move> battle2 = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[3]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[4]].statsList[0]);
-        List<Move> battle3 = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[5]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[6]].statsList[0]);
+        List<Move> battle1 = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[1]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[2]].GetActualStats());
+        List<Move> battle2 = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[3]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[4]].GetActualStats());
+        List<Move> battle3 = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[5]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[6]].GetActualStats());
 
         nextThree.Add(ValidEnemies[battle1[battle1.Count - 1].DefenderStats.Name]);
         nextThree.Add(ValidEnemies[battle2[battle2.Count - 1].DefenderStats.Name]);
         nextThree.Add(ValidEnemies[battle3[battle3.Count - 1].DefenderStats.Name]);
 
-        List<Move> lastNPB = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[1]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[2]].statsList[0]);
+        List<Move> lastNPB = BattleSimulator(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[1]].statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[2]].GetActualStats());
 
         final.Add(ValidEnemies[lastNPB[lastNPB.Count - 1].DefenderStats.Name]);
 
@@ -209,7 +203,7 @@ public class AIManager : MonoBehaviour
         }
     }
 
-    public void displayBracket(/*List<int> first, List<int> nextThree, List<int> final*/)
+    public void displayBracket()
     {
         Instantiate(bracket);
 
@@ -225,11 +219,11 @@ public class AIManager : MonoBehaviour
             {
                 a.GetComponent<BracketLayer>().drawLayer(nextThree);
 
-                //MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].HP += ((MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP * 5) / 3);
+                //MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().HP += ((MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().MAXHP * 5) / 3);
                 //MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP += ((MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP * 5) / 2);
-                //MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].HP = (MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].HP > MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP * 5) ? MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].MAXHP : MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0].HP;
+                //MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().HP = (MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().HP > MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().MAXHP * 5) ? MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().MAXHP : MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().HP;
                 //MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP = (MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP > MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].MAXHP * 5) ? MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].MAXHP : MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP;
-                //Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().statsList[0], MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0]);
+                //Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats(), MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].GetActualStats());
                 //StartCoroutine(animateBattle());
             }
             if (a.name == "Third Layer" && BracketController.layers >= 3)
@@ -537,9 +531,5 @@ public class AIManager : MonoBehaviour
         }
         return moves;
     }
-    
-    void Update()
-    {
 
-    }
 }

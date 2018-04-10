@@ -94,6 +94,9 @@ public class ListDataInfo
             {
                 if (itemList[p].id == equipedItensId[i])
                 {
+                    try
+                    {
+
                     ItemDataInfo tempItem = itemList[p];
                     //actualStat.HP += (int)(tempItem.Stats.HP);
                     actualStat.MAXHP += tempItem.Stats.MAXHP;
@@ -102,6 +105,11 @@ public class ListDataInfo
                     actualStat.Dexterity = Utility.GetMaxValue(actualStat.Dexterity, tempItem.Stats.Dexterity);
                     actualStat.Agility = Utility.GetMaxValue(actualStat.Agility, tempItem.Stats.Agility);
                     actualStat.Strength = Utility.GetMaxValue(actualStat.Strength, tempItem.Stats.Strength);
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
         }
