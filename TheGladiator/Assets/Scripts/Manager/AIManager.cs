@@ -156,50 +156,44 @@ public class AIManager : MonoBehaviour
         int index = 0;
         foreach (var a in MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData)
         {
+            List<C.ItemIndex> avail = new List<C.ItemIndex>()
+        {
+            C.ItemIndex.ARMOR,
+            C.ItemIndex.HELMET,
+            C.ItemIndex.LEFT_HAND,
+            C.ItemIndex.PANTS,
+            C.ItemIndex.RIGHT_HAND,
+            C.ItemIndex.SHOES
+
+        };
             if (a.playerTier == MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier)
             {
                 a.itemList.Clear();
-                ItemDataInfo idf = new ItemDataInfo();
-                idf.Item_type = C.ItemIndex.ARMOR;
-                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.ArmorList.Count);
-                a.itemList.Add(idf);
-
-                idf = new ItemDataInfo();
-                idf.Item_type = C.ItemIndex.HELMET;
-                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.HelmetList.Count);
-                a.itemList.Add(idf);
-
-                idf = new ItemDataInfo();
-                idf.Item_type = C.ItemIndex.LEFT_HAND;
-                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.LeftHandList.Count);
-                a.itemList.Add(idf);
-
-                 idf = new ItemDataInfo();
-                idf.Item_type = C.ItemIndex.PANTS;
-                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.PantsList.Count);
-                a.itemList.Add(idf);
-
-                idf = new ItemDataInfo();
-                idf.Item_type = C.ItemIndex.RIGHT_HAND;
-                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.RightHandList.Count);
-                a.itemList.Add(idf);
-
-                idf = new ItemDataInfo();
-                idf.Item_type = C.ItemIndex.SHOES;
-                idf.Sprite_index = Random.Range(0, MasterManager.ManagerSprite.ShoesList.Count);
-                a.itemList.Add(idf);
-                
-                for (int i = 0; i < a.itemList.Count; i++)
+                a.equipedItensId.Clear();
+                foreach (var item in MasterManager.ManagerGlobalData.GetItemDataInfo().itemData)
                 {
-                    if (Random.value >= 0.5)
+                    if (avail.Contains(item.Item_type))
                     {
-                        a.equipedItensId.Add(i);
+                        if (Random.value >= 0.5f)
+                        {
+                            avail.Remove(item.Item_type);
+                            a.itemList.Add(item);
+                        }
+                    }
+                }
+                
+                foreach (var i in a.itemList)
+                {
+                    if (Random.value >= 0.4f)
+                    {
+                        a.equipedItensId.Add(i.id);
                     }
                 }
 
                 ValidEnemies.Add(a.statsList[0].Name, index);
             }
             index++;
+
         }
     }
 
