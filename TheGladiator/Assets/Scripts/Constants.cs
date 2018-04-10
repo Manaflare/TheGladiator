@@ -62,7 +62,7 @@ public static class Constants
 
     public enum HouseType
     {
-        SMALL = 0,
+        SMALL = 1,
         MEDIUM,
         HUGE,
         MANSION,
@@ -87,7 +87,7 @@ public static class Constants
 
     public enum BuildingPanel_Type
     {
-        NOT_IMPLEMENTED =0,
+        NOT_IMPLEMENTED = 0,
         WINDOW,
         SCENE,
     }
@@ -106,7 +106,7 @@ public static class Constants
     public const float PER_TIME = 21600.0f;
     public const float TIME_GAMESTART = 28800.0f;
 
-    public enum JSONIndex : int 
+    public enum JSONIndex : int
     {
         DATA_PLAYER = 1,
         DATA_ENEMY,
@@ -136,7 +136,7 @@ public static class Constants
 
     public static int MAX_ENEMY_RANK = 10;
 
-    public static  float HOUR_SPENT = 8.0f;
+    public static float HOUR_SPENT = 8.0f;
     public static float STAMINA_REGEN_INTERVAL = 1.0f;
 
     public static string RIGHT_HAND = "right hand";
