@@ -4,17 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class TownManager : MonoBehaviour {
+public class TownManager : MonoBehaviour
+{
 
     private static TownManager instance;
     public static TownManager Instance
     {
         get
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = GameObject.FindObjectOfType<TownManager>();
-                if(instance == null)
+                if (instance == null)
                 {
                     GameObject container = new GameObject("TownManager");
                     instance = container.AddComponent<TownManager>();
@@ -28,7 +29,7 @@ public class TownManager : MonoBehaviour {
 
     public GameObject[] Objects;
     public GameObject[] Panels;
-   
+
     private int selectedIndex = 0;
     private long gold;
 
@@ -57,7 +58,7 @@ public class TownManager : MonoBehaviour {
     public Text MaxSTA;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         // call BGM
         MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
@@ -75,9 +76,9 @@ public class TownManager : MonoBehaviour {
             Panels[10].SetActive(true);
         }
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         //Objects[selectedIndex].GetComponent<GlowButton>().EndGlow();
 
@@ -136,14 +137,14 @@ public class TownManager : MonoBehaviour {
         //            default:
         //                break;
         //        }
-                
+
         //    }
 
         //}
 
-       
 
-        if(MasterManager.ManagerInput.GetKeyDown(KeyCode.E))
+
+        if (MasterManager.ManagerInput.GetKeyDown(KeyCode.E))
         {
             object[] test = { "MainMenu" };
             MasterManager.ManagerPopup.ShowMessageBox("TEST", "This is a test", Constants.PopupType.POPUP_NO, TEST, test);
@@ -180,7 +181,7 @@ public class TownManager : MonoBehaviour {
         }
     }
 
-    
+
 
     public void GoBackToMusic()
     {
@@ -197,7 +198,12 @@ public class TownManager : MonoBehaviour {
 
         UpdatePlayerUI();
 
-        
+
+    }
+
+    public void SetSelectPanel(int index)
+    {
+        selectedIndex = index;
     }
 
     public void UpdatePlayerUI()
@@ -206,11 +212,11 @@ public class TownManager : MonoBehaviour {
         Stats actStat = playerData.GetActualStats();
         playerName.text = playerData.statsList[0].Name;
         MaxHP.text = (actStat.MAXHP * Constants.HP_MULTIPLIER).ToString();
-       // HP.text = actStat.HP.ToString();
+        // HP.text = actStat.HP.ToString();
         STR.text = actStat.Strength.ToString();
         AGI.text = actStat.Agility.ToString();
         DEX.text = actStat.Dexterity.ToString();
-       // STA.text = actStat.Stamina.ToString();
+        // STA.text = actStat.Stamina.ToString();
         MaxSTA.text = actStat.MaxStamina.ToString();
         Tier.text = playerData.playerTier.ToString();
         Character.GetComponent<CharacterSpriteManager>().UpdateSprites();
@@ -221,7 +227,7 @@ public class TownManager : MonoBehaviour {
             playerData.statsList[0].HP = actStat.HP;
             MasterManager.ManagerGlobalData.SavePlayerData();
         }
-        
+
         barMaxHP.text = MaxHP.text;
         barCurHP.text = actStat.HP.ToString();
         HPBar.maxValue = actStat.MAXHP;
@@ -232,7 +238,7 @@ public class TownManager : MonoBehaviour {
         barCurSTA.text = actStat.Stamina.ToString();
         StaminaBar.maxValue = actStat.MaxStamina;
         StaminaBar.minValue = 1;
-        StaminaBar.value = actStat.Stamina ;
+        StaminaBar.value = actStat.Stamina;
 
 
         UpdateEnvUI();
@@ -247,7 +253,7 @@ public class TownManager : MonoBehaviour {
     public void TEST(object[] asd)
     {
         MasterManager.ManagerLoadScene.LoadScene(asd[0].ToString());
-            
+
     }
 
     public void WorkForNextWeek()
