@@ -11,6 +11,7 @@ public class EnvironmentData
     public Constants.DayType days;
     public byte weeks = 1;
     public float times = Constants.TIME_GAMESTART; //game start at 8 am
+    public byte house_level = 1;
 }
 
 public class DayNightCycleManager : MonoBehaviour
