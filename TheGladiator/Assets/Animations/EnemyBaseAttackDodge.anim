@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: EnemyBaseAttack
+  m_Name: EnemyBaseAttackDodge
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -262,13 +262,6 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: startAttack
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.41666666
-    functionName: displayDamage
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

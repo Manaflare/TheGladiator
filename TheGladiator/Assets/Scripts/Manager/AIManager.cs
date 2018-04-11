@@ -42,30 +42,29 @@ public class AIManager : MonoBehaviour
     [Header("Battle Start Delay")]
     [Range(0.0f, 10.0f)]
     public float Delay;
-    private float time = 0.0f;
-    private bool doOnce = true;
 
     [HideInInspector]
     public bool CanAttack = true;
     private List<Move> Battle;
-    private Stats player1Stats;
-    private Stats player2Stats;
     private Dictionary<C.PlayerType, Animator> animators;
     #endregion
-    
+    #region Bracket Dislpay Variables
     Dictionary<string, int> ValidEnemies;
     public GameObject bracket;
     List<int> first = new List<int>();
     List<int> nextThree = new List<int>();
     List<int> final = new List<int>();
     public int wins = 0;
-
+    #endregion
+    #region Sounds Stuffs
     // declare variables for BGM
     public AudioClip introMusic;
     public AudioClip backgroundMusic;
     public AudioClip victoryMusic;
     public AudioClip defeatMusic;
+    #endregion
 
+    Stats currentEnemy = null;
 
     private void Start()
     {
@@ -98,23 +97,34 @@ public class AIManager : MonoBehaviour
         if (wins == 0)
         {
             Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats(), MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[0]].GetActualStats());
+            currentEnemy = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[0]].GetActualStats();
             animators[C.PlayerType.ENEMY].gameObject.GetComponent<BattleCharacterDisplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[0]]);
+            GameObject.FindGameObjectWithTag("player2").GetComponent<Attribute>().setSTATS(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[first[0]].GetActualStats());
+
         }
         else if (wins == 1)
         {
             Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats(), MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].GetActualStats());
+            currentEnemy = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].GetActualStats();
+
             animators[C.PlayerType.ENEMY].gameObject.GetComponent<BattleCharacterDisplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]]);
+            GameObject.FindGameObjectWithTag("player2").GetComponent<Attribute>().setSTATS(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].GetActualStats());
 
         }
         else if ( wins == 2)
         {
             Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats(), MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[final[0]].GetActualStats());
+            currentEnemy = MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[final[0]].GetActualStats();
+
             animators[C.PlayerType.ENEMY].gameObject.GetComponent<BattleCharacterDisplay>().Draw(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[final[0]]);
+            GameObject.FindGameObjectWithTag("player2").GetComponent<Attribute>().setSTATS(MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[final[0]].GetActualStats());
             if (Battle[Battle.Count - 1].DefenderStats.PlayerType == C.PlayerType.PLAYER)
             {
                 MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier++;
             }
         }
+        GameObject.FindGameObjectWithTag("player1").GetComponent<Attribute>().setSTATS(MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats());
+
         StartCoroutine(animateBattle());
     }
 
@@ -157,15 +167,15 @@ public class AIManager : MonoBehaviour
         foreach (var a in MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData)
         {
             List<C.ItemIndex> avail = new List<C.ItemIndex>()
-        {
-            C.ItemIndex.ARMOR,
-            C.ItemIndex.HELMET,
-            C.ItemIndex.LEFT_HAND,
-            C.ItemIndex.PANTS,
-            C.ItemIndex.RIGHT_HAND,
-            C.ItemIndex.SHOES
+            { 
+                C.ItemIndex.ARMOR,
+                C.ItemIndex.HELMET,
+                C.ItemIndex.LEFT_HAND,
+                C.ItemIndex.PANTS,
+                C.ItemIndex.RIGHT_HAND,
+                C.ItemIndex.SHOES
+            };
 
-        };
             if (a.playerTier == MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier)
             {
                 a.itemList.Clear();
@@ -181,7 +191,6 @@ public class AIManager : MonoBehaviour
                         }
                     }
                 }
-                
                 foreach (var i in a.itemList)
                 {
                     if (Random.value >= 0.4f)
@@ -207,29 +216,62 @@ public class AIManager : MonoBehaviour
         {
             if (a.name == "Bottom Layer" && BracketController.layers >= 1)
             {
-                a.GetComponent<BracketLayer>().drawLayer(first);
+                if (BracketController.layers >= 2)
+                {
+                    List<int> greys = new List<int>();
+                    foreach (int i in first)
+                    {
+                        if (nextThree.Contains(i))
+                        {
+                            Debug.Log(i);
+                            greys.Add(i);
+                        }
+                    }
+                    a.GetComponent<BracketLayer>().drawLayer(first, greys);
+                }
+                else
+                {
+                    a.GetComponent<BracketLayer>().drawLayer(first, new List<int>() { -1 });
+
+                }
             }
             if (a.name == "Second Layer" && BracketController.layers >= 2)
             {
-                a.GetComponent<BracketLayer>().drawLayer(nextThree);
-
-                //MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().HP += ((MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().MAXHP * 5) / 3);
-                //MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP += ((MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP * 5) / 2);
-                //MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().HP = (MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().HP > MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().MAXHP * 5) ? MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().MAXHP : MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats().HP;
-                //MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP = (MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP > MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].MAXHP * 5) ? MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].MAXHP : MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].statsList[0].HP;
-                //Battle = BattleSimulator(MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats(), MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData[nextThree[0]].GetActualStats());
-                //StartCoroutine(animateBattle());
+                if (BracketController.layers >= 3)
+                {
+                    List<int> greys = new List<int>();
+                    foreach (int i in nextThree)
+                    {
+                        if (final.Contains(i))
+                        {
+                            Debug.Log(i);
+                            greys.Add(i);
+                        }
+                    }
+                    a.GetComponent<BracketLayer>().drawLayer(nextThree, greys);
+                }
+                else
+                {
+                    a.GetComponent<BracketLayer>().drawLayer(nextThree, new List<int>() { -1 });
+                }
             }
             if (a.name == "Third Layer" && BracketController.layers >= 3)
             {
-                a.GetComponent<BracketLayer>().drawLayer(final);
+                if (BracketController.layers >= 4)
+                {
+
+                    a.GetComponent<BracketLayer>().drawLayer(final, final);
+                }
+                else
+                {
+                    a.GetComponent<BracketLayer>().drawLayer(final, new List<int>() { -1 });
+                }
             }
             if (a.name == "Winner" && BracketController.layers >= 4)
             {
-                a.GetComponent<BracketLayer>().drawLayer(final);
+                a.GetComponent<BracketLayer>().drawLayer(final, new List<int>() { -1 });
             }
         }
-        doOnce = true;
         BracketController.layers++;
     }
 
@@ -253,61 +295,49 @@ public class AIManager : MonoBehaviour
     void playMove(Move m)
     {
 
+        if (m.AttackerStats.PlayerType == C.PlayerType.PLAYER)
+        {
+            GameObject.FindGameObjectWithTag("enemybars").GetComponent<BattleBarController>().set(m.DefenderStats.HP, m.DefenderStats.MAXHP * 5, m.DefenderStats.Stamina, m.DefenderStats.MaxStamina);
+            GameObject.FindGameObjectWithTag("playerbars").GetComponent<BattleBarController>().set(m.AttackerStats.HP, m.AttackerStats.MAXHP * 5, m.AttackerStats.Stamina, m.AttackerStats.MaxStamina);
+        }
+        else if (m.AttackerStats.PlayerType == C.PlayerType.ENEMY)
+        {
+            GameObject.FindGameObjectWithTag("playerbars").GetComponent<BattleBarController>().set(m.DefenderStats.HP, m.DefenderStats.MAXHP * 5, m.DefenderStats.Stamina, m.DefenderStats.MaxStamina);
+            GameObject.FindGameObjectWithTag("enemybars").GetComponent<BattleBarController>().set(m.AttackerStats.HP, m.AttackerStats.MAXHP * 5, m.AttackerStats.Stamina, m.AttackerStats.MaxStamina);
+        }
         switch (m.typeOfMove)
         {
             
             case Constants.MoveType.ATTACK:
-
-                // call SFX random Attacks
                 MasterManager.ManagerSound.PlayRandomSound("Sword Clash Short", "Attack Knife", "Whip Crack", "Attack Shield", "Attack Sword");
-
                 animators[m.AttackerStats.PlayerType].Play("Attack");
                 break;
 
             case Constants.MoveType.DODGE:
-                animators[m.AttackerStats.PlayerType].Play("Attack");
-
-                // call SFX Dodge
+                animators[m.AttackerStats.PlayerType].Play("AttackDodge");
                 MasterManager.ManagerSound.PlaySingleSound("Quick Swinging Swish");
-                // call SFX Wow
                 MasterManager.ManagerSound.PlayRandomSound("People Saying Wow", "People Saying Ahh");
-
                 animators[m.DefenderStats.PlayerType].Play("Dodge");
                 break;
-
             case Constants.MoveType.MISS:
-
-                // call SFX Miss
                 MasterManager.ManagerSound.PlaySingleSound("Fast Whoosh By");
-
-                // call SFX Oohhh on Miss
                 MasterManager.ManagerSound.PlaySingleSound("People Saying Oohhh");
                 animators[m.AttackerStats.PlayerType].Play("Miss");
                 break;
-
             case Constants.MoveType.DEATH:
                 GameObject reff = Instantiate(WinnerPopup);
-
-                // call SFX characater dies
                 MasterManager.ManagerSound.PlaySingleSound("Character dies");
                 if (m.DefenderStats.PlayerType == C.PlayerType.PLAYER)
                 {
                     wins++;
                     CanAttack = true;
-                    // call BGM Victory Music
                     MasterManager.ManagerSound.PlayBackgroundMusic(victoryMusic, false);
-
-                    // call SFX Crowd Victory
                     MasterManager.ManagerSound.PlayRandomSound("Crowd Victory", "Crowd Angry");
                 }
                 else
                 {
                     reff.GetComponent<BattleResultScript>().enemyDrawIndex = ValidEnemies[m.DefenderStats.Name];
-                   
-                    // call BGM Victory Music
                     MasterManager.ManagerSound.PlayBackgroundMusic(defeatMusic, false);
-
-                    // call SFX Crowd Boo on Defeat
                     MasterManager.ManagerSound.PlaySingleSound("Crowd Boo");
 
                 }
@@ -320,15 +350,18 @@ public class AIManager : MonoBehaviour
 
     IEnumerator animateBattle()
     {
-        Queue<Move> moveQueue = new Queue<Move>();
+        Stats player = MasterManager.ManagerGlobalData.GetPlayerDataInfo().GetActualStats();
+        Stats enemy = Stats.copy(currentEnemy);
+        GameObject.FindGameObjectWithTag("playerbars").GetComponent<BattleBarController>().set(player.HP, player.MAXHP * 5, player.Stamina, player.MaxStamina);
+        GameObject.FindGameObjectWithTag("enemybars").GetComponent<BattleBarController>().set(enemy.HP, enemy.MAXHP * 5, enemy.Stamina, enemy.MaxStamina);
 
+        Queue<Move> moveQueue = new Queue<Move>();
         foreach (Move m in Battle)
         {
             moveQueue.Enqueue(m);
         }
         float cummulativeTime = 0.0f;
         Move CurrentMove = moveQueue.Dequeue();
-        
         while (true)
         {
             if (CanAttack && !player1.GetComponent<Character>().isAttacking && !player2.GetComponent<Character>().isAttacking)

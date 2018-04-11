@@ -20,8 +20,14 @@ public class Character : MonoBehaviour
     {
         GameObject g = Instantiate(dmgPrefab, this.transform.root);
         g.SetActive(true);
-        g.GetComponent<RectTransform>().rect.Set(300, 0, 0, 0);
-        g.GetComponent<DamageDisplayScript>().value = 100;
+        Vector2 pos = new Vector2(40, 200);
+        if (this.name == "Player1")
+        {
+            pos.x = 800;
+        }
+
+        g.GetComponent<RectTransform>().position = pos;
+        g.GetComponent<DamageDisplayScript>().value = this.GetComponent<Attribute>().getSTATS().Strength;
     }
 	// Use this for initialization
 	protected virtual void Start ()
