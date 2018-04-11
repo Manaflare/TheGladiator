@@ -304,7 +304,7 @@ public class AIManager : MonoBehaviour
                 {
                     reff.GetComponent<BattleResultScript>().enemyDrawIndex = ValidEnemies[m.DefenderStats.Name];
                    
-                    // call BGM Victory Music
+                    // call BGM Defeat Music (you lose)
                     MasterManager.ManagerSound.PlayBackgroundMusic(defeatMusic, false);
 
                     // call SFX Crowd Boo on Defeat
