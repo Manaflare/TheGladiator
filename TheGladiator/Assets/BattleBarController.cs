@@ -19,6 +19,8 @@ public class BattleBarController : MonoBehaviour {
     public void set(float currentHP, float maxHP, float stamina, float maxStamina )
     {
 
+        currentHP = (currentHP <= 0) ? 0 : currentHP;
+
         currentHPValue.text = ((int)currentHP).ToString();
         currentStamValue.text = ((int)stamina).ToString();
 
