@@ -65,7 +65,7 @@ public class AIManager : MonoBehaviour
     #endregion
 
     Stats currentEnemy = null;
-
+    public SpectatorScript[] spectators;
     private void Start()
     {
         BracketController.layers = 1;
@@ -292,9 +292,17 @@ public class AIManager : MonoBehaviour
         return res;
     }
 
+    void AnimateCrowd()
+    {
+        foreach (SpectatorScript item in spectators)
+        {
+            item.PlayRandomAnimation();
+        }
+    }
+
     void playMove(Move m)
     {
-
+        AnimateCrowd();
         if (m.AttackerStats.PlayerType == C.PlayerType.PLAYER)
         {
             GameObject.FindGameObjectWithTag("enemybars").GetComponent<BattleBarController>().set(m.DefenderStats.HP, m.DefenderStats.MAXHP * 5, m.DefenderStats.Stamina, m.DefenderStats.MaxStamina);

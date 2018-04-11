@@ -26,7 +26,7 @@ public class SpectatorScript : MonoBehaviour {
         PlayRandomAnimation();
     }
 
-    void PlayRandomAnimation()
+    public void PlayRandomAnimation()
     {
         float randomStart = Random.Range(0f, 1f);
         AnimationClip selectedClip = clips[Random.Range(0, clips.Length)];
