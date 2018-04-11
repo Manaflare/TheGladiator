@@ -38,16 +38,27 @@ public class WorkPanel : MonoBehaviour
     public GameObject workPopup;
     // Use this for initialization
     private bool bMoving = false;
-
+    private bool bReservedResetWork = false;
     public Text goldText;
     public Text staminaText;
     public Text TimeText;
     ListDataInfo playerData;
+
+    private enum WorkProgress
+    {
+        Is_Ready = 0,
+        Is_Working,
+        Is_Done,
+    }
+
+    private WorkProgress workProgress;
     void Awake()
     {
         playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         ResetWork();
         bMoving = false;
+        bReservedResetWork = false;
+        workProgress = WorkProgress.Is_Ready;
     }
 
     // Update is called once per frame
@@ -58,6 +69,12 @@ public class WorkPanel : MonoBehaviour
 
     public void ResetWork()
     {
+        if (workProgress == WorkProgress.Is_Working)
+        {
+            bReservedResetWork = true;
+            return;
+        }
+
         workList.Clear();
         ListWorkInfo allWorkInfo = MasterManager.ManagerGlobalData.GetAllWorkData();
 
@@ -77,8 +94,8 @@ public class WorkPanel : MonoBehaviour
 
             //move the element to the end the list
             temp = randomIndecies[randomIndex];
-            randomIndecies[randomIndex] = randomIndecies[listSize-1];
-            randomIndecies[listSize-1] = temp;
+            randomIndecies[randomIndex] = randomIndecies[listSize - 1];
+            randomIndecies[listSize - 1] = temp;
 
             listSize--;
         }
@@ -90,7 +107,7 @@ public class WorkPanel : MonoBehaviour
     private void OnEnable()
     {
         //check if there isn't work in the work list
-        if(workList.Count == 0)
+        if (workList.Count == 0)
         {
             MasterManager.ManagerPopup.ShowMessageBox("Hey!", "Don't have work this week\nWait until next weekend", Constants.PopupType.POPUP_NO, OnCloseWindow);
         }
@@ -107,14 +124,14 @@ public class WorkPanel : MonoBehaviour
 
         //set previous page
         int prevIndex = currentIndex - 1;
-        if(prevIndex < 0 )
+        if (prevIndex < 0)
         {
             prevIndex = workList.Count - 1;
         }
-        
+
         SetWorkPage(workList[prevIndex], Preivious);
         StartCoroutine(IE_MoveToRight());
-        
+
     }
 
     public void OnPrevious()
@@ -129,7 +146,7 @@ public class WorkPanel : MonoBehaviour
         }
 
         SetWorkPage(workList[nextIndex], Next);
-        StartCoroutine(IE_MoveToLeft());        
+        StartCoroutine(IE_MoveToLeft());
     }
 
     void SetWorkPage(Work workInfo, RectTransform parent)
@@ -142,7 +159,7 @@ public class WorkPanel : MonoBehaviour
         bMoving = true;
         Vector3 curPos = Current.GetComponentInChildren<Image>().rectTransform.position;
         Vector3 nextPos = Next.GetComponentInChildren<Image>().rectTransform.position;
-        
+
         Vector3 destForCur = Preivious.position;
         Vector3 destForNext = Current.position;
 
@@ -183,7 +200,7 @@ public class WorkPanel : MonoBehaviour
         Vector3 destForCur = Next.position;
         Vector3 destForPrev = Current.position;
         float t = 0.0f;
-        while(Vector3.Distance(curPos, destForCur) > 0.01f)
+        while (Vector3.Distance(curPos, destForCur) > 0.01f)
         {
             curPos = Vector3.Lerp(curPos, destForCur, t);
             prevPos = Vector3.Lerp(prevPos, destForPrev, t);
@@ -194,7 +211,7 @@ public class WorkPanel : MonoBehaviour
             yield return null;
         }
 
-       
+
         Debug.Log("Done");
         bMoving = false;
         //go back to original pos
@@ -219,6 +236,7 @@ public class WorkPanel : MonoBehaviour
         else
         {
             TownManager.Instance.CloseCurrentWindow(true, CallBackEndWork, workList[currentIndex].turn);
+            workProgress = WorkProgress.Is_Working;
         }
 
         workPopup.SetActive(false);
@@ -241,6 +259,9 @@ public class WorkPanel : MonoBehaviour
 
     public void CallBackEndWork()
     {
+        workProgress = WorkProgress.Is_Done;
+
+
         //make money
         long earnedGold = workList[currentIndex].gold * playerData.playerTier;
         MasterManager.ManagerGlobalData.GetEnvData().gold += earnedGold;
@@ -250,7 +271,7 @@ public class WorkPanel : MonoBehaviour
         //ListDataInfo playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         playerData.statsList[0].Stamina -= (short)(workList[currentIndex].stamina * playerData.playerTier);
         MasterManager.ManagerGlobalData.SavePlayerData();
-       
+
         MasterManager.ManagerPopup.ShowMessageBox("Hey!", "You made " + earnedGold.ToString() + " gold", Constants.PopupType.POPUP_SYSTEM);
 
         //update player ui
@@ -272,13 +293,21 @@ public class WorkPanel : MonoBehaviour
             staminaText.text = "";
             TimeText.text = "";
         }
+
+        if (bReservedResetWork)
+        {
+            ResetWork();
+            bReservedResetWork = false;
+        }
+
+        workProgress = WorkProgress.Is_Ready;
     }
 
     private void SetCurrentWork()
     {
-        if(workList.Count > 0)
+        if (workList.Count > 0)
         {
-            if(playerData == null)
+            if (playerData == null)
                 playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
 
             SetWorkPage(workList[currentIndex], Current);

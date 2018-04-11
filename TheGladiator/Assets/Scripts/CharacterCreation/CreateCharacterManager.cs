@@ -34,7 +34,7 @@ public class CreateCharacterManager : MonoBehaviour {
     public int BaseStats;
 
     protected int HPPoints;
-    protected byte StrPoints;
+    protected short StrPoints;
     protected byte AgiPoints;
     protected byte DexPoints;
     protected short StaPoints;

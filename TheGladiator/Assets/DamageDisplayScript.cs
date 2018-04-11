@@ -21,10 +21,9 @@ public class DamageDisplayScript : MonoBehaviour {
         {
             numbers.Add(numbers.Count.ToString(), o as Sprite);
         }
-        this.GetComponent<Rigidbody2D>().AddForce(new Vector3(3500, 12500));
+        this.GetComponent<Rigidbody2D>().AddForce(new Vector3(-3500, 12500));
         Display(value);
 	}
-
     private void OnEnable()
     {
         Start();

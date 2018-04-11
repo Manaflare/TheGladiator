@@ -7,9 +7,67 @@ public class HomePanel : MonoBehaviour
 {
 
     public GameObject sleepImage;
+    public Text houseType;
+    public Text data;
+    public Text cost;
+    public Image coin;
+    public Button upgradeBtn;
+    int BaseCost = 150;
+    int FinalCost;
+
     // Use this for initialization
     void Start()
     {
+       
+        FinalCost = (int)(BaseCost * Mathf.Pow(MasterManager.ManagerGlobalData.GetEnvData().house_level, 3));
+        cost.text = FinalCost.ToString();
+
+        Constants.HouseType houseType = (Constants.HouseType)MasterManager.ManagerGlobalData.GetEnvData().house_level ;
+        string dataText = "";
+        switch (houseType)
+        {
+            case Constants.HouseType.SMALL:
+                this.houseType.text = "Small House";
+                dataText = "45%\n45%";
+                break;
+            case Constants.HouseType.MEDIUM:
+                dataText = "65%\n65%";
+                this.houseType.text = "Medium House";
+                break;
+            case Constants.HouseType.HUGE:
+                dataText = "85%\n85%";
+                this.houseType.text  = "Huge House";
+                break;
+            case Constants.HouseType.MANSION:
+                this.houseType.text = "Mansion";
+                dataText = "100%\n100%";
+                upgradeBtn.gameObject.SetActive(false);
+                coin.gameObject.SetActive(false);
+                cost.gameObject.SetActive(false);
+                break;
+            default:
+                break;
+        }
+        data.text = dataText;
+    }
+    private void OnEnable()
+    {
+        Start();        
+    }
+   public void UpgradeHome()
+    {
+        if(MasterManager.ManagerGlobalData.GetEnvData().gold > FinalCost)
+        {
+            MasterManager.ManagerGlobalData.GetEnvData().gold -= FinalCost;
+            MasterManager.ManagerGlobalData.GetEnvData().house_level++;
+            MasterManager.ManagerGlobalData.SaveEnvData();
+            TownManager.Instance.UpdatePlayerUI();
+            Start();
+        }
+        else
+        {
+            MasterManager.ManagerPopup.ShowMessageBox("Oh No!","You don't have enought gold to buy this house",Constants.PopupType.POPUP_NO);
+        }
     }
 
     // Update is called once per frame
@@ -56,7 +114,7 @@ public class HomePanel : MonoBehaviour
                 multiPlier = 0.85f;
                 break;
             case Constants.HouseType.MANSION:
-                multiPlier = 1.10f;
+                multiPlier = 1.00f;
                 break;
             default:
                 break;

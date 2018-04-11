@@ -11,8 +11,6 @@ public class ItemUnlockScript : MonoBehaviour
     private ListDataInfo playerItems;
     List<ItemDataInfo> itemData;
 
-    private byte winStreak;
-
     private int currentTier;
     private int itemTier;
     private int rngCannon;
@@ -39,18 +37,6 @@ public class ItemUnlockScript : MonoBehaviour
 
        
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        if (winStreak == 3)
-        {
-            playerItems = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
-            fireTheCannon();
-            this.transform.root.gameObject.SetActive(true);
-        }
-    }
-
     void continueButtonClick()
     {
         this.transform.root.gameObject.SetActive(false);

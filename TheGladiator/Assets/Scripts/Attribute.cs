@@ -154,7 +154,7 @@ public class Stats
     {
 
     }
-    public Stats(string name, Constants.PlayerType playerType, int maxHp, byte str, byte agi, byte dex, short maxStamina, short stamina = short.MinValue, int hp = int.MinValue)
+    public Stats(string name, Constants.PlayerType playerType, int maxHp, short str, byte agi, byte dex, short maxStamina, short stamina = short.MinValue, int hp = int.MinValue)
     {
         Name = name;
         PlayerType = playerType;
@@ -174,7 +174,7 @@ public class Stats
         }
 
     }
-    public Stats(string name, int maxHp, byte str, byte agi, byte dex, short maxStamina, short stamina = short.MinValue, int hp = int.MinValue)
+    public Stats(string name, int maxHp, short str, byte agi, byte dex, short maxStamina, short stamina = short.MinValue, int hp = int.MinValue)
     {
         Name = name;
         MAXHP = maxHp;
@@ -204,7 +204,7 @@ public class Stats
     public Constants.PlayerType PlayerType;
     public int HP;
     public int MAXHP;
-    public byte Strength;
+    public short Strength;
     public byte Agility;
     public byte Dexterity;
     public short Stamina;
