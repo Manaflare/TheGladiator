@@ -224,7 +224,7 @@ public class TownManager : MonoBehaviour
         if (actStat.HP > actStat.MAXHP)
         {
             actStat.HP = (int)(actStat.MAXHP * Constants.HP_MULTIPLIER);
-            // playerData.statsList[0].HP = actStat.HP;
+            playerData.statsList[0].HP = actStat.HP;
             MasterManager.ManagerGlobalData.SavePlayerData();
         }
 
