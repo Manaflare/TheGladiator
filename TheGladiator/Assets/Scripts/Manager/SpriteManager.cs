@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class SpriteManager : MonoBehaviour, IManager
@@ -52,7 +51,7 @@ public class SpriteManager : MonoBehaviour, IManager
         HairList.Add(empty);
         FacialHairList.Add(empty);
 
-        foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(characterTexture)))
+        foreach (Object o in Resources.LoadAll<Sprite>(characterTexture.name))
         {
             if (o.name.Contains("Pants"))
             {

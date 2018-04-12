@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.UI;
 
 public class Gore : MonoBehaviour {
@@ -17,7 +16,8 @@ public class Gore : MonoBehaviour {
         canvas = GameObject.FindObjectOfType<Canvas>();
         timeAlive = 0.0f;
         Vector2 startPos = new Vector2(-18.75f, +31.25f);
-        imageChildren = GameObject.FindGameObjectWithTag("goreparent").GetComponentsInChildren<Image>();
+        //imageChildren = GameObject.FindGameObjectWithTag("goreparent").GetComponentsInChildren<Image>();
+        imageChildren = this.GetComponentsInChildren<Image>();
 
         Vector2 offset = new Vector2(0, 0);
         foreach(var enable in imageChildren)
@@ -29,7 +29,7 @@ public class Gore : MonoBehaviour {
         int currentLayerLength = 3;
         
         int index = 0;
-        foreach (Object o in AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(goreTexture)))
+        foreach (Object o in Resources.LoadAll<Sprite>(goreTexture.name))
         {
             if (o.GetType().ToString() == "UnityEngine.Sprite")
             {

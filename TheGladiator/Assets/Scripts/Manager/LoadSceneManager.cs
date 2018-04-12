@@ -6,22 +6,47 @@ using UnityEngine.SceneManagement;
 public class LoadSceneManager : MonoBehaviour, IManager {
 
     // Use this for initialization
+    private bool afterBattle = false;
+    public bool AfterBattle
+    {
+        get { return afterBattle; }
+        set { afterBattle = value; }
+    }
+
     public void Initialize()
     {
-
+        afterBattle = false;
     }
 
     // Update is called once per frame
     void Update () {
 		
 	}
-    public void LoadScene(string sceneName)
+    public void LoadScene(string sceneName, bool withLoading = true)
     {
-        SceneManager.LoadScene(sceneName);
+        if(withLoading)
+        {
+            LoadSceneAsync.LoadScene(sceneName);
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+
+        if (SceneManager.GetActiveScene().name == "Arena")
+        {
+            afterBattle = true;
+        }
+    
+        MasterManager.ManagerGlobalData.SaveAllData();
+
     }
 
-    public void LoadScene(int sceneIndex)
+    public void LoadScene(int sceneIndex, bool withLoading = true)
     {
-        SceneManager.LoadScene(sceneIndex);
+        string scene_path = SceneUtility.GetScenePathByBuildIndex(sceneIndex);
+        string scene_name_with_extension = scene_path.Split('/')[2];
+        string scene_name = System.IO.Path.GetFileNameWithoutExtension(scene_name_with_extension);
+        LoadScene(scene_name, withLoading);
     }
 }

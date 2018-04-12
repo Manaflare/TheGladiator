@@ -62,7 +62,7 @@ public static class Constants
 
     public enum HouseType
     {
-        SMALL = 0,
+        SMALL = 1,
         MEDIUM,
         HUGE,
         MANSION,
@@ -85,18 +85,36 @@ public static class Constants
         BOSS
     }
 
+    public enum BuildingPanel_Type
+    {
+        NOT_IMPLEMENTED = 0,
+        WINDOW,
+        SCENE,
+    }
+
+    public enum BuildingPanel_Status
+    {
+        NOT_AVAILABLE = 0,
+        AVAILABLE,
+        ONLY_SUNDAY,
+    }
+
     public const float SECOND_FOR_DAY = 86400.0f;
     public const float TIME_DAYTIME = 43200.0f;
     public const float TIME_SUNSET = 64800.0f;
     public const float TIME_DAWN = 21600.0f;
     public const float PER_TIME = 21600.0f;
+    public const float TIME_GAMESTART = 28800.0f;
 
-
-    public enum JSONIndex : int 
+    public enum JSONIndex : int
     {
         DATA_PLAYER = 1,
         DATA_ENEMY,
         DATA_ITEM,
+        DATA_ENVIRONMENT,
+        DATA_WORK,
+        DATA_CONFIG,
+        DATA_CREDIT,
     }
 
     public delegate void CallbackFunction();
@@ -116,7 +134,10 @@ public static class Constants
 
     }
 
+    public static int MAX_ENEMY_RANK = 10;
+
     public static float HOUR_SPENT = 8.0f;
+    public static float STAMINA_REGEN_INTERVAL = 1.0f;
 
     public static string RIGHT_HAND = "right hand";
     public static string ARMOR = "armor";
@@ -125,15 +146,20 @@ public static class Constants
     public static string PANTS = "pants";
     public static string SHOES = "shoes";
 
-    public static string playerName = "Player";
-    public static string enemyName = "Player 2";
+    public static string C_RIGHT_HAND = "Right Hand";
+    public static string C_ARMOR = "Armor";
+    public static string C_LEFT_HAND = "Left Hand";
+    public static string C_HELMET = "Helmet";
+    public static string C_PANTS = "Pants";
+    public static string C_SHOES = "Shoes";
 
-    public static string player1Tag = "player1";
-    public static string enemyTag = "player2";
+    public static string PLAYER_NAME = "Player";
+    public static string ENEMY_NAME = "Player 2";
+
+    public static string PLAYER1_TAG = "player1";
+    public static string ENEMY_TAG = "player2";
 
     public static int PlayerIndex = 0;
-
-
 
     public static string KEY_STRENGTH = "Strength";
     public static string KEY_AGILITY = "Agility";
@@ -142,7 +168,10 @@ public static class Constants
 
     public static byte MAX_STAT_LEVEL = byte.MaxValue;
 
+    public static float HP_MULTIPLIER = 5;
+
     public static float MINIMUM_DELAY = 0.5f;
+
     public static float BASE_TIME = 2.0f;
     public static float MODIFIABLE_TIME = BASE_TIME - MINIMUM_DELAY;
 
@@ -155,5 +184,16 @@ public static class Constants
     public static float MAXIMUM_DODGE = 0.7F;
     public static float DODGE_STEP_AMOUNT = (MAXIMUM_DODGE - MINIMUM_DODGE) / MAX_STAT_LEVEL;
 
+    public static string CONFIG_PATH = "Assets/Resources/Config/";
+    public static string LOCALE_PATH = "Assets/Resources/Locale/localText_";
+    public static string LOCALE_NAME_PATH = "Locale/localText_";
+
+    public enum LOCALE_TYPE
+    {
+        EN_CA = 0,
+        FR_CA,
+        KO_KR,
+        PT_BR,
+    }
 }
 
