@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224134321892851712}
-  - component: {fileID: 114179979985891812}
   - component: {fileID: 95945396581062290}
+  - component: {fileID: 114931733169248012}
   m_Layer: 5
   m_Name: Spectator
   m_TagString: Untagged
@@ -203,29 +203,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114179979985891812
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1151922723656972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2eee3136893dea4b976ec7073b092ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  body: {fileID: 114988085506317936}
-  hair: {fileID: 114789048070675606}
-  facehair: {fileID: 114060164510257012}
-  armor: {fileID: 114425212672030362}
-  pants: {fileID: 114980081773134902}
-  shoes: {fileID: 114567448042128900}
-  clips:
-  - {fileID: 7400000, guid: 003e568db9e614c4c8ad39b819cbab4c, type: 2}
-  - {fileID: 7400000, guid: deba9c2b0f0e3f8449f4c4ad69e20bd7, type: 2}
-  - {fileID: 7400000, guid: 398f1a51b0e05d34fbc0715fe2cf12ef, type: 2}
-  - {fileID: 7400000, guid: e63f8804484006543978c9d7f561fad0, type: 2}
-  - {fileID: 7400000, guid: c43082da0ec67954c856c218311a08a8, type: 2}
 --- !u!114 &114425212672030362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -307,6 +284,29 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114931733169248012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1151922723656972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd8a473de8035244b77977c06ad2de2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 114988085506317936}
+  hair: {fileID: 114789048070675606}
+  facehair: {fileID: 114060164510257012}
+  armor: {fileID: 114425212672030362}
+  pants: {fileID: 114980081773134902}
+  shoes: {fileID: 114567448042128900}
+  clips:
+  - {fileID: 7400000, guid: 003e568db9e614c4c8ad39b819cbab4c, type: 2}
+  - {fileID: 7400000, guid: deba9c2b0f0e3f8449f4c4ad69e20bd7, type: 2}
+  - {fileID: 7400000, guid: 398f1a51b0e05d34fbc0715fe2cf12ef, type: 2}
+  - {fileID: 7400000, guid: e63f8804484006543978c9d7f561fad0, type: 2}
+  - {fileID: 7400000, guid: c43082da0ec67954c856c218311a08a8, type: 2}
 --- !u!114 &114980081773134902
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -426,7 +426,7 @@ RectTransform:
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_Children: []
   m_Father: {fileID: 224134321892851712}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -444,8 +444,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224022928002498040}
-  - {fileID: 224449990487640856}
   - {fileID: 224133202252962474}
+  - {fileID: 224449990487640856}
   - {fileID: 224290735953276690}
   - {fileID: 224956032427096024}
   - {fileID: 224949232180290886}
@@ -486,7 +486,7 @@ RectTransform:
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_Children: []
   m_Father: {fileID: 224134321892851712}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
