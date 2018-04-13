@@ -68,10 +68,14 @@ public class MasterManager : MonoBehaviour {
 
         string path = Application.dataPath;
         //If mobileCreate a copy of the data json
-        if (Application.platform == RuntimePlatform.Android ||
+        if (Application.platform == RuntimePlatform.Switch || 
+            Application.platform == RuntimePlatform.Android ||
                Application.platform == RuntimePlatform.IPhonePlayer)
         {
             path = Application.persistentDataPath;
+        }else
+        {
+            path = Application.dataPath;
         }
             
         TextAsset _jsonString = (TextAsset)Resources.Load("JSON/EnemyData", typeof(TextAsset));

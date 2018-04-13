@@ -148,7 +148,7 @@ public class ShopManager : InventoryManager {
 
         itemSlot.text = itemPos;
 
-        itemHP.text  = (Constants.HP_MULTIPLIER * playerItens[id].Stats.HP).ToString();
+        itemHP.text  = (playerItens[id].Stats.HP).ToString();
         itemSTR.text = playerItens[id].Stats.Strength.ToString();
         itemAGI.text = playerItens[id].Stats.Agility.ToString();
         itemDEX.text = playerItens[id].Stats.Dexterity.ToString();
