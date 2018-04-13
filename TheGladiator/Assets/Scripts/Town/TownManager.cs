@@ -80,6 +80,10 @@ public class TownManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (MasterManager.ManagerInput.GetKeyDown(KeyCode.Escape))
+        {
+            SelectPanel(2);
+        }
         //Objects[selectedIndex].GetComponent<GlowButton>().EndGlow();
 
         //if (MasterManager.ManagerInput.GetKeyDown(KeyCode.LeftArrow))
