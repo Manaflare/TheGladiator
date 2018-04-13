@@ -60,6 +60,22 @@ public class TownManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if(PlayerPrefs.GetInt("WinBracket") == 1)
+        {
+            //call popup window
+            for (int i = 0; i<2; i++)
+            {
+                if (i == 0)
+                {
+                    Panels[11].SetActive(true);
+                }
+                if (i == 1)
+                {
+                    Panels[12].SetActive(true);
+                }
+            }
+            PlayerPrefs.SetInt("WinBracket", 0);
+        }
         // call BGM
         MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
         if (!MasterManager.ManagerGlobalData.GetConfiguration().hasReadTutorial)
