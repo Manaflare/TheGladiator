@@ -88,6 +88,9 @@ public class MainMenuScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		
-	}
+        if (MasterManager.ManagerInput.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
 }

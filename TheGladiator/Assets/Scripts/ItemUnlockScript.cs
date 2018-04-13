@@ -27,7 +27,7 @@ public class ItemUnlockScript : MonoBehaviour
     // Use this for initialization
 	void Start ()
     {
-	    rngCannon = Random.Range(0, 100);
+        rngCannon = Random.Range(0, 100);
 
         playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         currentTier = playerDataInfo.playerTier == 0 ? 1 : playerDataInfo.playerTier;

@@ -109,7 +109,7 @@ public class WorkPanel : MonoBehaviour
         //check if there isn't work in the work list
         if (workList.Count == 0)
         {
-            MasterManager.ManagerPopup.ShowMessageBox("Hey!", "Don't have work this week\nWait until next weekend", Constants.PopupType.POPUP_NO, OnCloseWindow);
+            MasterManager.ManagerPopup.ShowMessageBox("Hey!", "Guild is out of work this week\nCome back next week", Constants.PopupType.POPUP_NO, OnCloseWindow);
         }
         else
         {
