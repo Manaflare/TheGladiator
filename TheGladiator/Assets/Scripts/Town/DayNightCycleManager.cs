@@ -206,10 +206,10 @@ public class DayNightCycleManager : MonoBehaviour
 
         expectHandler = callbackFunc;
 
-        if (expectingTime >= Constants.SECOND_FOR_DAY)
+        for(int count = 1; expectingTime >= Constants.SECOND_FOR_DAY; ++count)
         {
             expectingTime -= Constants.SECOND_FOR_DAY;
-            expectingdDay = envData.days + 1;
+            expectingdDay = envData.days + count;
             if (expectingdDay > Constants.DayType.SUNDAY)
             {
                 expectingdDay = 0;
