@@ -2046,7 +2046,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.22000122, y: 0.8800001}
+  m_AnchoredPosition: {x: -0.22000122, y: 0.87999916}
   m_SizeDelta: {x: 9.24, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &155039427
@@ -18498,12 +18498,34 @@ Prefab:
     - target: {fileID: 114127938219744664, guid: ff5fe596977c17b4d87db4d8a18a38fb,
         type: 2}
       propertyPath: m_Text
-      value: Go to battle
+      value: Go Battle
       objectReference: {fileID: 0}
     - target: {fileID: 114734222149024480, guid: ff5fe596977c17b4d87db4d8a18a38fb,
         type: 2}
       propertyPath: m_Text
-      value: Skip Today
+      value: Skip
+      objectReference: {fileID: 0}
+    - target: {fileID: 114575192515290862, guid: ff5fe596977c17b4d87db4d8a18a38fb,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Would you like to skip this week and go straight to the battle?
+
+        (It will go next Monday)'
+      objectReference: {fileID: 0}
+    - target: {fileID: 224461732512035566, guid: ff5fe596977c17b4d87db4d8a18a38fb,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 256.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 224461732512035566, guid: ff5fe596977c17b4d87db4d8a18a38fb,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 24.73999
+      objectReference: {fileID: 0}
+    - target: {fileID: 224461732512035566, guid: ff5fe596977c17b4d87db4d8a18a38fb,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 70.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114623111346533026, guid: ff5fe596977c17b4d87db4d8a18a38fb, type: 2}
