@@ -104,6 +104,10 @@ public class WorkPanel : MonoBehaviour
             return;
         }
 
+        if (playerData == null)
+        {
+            playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+        }
         //clear list
         workList.Clear();
         playerData.workIndexList.Clear();
