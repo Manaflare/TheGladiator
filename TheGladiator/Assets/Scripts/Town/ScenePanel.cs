@@ -28,12 +28,6 @@ public class ScenePanel : MonoBehaviour
         MasterManager.ManagerLoadScene.LoadScene(sceneName);
     }
 
-    public void OnSkip()
-    {
-        OnCancel();
-        DayNightCycleManager.Instance.SpendTime(Constants.TIME_GAMESTART, Constants.DayType.MONDAY, MasterManager.ManagerGlobalData.GetEnvData().weeks + 1);
-    }
-
     public void OnCancel()
     {
         TownManager.Instance.CloseCurrentWindow(false);

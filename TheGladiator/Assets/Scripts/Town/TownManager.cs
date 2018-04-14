@@ -189,14 +189,21 @@ public class TownManager : MonoBehaviour
                 }
                 break;
             case Constants.BuildingPanel_Type.SCENE:
-                if (buildingPanel.CheckStatus())
+                string panelName = Panels[selectedIndex].name;
+                StringBuilder s = new StringBuilder(panelName);
+                s.Replace("Panel", "");
+
+                if (buildingPanel.GetStatus() == Constants.BuildingPanel_Status.ONLY_SUNDAY
+                    && MasterManager.ManagerGlobalData.GetEnvData().days != Constants.DayType.SUNDAY)
                 {
+
                     Panels[selectedIndex].SetActive(true);
-                    string panelName = Panels[selectedIndex].name;
-                    StringBuilder s = new StringBuilder(panelName);
-                    s.Replace("Panel", "");
                     Panels[selectedIndex].GetComponentInChildren<ScenePanel>().SetSceneName(s.ToString());
 
+                }
+                else
+                {
+                    MasterManager.ManagerLoadScene.LoadScene(s.ToString());
                 }
                 break;
             default:
