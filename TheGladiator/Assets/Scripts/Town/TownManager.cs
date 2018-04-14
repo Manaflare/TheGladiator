@@ -60,10 +60,10 @@ public class TownManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if(PlayerPrefs.GetInt("WinBracket") == 1)
+        if (PlayerPrefs.GetInt("WinBracket") == 1)
         {
             //call popup window
-            for (int i = 0; i<2; i++)
+            for (int i = 0; i < 2; i++)
             {
                 if (i == 0)
                 {
@@ -190,10 +190,12 @@ public class TownManager : MonoBehaviour
             case Constants.BuildingPanel_Type.SCENE:
                 if (buildingPanel.CheckStatus())
                 {
+                    Panels[selectedIndex].SetActive(true);
                     string panelName = Panels[selectedIndex].name;
                     StringBuilder s = new StringBuilder(panelName);
                     s.Replace("Panel", "");
-                    MasterManager.ManagerLoadScene.LoadScene(s.ToString());
+                    Panels[selectedIndex].GetComponentInChildren<ScenePanel>().SetSceneName(s.ToString());
+
                 }
                 break;
             default:
