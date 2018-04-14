@@ -31,6 +31,7 @@ public class TownManager : MonoBehaviour
     public GameObject[] Panels;
 
     private int selectedIndex = 0;
+    private bool FirstTownScene = false; // this town manager is instantiated first after tutorial
     private long gold;
 
     [Header("Player Display")]
@@ -315,6 +316,15 @@ public class TownManager : MonoBehaviour
             selectedIndex = oldIndex;
     }
 
+    public void SetupAllAfterTutorial()
+    {
+        FirstTownScene = true;
+    }
+
+    public bool IsitFirstPlay()
+    {
+        return FirstTownScene;
+    }
 
     public void OnGoBackToMainMenu()
     {
