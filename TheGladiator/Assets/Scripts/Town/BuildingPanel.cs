@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildingPanel : MonoBehaviour {
+public class BuildingPanel : MonoBehaviour
+{
 
     public Constants.BuildingPanel_Type BuildingType;
 
@@ -18,7 +19,8 @@ public class BuildingPanel : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
     }
 
@@ -34,7 +36,7 @@ public class BuildingPanel : MonoBehaviour {
 
     public bool CheckStatus()
     {
-        if(BuildingStatus == Constants.BuildingPanel_Status.NOT_AVAILABLE)
+        if (BuildingStatus == Constants.BuildingPanel_Status.NOT_AVAILABLE)
         {
             MasterManager.ManagerPopup.ShowMessageBox("System", "This building is not available now", Constants.PopupType.POPUP_NO);
         }
@@ -42,7 +44,8 @@ public class BuildingPanel : MonoBehaviour {
         if (BuildingStatus == Constants.BuildingPanel_Status.ONLY_SUNDAY && MasterManager.ManagerGlobalData.GetEnvData().days != Constants.DayType.SUNDAY)
         {
             MasterManager.ManagerPopup.ShowMessageBox("Not Open Yet", "This building is only open on Sundays", Constants.PopupType.POPUP_NO);
-        }else if (BuildingStatus == Constants.BuildingPanel_Status.ONLY_SUNDAY && MasterManager.ManagerGlobalData.GetEnvData().days == Constants.DayType.SUNDAY)
+        }
+        else if (BuildingStatus == Constants.BuildingPanel_Status.ONLY_SUNDAY && MasterManager.ManagerGlobalData.GetEnvData().days == Constants.DayType.SUNDAY)
         {
             return (BuildingStatus == Constants.BuildingPanel_Status.ONLY_SUNDAY);
         }

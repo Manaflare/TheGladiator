@@ -196,31 +196,37 @@ public class DayNightCycleManager : MonoBehaviour
         TownManager.Instance.WorkForNextWeek();
     }
 
-    public void SpendTime(float hourMultiPlier = 1.0f, Constants.CallbackFunction callbackFunc = null)
+    public void SpendTime(float times, Constants.DayType day, int week, Constants.CallbackFunction callbackFunc = null)
     {
         speed *= speedMutiplier;
         speedUp = true;
-        expectingTime = envData.times + (Constants.HOUR_SPENT * hourMultiPlier * 3600f);
-        expectingdDay = envData.days;
-        expectingWeek = envData.weeks;
+        expectingTime = times;
+        expectingdDay = day;
+        expectingWeek = week;
 
         expectHandler = callbackFunc;
 
-        for(int count = 1; expectingTime >= Constants.SECOND_FOR_DAY; ++count)
+        Blocker.SetActive(true);
+        ClockImage.SetActive(true);
+    }
+    public void SpendTime(float hourMultiPlier = 1.0f, Constants.CallbackFunction callbackFunc = null)
+    {
+        float calcTime = envData.times + (Constants.HOUR_SPENT * hourMultiPlier * 3600f);
+        Constants.DayType calcDay = envData.days;
+        int calcWeek = envData.weeks;
+
+        for (int count = 1; calcTime >= Constants.SECOND_FOR_DAY; ++count)
         {
-            expectingTime -= Constants.SECOND_FOR_DAY;
-            expectingdDay = envData.days + count;
-            if (expectingdDay > Constants.DayType.SUNDAY)
+            calcTime -= Constants.SECOND_FOR_DAY;
+            calcDay = envData.days + count;
+            if (calcDay > Constants.DayType.SUNDAY)
             {
-                expectingdDay = 0;
-                expectingWeek = envData.weeks + 1;
+                calcDay = 0;
+                calcWeek = envData.weeks + 1;
             }
         }
 
-        Blocker.SetActive(true);
-        ClockImage.SetActive(true);
-
-
+        SpendTime(calcTime, calcDay, calcWeek, callbackFunc);
     }
 
     private void EndExpectedTime()
