@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+[ExecuteInEditMode]
 public class SpectatorScript : MonoBehaviour {
 
    public Image body;

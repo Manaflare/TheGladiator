@@ -13,7 +13,7 @@ public class BattleBarController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        set(80000, 101, 10, 15);
+        set(100, 100, 100, 100);
 	}
 	
     public void set(float currentHP, float maxHP, float stamina, float maxStamina )

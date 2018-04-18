@@ -20,6 +20,7 @@ public class CharacterSpriteManager : MonoBehaviour {
     protected List<ItemDataInfo> itemList;
     protected SpriteInfo spriteInfo;
 
+
     Color showColor = new Color(1, 1, 1, 1);
     Color hideColor = new Color(1, 1, 1, 0);
 
