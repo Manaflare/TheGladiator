@@ -18,16 +18,17 @@ public class Character : MonoBehaviour
     }
     public void displayDamage()
     {
+        Vector2 pos = new Vector2(-300, -55);
         GameObject g = Instantiate(dmgPrefab, this.transform.root);
-        g.SetActive(true);
-        Vector2 pos = new Vector2(40, 200);
+        g.GetComponent<DamageDisplayScript>().multiplier = 2;
         if (this.name == "Player1")
         {
-            pos.x = 800;
+            g.GetComponent<DamageDisplayScript>().multiplier = -1;
+            pos.x = 275;
         }
-
-        g.GetComponent<RectTransform>().position = pos;
+        g.GetComponent<RectTransform>().localPosition = pos;
         g.GetComponent<DamageDisplayScript>().value = this.GetComponent<Attribute>().getSTATS().Strength;
+        g.SetActive(true);
     }
 	// Use this for initialization
 	protected virtual void Start ()
