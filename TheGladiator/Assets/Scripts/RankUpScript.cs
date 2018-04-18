@@ -21,6 +21,6 @@ public class RankUpScript : MonoBehaviour {
 	
 	public void closeOnClick()
     {
-        this.transform.root.gameObject.SetActive(false);
+        this.transform.gameObject.SetActive(false);
     }
 }
