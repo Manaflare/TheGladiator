@@ -105,6 +105,13 @@ public class ListDataInfo
                         actualStat.Dexterity = Utility.GetMaxValue(actualStat.Dexterity, tempItem.Stats.Dexterity);
                         actualStat.Agility = Utility.GetMaxValue(actualStat.Agility, tempItem.Stats.Agility);
                         actualStat.Strength = Utility.GetMaxValue(actualStat.Strength, tempItem.Stats.Strength);
+
+                        //TODO : have to organize a concep of HP
+                        if (actualStat.HP > actualStat.MAXHP)
+                        {
+                            actualStat.HP = (int)(actualStat.MAXHP * Constants.HP_MULTIPLIER);
+                            statsList[0].HP = actualStat.HP;
+                        }
                     }
                     catch
                     {
