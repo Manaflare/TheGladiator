@@ -46,6 +46,9 @@ public class DayNightCycleManager : MonoBehaviour
     [SerializeField]
     private GameObject ClockImage;
 
+    [SerializeField]
+    private RuntimeAnimatorController[] imageAnimators;
+
     private TimeSpan currentTime;
 
 
@@ -196,7 +199,7 @@ public class DayNightCycleManager : MonoBehaviour
         TownManager.Instance.WorkForNextWeek();
     }
 
-    public void SpendTime(float times, Constants.DayType day, int week, Constants.CallbackFunction callbackFunc = null)
+    public void SpendTime(float times, Constants.DayType day, int week, Constants.CallbackFunction callbackFunc = null, Constants.ClockImageType clockType = Constants.ClockImageType.HOUR_GLASS)
     {
         speed *= speedMutiplier;
         speedUp = true;
@@ -208,8 +211,9 @@ public class DayNightCycleManager : MonoBehaviour
 
         Blocker.SetActive(true);
         ClockImage.SetActive(true);
+        ClockImage.GetComponent<Animator>().runtimeAnimatorController = imageAnimators[(byte)clockType];
     }
-    public void SpendTime(float hourMultiPlier = 1.0f, Constants.CallbackFunction callbackFunc = null)
+    public void SpendTime(float hourMultiPlier = 1.0f, Constants.CallbackFunction callbackFunc = null, Constants.ClockImageType clockType = Constants.ClockImageType.HOUR_GLASS)
     {
         float calcTime = envData.times + (Constants.HOUR_SPENT * hourMultiPlier * 3600f);
         Constants.DayType calcDay = envData.days;
@@ -226,7 +230,7 @@ public class DayNightCycleManager : MonoBehaviour
             }
         }
 
-        SpendTime(calcTime, calcDay, calcWeek, callbackFunc);
+        SpendTime(calcTime, calcDay, calcWeek, callbackFunc, clockType);
     }
 
     private void EndExpectedTime()

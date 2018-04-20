@@ -79,7 +79,7 @@ public class HomePanel : MonoBehaviour
     public void OnOK()
     {
         //  sleepImage.SetActive(true);
-        TownManager.Instance.CloseCurrentWindow(true, CallBackEndSleep, 1.0f);
+        TownManager.Instance.CloseCurrentWindow(true, CallBackEndSleep, 1.0f, Constants.ClockImageType.HOME);
     }
 
     public void OnCancel()
