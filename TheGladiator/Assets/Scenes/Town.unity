@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -8124,6 +8124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98121097d67d80046afd32a03fb48ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fonts: []
 --- !u!4 &536644368
 Transform:
   m_ObjectHideFlags: 0
@@ -14757,6 +14758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98121097d67d80046afd32a03fb48ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fonts: []
 --- !u!1 &1278583734
 GameObject:
   m_ObjectHideFlags: 0
@@ -20698,6 +20700,9 @@ MonoBehaviour:
   speed: 10
   speedMutiplier: 3000
   ClockImage: {fileID: 1849888405}
+  imageAnimators:
+  - {fileID: 9100000, guid: 33ae50133eb4799459c47fb020b94a20, type: 2}
+  - {fileID: 9100000, guid: f8cfee7cc77c1e249804e8b518e56c2b, type: 2}
   TownImage: {fileID: 1313924335}
   fogDay: {r: 1, g: 1, b: 1, a: 1}
   fogSunset: {r: 1, g: 0.5019608, b: 0.5019608, a: 1}
@@ -22778,7 +22783,7 @@ Animator:
   m_GameObject: {fileID: 1849888405}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 33ae50133eb4799459c47fb020b94a20, type: 2}
+  m_Controller: {fileID: 9100000, guid: f8cfee7cc77c1e249804e8b518e56c2b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

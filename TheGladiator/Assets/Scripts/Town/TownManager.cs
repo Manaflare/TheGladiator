@@ -218,13 +218,13 @@ public class TownManager : MonoBehaviour
         MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
     }
 
-    public void CloseCurrentWindow(bool bSpendTime = true, Constants.CallbackFunction callFunc = null, float spendingTurn = 1.0f)
+    public void CloseCurrentWindow(bool bSpendTime = true, Constants.CallbackFunction callFunc = null, float spendingTurn = 1.0f, Constants.ClockImageType clockType = Constants.ClockImageType.HOUR_GLASS)
     {
         MasterManager.ManagerGlobalData.SavePlayerData();
         Panels[selectedIndex].SetActive(false);
 
         if (bSpendTime)
-            DayNightCycleManager.Instance.SpendTime(spendingTurn, callFunc);
+            DayNightCycleManager.Instance.SpendTime(spendingTurn, callFunc, clockType);
 
         UpdatePlayerUI();
 
