@@ -40,12 +40,13 @@ public class ListDataInfo
         playerTier = 1;
         itemList = new List<ItemDataInfo>();
         equipedItensId = new List<int>();
+        workIndexList = new List<int>();
     }
     public ListDataInfo(Stats stats, SpriteInfo sprites)
     {
         statsList = new List<Stats>();
         spriteList = new List<SpriteInfo>();
-
+        workIndexList = new List<int>();
         statsList.Add(stats);
         spriteList.Add(sprites);
     }
@@ -56,6 +57,7 @@ public class ListDataInfo
         spriteList = new List<SpriteInfo>();
         itemList = new List<ItemDataInfo>();
         equipedItensId = new List<int>();
+        workIndexList = new List<int>();
 
         playerTier = ldf.playerTier;
         foreach (var a in ldf.equipedItensId)
