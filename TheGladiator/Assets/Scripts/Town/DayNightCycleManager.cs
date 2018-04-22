@@ -46,6 +46,9 @@ public class DayNightCycleManager : MonoBehaviour
     [SerializeField]
     private GameObject ClockImage;
 
+    [SerializeField]
+    private RuntimeAnimatorController[] imageAnimators;
+
     private TimeSpan currentTime;
 
 
@@ -196,31 +199,38 @@ public class DayNightCycleManager : MonoBehaviour
         TownManager.Instance.WorkForNextWeek();
     }
 
-    public void SpendTime(float hourMultiPlier = 1.0f, Constants.CallbackFunction callbackFunc = null)
+    public void SpendTime(float times, Constants.DayType day, int week, Constants.CallbackFunction callbackFunc = null, Constants.ClockImageType clockType = Constants.ClockImageType.HOUR_GLASS)
     {
         speed *= speedMutiplier;
         speedUp = true;
-        expectingTime = envData.times + (Constants.HOUR_SPENT * hourMultiPlier * 3600f);
-        expectingdDay = envData.days;
-        expectingWeek = envData.weeks;
+        expectingTime = times;
+        expectingdDay = day;
+        expectingWeek = week;
 
         expectHandler = callbackFunc;
 
-        if (expectingTime >= Constants.SECOND_FOR_DAY)
+        Blocker.SetActive(true);
+        ClockImage.SetActive(true);
+        ClockImage.GetComponent<Animator>().runtimeAnimatorController = imageAnimators[(byte)clockType];
+    }
+    public void SpendTime(float hourMultiPlier = 1.0f, Constants.CallbackFunction callbackFunc = null, Constants.ClockImageType clockType = Constants.ClockImageType.HOUR_GLASS)
+    {
+        float calcTime = envData.times + (Constants.HOUR_SPENT * hourMultiPlier * 3600f);
+        Constants.DayType calcDay = envData.days;
+        int calcWeek = envData.weeks;
+
+        for (int count = 1; calcTime >= Constants.SECOND_FOR_DAY; ++count)
         {
-            expectingTime -= Constants.SECOND_FOR_DAY;
-            expectingdDay = envData.days + 1;
-            if (expectingdDay > Constants.DayType.SUNDAY)
+            calcTime -= Constants.SECOND_FOR_DAY;
+            calcDay = envData.days + count;
+            if (calcDay > Constants.DayType.SUNDAY)
             {
-                expectingdDay = 0;
-                expectingWeek = envData.weeks + 1;
+                calcDay = 0;
+                calcWeek = envData.weeks + 1;
             }
         }
 
-        Blocker.SetActive(true);
-        ClockImage.SetActive(true);
-
-
+        SpendTime(calcTime, calcDay, calcWeek, callbackFunc, clockType);
     }
 
     private void EndExpectedTime()

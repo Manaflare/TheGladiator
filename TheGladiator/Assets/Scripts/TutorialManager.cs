@@ -32,10 +32,11 @@ public class TutorialManager : MonoBehaviour
         {
             if (nextScene != null && nextScene != "")
             {
-                MasterManager.ManagerLoadScene.LoadScene(nextScene,false);
+                MasterManager.ManagerLoadScene.LoadScene(nextScene, false);
             }
             if (isTutorial)
             {
+                TownManager.Instance.SetupAllAfterTutorial();
                 config.hasReadTutorial = true;
                 MasterManager.ManagerGlobalData.SaveConfig();
             }

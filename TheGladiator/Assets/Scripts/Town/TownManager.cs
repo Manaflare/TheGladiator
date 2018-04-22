@@ -31,6 +31,7 @@ public class TownManager : MonoBehaviour
     public GameObject[] Panels;
 
     private int selectedIndex = 0;
+    private bool FirstTownScene = false; // this town manager is instantiated first after tutorial
     private long gold;
 
     [Header("Player Display")]
@@ -60,6 +61,22 @@ public class TownManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (PlayerPrefs.GetInt("WinBracket") == 1)
+        {
+            //call popup window
+            for (int i = 0; i < 2; i++)
+            {
+                if (i == 0)
+                {
+                    Panels[11].SetActive(true);
+                }
+                if (i == 1)
+                {
+                    Panels[12].SetActive(true);
+                }
+            }
+            PlayerPrefs.SetInt("WinBracket", 0);
+        }
         // call BGM
         MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
         if (!MasterManager.ManagerGlobalData.GetConfiguration().hasReadTutorial)
@@ -80,6 +97,10 @@ public class TownManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (MasterManager.ManagerInput.GetKeyDown(KeyCode.Escape))
+        {
+            SelectPanel(2);
+        }
         //Objects[selectedIndex].GetComponent<GlowButton>().EndGlow();
 
         //if (MasterManager.ManagerInput.GetKeyDown(KeyCode.LeftArrow))
@@ -168,11 +189,20 @@ public class TownManager : MonoBehaviour
                 }
                 break;
             case Constants.BuildingPanel_Type.SCENE:
-                if (buildingPanel.CheckStatus())
+                string panelName = Panels[selectedIndex].name;
+                StringBuilder s = new StringBuilder(panelName);
+                s.Replace("Panel", "");
+
+                if (buildingPanel.GetStatus() == Constants.BuildingPanel_Status.ONLY_SUNDAY
+                    && MasterManager.ManagerGlobalData.GetEnvData().days != Constants.DayType.SUNDAY)
                 {
-                    string panelName = Panels[selectedIndex].name;
-                    StringBuilder s = new StringBuilder(panelName);
-                    s.Replace("Panel", "");
+
+                    Panels[selectedIndex].SetActive(true);
+                    Panels[selectedIndex].GetComponentInChildren<ScenePanel>().SetSceneName(s.ToString());
+
+                }
+                else
+                {
                     MasterManager.ManagerLoadScene.LoadScene(s.ToString());
                 }
                 break;
@@ -188,13 +218,13 @@ public class TownManager : MonoBehaviour
         MasterManager.ManagerSound.PlayBackgroundMusic(backgroundMusic);
     }
 
-    public void CloseCurrentWindow(bool bSpendTime = true, Constants.CallbackFunction callFunc = null, float spendingTurn = 1.0f)
+    public void CloseCurrentWindow(bool bSpendTime = true, Constants.CallbackFunction callFunc = null, float spendingTurn = 1.0f, Constants.ClockImageType clockType = Constants.ClockImageType.HOUR_GLASS)
     {
         MasterManager.ManagerGlobalData.SavePlayerData();
         Panels[selectedIndex].SetActive(false);
 
         if (bSpendTime)
-            DayNightCycleManager.Instance.SpendTime(spendingTurn, callFunc);
+            DayNightCycleManager.Instance.SpendTime(spendingTurn, callFunc, clockType);
 
         UpdatePlayerUI();
 
@@ -293,6 +323,15 @@ public class TownManager : MonoBehaviour
             selectedIndex = oldIndex;
     }
 
+    public void SetupAllAfterTutorial()
+    {
+        FirstTownScene = true;
+    }
+
+    public bool IsitFirstPlay()
+    {
+        return FirstTownScene;
+    }
 
     public void OnGoBackToMainMenu()
     {

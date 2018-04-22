@@ -28,11 +28,11 @@ public class BracketController : MonoBehaviour {
     {
         if (GameObject.FindGameObjectWithTag("aimanager").GetComponent<AIManager>().wins == 3)
         {
-            if(MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier >= Constants.MAX_ENEMY_RANK)
+            PlayerPrefs.SetInt("WinBracket", 1);
+            if (MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier >= Constants.MAX_ENEMY_RANK)
             {
                 PlayerPrefs.SetInt("Ending", 1);
             }
-
             MasterManager.ManagerLoadScene.LoadScene("Town");
         }
         else

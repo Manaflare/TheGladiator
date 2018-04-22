@@ -40,12 +40,13 @@ public class ListDataInfo
         playerTier = 1;
         itemList = new List<ItemDataInfo>();
         equipedItensId = new List<int>();
+        workIndexList = new List<int>();
     }
     public ListDataInfo(Stats stats, SpriteInfo sprites)
     {
         statsList = new List<Stats>();
         spriteList = new List<SpriteInfo>();
-
+        workIndexList = new List<int>();
         statsList.Add(stats);
         spriteList.Add(sprites);
     }
@@ -56,6 +57,7 @@ public class ListDataInfo
         spriteList = new List<SpriteInfo>();
         itemList = new List<ItemDataInfo>();
         equipedItensId = new List<int>();
+        workIndexList = new List<int>();
 
         playerTier = ldf.playerTier;
         foreach (var a in ldf.equipedItensId)
@@ -66,7 +68,7 @@ public class ListDataInfo
         {
             itemList.Add(a);
         }
-        foreach( var a in ldf.spriteList)
+        foreach (var a in ldf.spriteList)
         {
             spriteList.Add(a);
         }
@@ -97,14 +99,21 @@ public class ListDataInfo
                     try
                     {
 
-                    ItemDataInfo tempItem = itemList[p];
-                    //actualStat.HP += (int)(tempItem.Stats.HP);
-                    actualStat.MAXHP += tempItem.Stats.MAXHP;
-                    actualStat.Stamina = Utility.GetMaxValue(actualStat.Stamina, tempItem.Stats.MaxStamina);
-                    actualStat.MaxStamina = Utility.GetMaxValue(actualStat.MaxStamina, tempItem.Stats.MaxStamina);
-                    actualStat.Dexterity = Utility.GetMaxValue(actualStat.Dexterity, tempItem.Stats.Dexterity);
-                    actualStat.Agility = Utility.GetMaxValue(actualStat.Agility, tempItem.Stats.Agility);
-                    actualStat.Strength = Utility.GetMaxValue(actualStat.Strength, tempItem.Stats.Strength);
+                        ItemDataInfo tempItem = itemList[p];
+                        //actualStat.HP += (int)(tempItem.Stats.HP);
+                        actualStat.MAXHP += tempItem.Stats.MAXHP;
+                        actualStat.Stamina = Utility.GetMaxValue(actualStat.Stamina, tempItem.Stats.MaxStamina);
+                        actualStat.MaxStamina = Utility.GetMaxValue(actualStat.MaxStamina, tempItem.Stats.MaxStamina);
+                        actualStat.Dexterity = Utility.GetMaxValue(actualStat.Dexterity, tempItem.Stats.Dexterity);
+                        actualStat.Agility = Utility.GetMaxValue(actualStat.Agility, tempItem.Stats.Agility);
+                        actualStat.Strength = Utility.GetMaxValue(actualStat.Strength, tempItem.Stats.Strength);
+
+                        //TODO : have to organize a concep of HP
+                        if (actualStat.HP > actualStat.MAXHP)
+                        {
+                            actualStat.HP = (int)(actualStat.MAXHP * Constants.HP_MULTIPLIER);
+                            statsList[0].HP = actualStat.HP;
+                        }
                     }
                     catch
                     {
@@ -122,6 +131,7 @@ public class ListDataInfo
     public List<SpriteInfo> spriteList;
     public List<ItemDataInfo> itemList;
     public List<int> equipedItensId;
+    public List<int> workIndexList;
     public int playerTier;
 }
 
@@ -158,7 +168,7 @@ public class Stats
     {
         Name = name;
         PlayerType = playerType;
-        MAXHP  = maxHp;
+        MAXHP = maxHp;
         HP = (int)(MAXHP * Constants.HP_MULTIPLIER);
         if (hp != int.MinValue)
         {
@@ -196,7 +206,7 @@ public class Stats
     }
     public static Stats copy(Stats source)
     {
-        return new Stats(source.Name, source.PlayerType, source.MAXHP, source.Strength, source.Agility, source.Dexterity,source.MaxStamina, source.Stamina, source.HP);
+        return new Stats(source.Name, source.PlayerType, source.MAXHP, source.Strength, source.Agility, source.Dexterity, source.MaxStamina, source.Stamina, source.HP);
 
     }
 
@@ -227,7 +237,7 @@ public class Attribute : MonoBehaviour
 
     public void setSTATS(Stats newStats)
     {
-        STATS = Stats.copy( newStats );
+        STATS = Stats.copy(newStats);
     }
 
     public bool IsAlive { get; private set; }
@@ -235,10 +245,10 @@ public class Attribute : MonoBehaviour
     public bool IsDying { get; private set; }
 
     // Use this for initialization
-    protected virtual void Start ()
+    protected virtual void Start()
     {
-		
-	}
+
+    }
     public virtual void onDeath()
     {
         this.gameObject.SetActive(false);
@@ -247,11 +257,11 @@ public class Attribute : MonoBehaviour
         gore.SetActive(true);
     }
     // Update is called once per frame
-    protected virtual void Update ()
+    protected virtual void Update()
     {
-		
-	}
-    
+
+    }
+
     public void takeDamage(byte damage)
     {
         //STATS.HP -= damage;

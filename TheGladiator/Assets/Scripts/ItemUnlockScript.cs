@@ -24,10 +24,15 @@ public class ItemUnlockScript : MonoBehaviour
     
     public Image itemSprite;
 
+    public Button continueButton;
+
     // Use this for initialization
-	void Start ()
+    void Start ()
     {
-	    rngCannon = Random.Range(0, 100);
+        rngCannon = Random.Range(0, 100);
+
+        Button btn = continueButton.GetComponent<Button>();
+        btn.onClick.AddListener(continueButtonClick);
 
         playerDataInfo = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         currentTier = playerDataInfo.playerTier == 0 ? 1 : playerDataInfo.playerTier;
@@ -35,11 +40,11 @@ public class ItemUnlockScript : MonoBehaviour
         itemDataInfo = MasterManager.ManagerGlobalData.GetItemDataInfo();
         itemData = new List<ItemDataInfo>();
 
-       
+        fireTheCannon();
     }
     void continueButtonClick()
     {
-        this.transform.root.gameObject.SetActive(false);
+        this.transform.gameObject.SetActive(false);
     }
 
     void fireTheCannon()

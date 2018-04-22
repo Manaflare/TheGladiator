@@ -23,6 +23,7 @@ public class Work
 
 public class WorkPanel : MonoBehaviour
 {
+    //TODO: merge work list with playerdata.worklist
     [SerializeField]
     private List<Work> workList = new List<Work>();
 
@@ -55,7 +56,35 @@ public class WorkPanel : MonoBehaviour
     void Awake()
     {
         playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
-        ResetWork();
+
+        //only at once
+        if (TownManager.Instance.IsitFirstPlay())
+        {
+            ResetWork();
+        }
+        else
+        {
+            ListWorkInfo allWorkInfo = MasterManager.ManagerGlobalData.GetAllWorkData();
+            for (int i = 0; i < playerData.workIndexList.Count; ++i)
+            {
+                int actualIndex = playerData.workIndexList[i];
+                workList.Add(allWorkInfo.workList[actualIndex]);
+            }
+
+            //only if there is still work availiable in the work list
+            if (workList.Count > 0)
+            {
+                SetCurrentWork();
+            }
+            else
+            {
+                Current.GetComponentInChildren<WorkWindow>().SetWorkWindow("", "", "");
+                goldText.text = "";
+                staminaText.text = "";
+                TimeText.text = "";
+            }
+        }
+
         bMoving = false;
         bReservedResetWork = false;
         workProgress = WorkProgress.Is_Ready;
@@ -75,7 +104,14 @@ public class WorkPanel : MonoBehaviour
             return;
         }
 
+        if (playerData == null)
+        {
+            playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
+        }
+        //clear list
         workList.Clear();
+        playerData.workIndexList.Clear();
+
         ListWorkInfo allWorkInfo = MasterManager.ManagerGlobalData.GetAllWorkData();
 
         int listSize = allWorkInfo.workList.Count;
@@ -91,6 +127,7 @@ public class WorkPanel : MonoBehaviour
             actualIndex = randomIndecies[randomIndex];
 
             workList.Add(allWorkInfo.workList[actualIndex]);
+            playerData.workIndexList.Add(actualIndex);
 
             //move the element to the end the list
             temp = randomIndecies[randomIndex];
@@ -109,7 +146,7 @@ public class WorkPanel : MonoBehaviour
         //check if there isn't work in the work list
         if (workList.Count == 0)
         {
-            MasterManager.ManagerPopup.ShowMessageBox("Hey!", "Don't have work this week\nWait until next weekend", Constants.PopupType.POPUP_NO, OnCloseWindow);
+            MasterManager.ManagerPopup.ShowMessageBox("Hey!", "Guild is out of work this week\nCome back next week", Constants.PopupType.POPUP_NO, OnCloseWindow);
         }
         else
         {
@@ -270,7 +307,7 @@ public class WorkPanel : MonoBehaviour
         //reduce stamina
         //ListDataInfo playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         playerData.statsList[0].Stamina -= (short)(workList[currentIndex].stamina * playerData.playerTier);
-        MasterManager.ManagerGlobalData.SavePlayerData();
+
 
         MasterManager.ManagerPopup.ShowMessageBox("Hey!", "You made " + earnedGold.ToString() + " gold", Constants.PopupType.POPUP_SYSTEM);
 
@@ -279,7 +316,11 @@ public class WorkPanel : MonoBehaviour
 
         //take out the work from the list
         workList.RemoveAt(currentIndex);
+        playerData.workIndexList.RemoveAt(currentIndex);
         currentIndex = 0;
+
+        //save player data
+        MasterManager.ManagerGlobalData.SavePlayerData();
 
         //only if there is still work availiable in the work list
         if (workList.Count > 0)

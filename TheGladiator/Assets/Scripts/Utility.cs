@@ -72,7 +72,8 @@ public static class Utility
         string fileName;
         if(JsonFileList.TryGetValue(fileIndex, out fileName) == true)
         {
-            string path = (Application.platform == RuntimePlatform.Android ||
+            string path = (Application.platform == RuntimePlatform.Switch || 
+                Application.platform == RuntimePlatform.Android ||
                Application.platform == RuntimePlatform.IPhonePlayer ?
                Application.persistentDataPath : Application.dataPath) + fileName;
 
@@ -99,7 +100,8 @@ public static class Utility
         if (JsonFileList.TryGetValue(fileIndex, out fileName) == true)
         {
             string jsonString = JsonUtility.ToJson(jsonData);
-            string directory = (Application.platform == RuntimePlatform.Android ||
+            string directory = (Application.platform == RuntimePlatform.Switch || 
+                Application.platform == RuntimePlatform.Android ||
                 Application.platform == RuntimePlatform.IPhonePlayer ?
                 Application.persistentDataPath : Application.dataPath);
             string path = directory + fileName;

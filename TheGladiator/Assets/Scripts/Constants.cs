@@ -134,6 +134,16 @@ public static class Constants
 
     }
 
+    public enum ClockImageType : byte
+    {
+        HOUR_GLASS =0,
+        HOME,
+        TRAIN,
+        SHOPPING,
+        SPY,
+        WORK,
+    }
+
     public static int MAX_ENEMY_RANK = 10;
 
     public static float HOUR_SPENT = 8.0f;

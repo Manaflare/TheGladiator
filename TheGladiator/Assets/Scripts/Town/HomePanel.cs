@@ -18,11 +18,11 @@ public class HomePanel : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-       
+
         FinalCost = (int)(BaseCost * Mathf.Pow(MasterManager.ManagerGlobalData.GetEnvData().house_level, 3));
         cost.text = FinalCost.ToString();
 
-        Constants.HouseType houseType = (Constants.HouseType)MasterManager.ManagerGlobalData.GetEnvData().house_level ;
+        Constants.HouseType houseType = (Constants.HouseType)MasterManager.ManagerGlobalData.GetEnvData().house_level;
         string dataText = "";
         switch (houseType)
         {
@@ -36,7 +36,7 @@ public class HomePanel : MonoBehaviour
                 break;
             case Constants.HouseType.HUGE:
                 dataText = "85%\n85%";
-                this.houseType.text  = "Huge House";
+                this.houseType.text = "Huge House";
                 break;
             case Constants.HouseType.MANSION:
                 this.houseType.text = "Mansion";
@@ -52,11 +52,11 @@ public class HomePanel : MonoBehaviour
     }
     private void OnEnable()
     {
-        Start();        
+        Start();
     }
-   public void UpgradeHome()
+    public void UpgradeHome()
     {
-        if(MasterManager.ManagerGlobalData.GetEnvData().gold > FinalCost)
+        if (MasterManager.ManagerGlobalData.GetEnvData().gold > FinalCost)
         {
             MasterManager.ManagerGlobalData.GetEnvData().gold -= FinalCost;
             MasterManager.ManagerGlobalData.GetEnvData().house_level++;
@@ -66,7 +66,7 @@ public class HomePanel : MonoBehaviour
         }
         else
         {
-            MasterManager.ManagerPopup.ShowMessageBox("Oh No!","You don't have enought gold to buy this house",Constants.PopupType.POPUP_NO);
+            MasterManager.ManagerPopup.ShowMessageBox("Oh No!", "You don't have enought gold to buy this house", Constants.PopupType.POPUP_NO);
         }
     }
 
@@ -79,7 +79,7 @@ public class HomePanel : MonoBehaviour
     public void OnOK()
     {
         //  sleepImage.SetActive(true);
-        TownManager.Instance.CloseCurrentWindow(true, CallBackEndSleep, 1.0f);
+        TownManager.Instance.CloseCurrentWindow(true, CallBackEndSleep, 1.0f, Constants.ClockImageType.HOME);
     }
 
     public void OnCancel()

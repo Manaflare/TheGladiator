@@ -13,14 +13,14 @@ public class RankUpScript : MonoBehaviour {
 	void Start ()
     {
         Button btn = continueButton.GetComponent<Button>();
-        btn.onClick.AddListener(DestroyOnClick);
+        btn.onClick.AddListener(closeOnClick);
 
         ListDataInfo playerData = MasterManager.ManagerGlobalData.GetPlayerDataInfo();
         currentTier.text = playerData.playerTier.ToString();
     }
 	
-	public void DestroyOnClick()
+	public void closeOnClick()
     {
-        Destroy(this.transform.root.gameObject);
+        this.transform.gameObject.SetActive(false);
     }
 }
