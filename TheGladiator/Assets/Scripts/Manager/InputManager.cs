@@ -17,11 +17,11 @@ public class InputManager : MonoBehaviour, IManager {
 
     public bool GetKeyDown(KeyCode code)
     {
-#if UNITY_XBOXONE
-                return false;
-#elif UNITY_ANDROID
-                return false;
-#endif
+//#if UNITY_XBOXONE
+//                return false;
+//#elif UNITY_ANDROID
+//                return false;
+//#endif
         return Input.GetKeyDown(code);  
     }
 }
