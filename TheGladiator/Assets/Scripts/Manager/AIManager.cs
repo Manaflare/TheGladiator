@@ -164,7 +164,7 @@ public class AIManager : MonoBehaviour
     void PopulateEnemies()
     {
         int index = 0;
-        foreach (var a in MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData)
+        foreach (ListDataInfo enemy in MasterManager.ManagerGlobalData.GetEnemyDataInfo().enemyData)
         {
             List<C.ItemIndex> avail = new List<C.ItemIndex>()
             { 
@@ -176,30 +176,34 @@ public class AIManager : MonoBehaviour
                 C.ItemIndex.SHOES
             };
 
-            if (a.playerTier == MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier)
+            if (enemy.playerTier == MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier)
             {
-                a.itemList.Clear();
-                a.equipedItensId.Clear();
+                enemy.itemList.Clear();
+                enemy.equipedItensId.Clear();
+                List<ItemDataInfo> tierItems = new List<ItemDataInfo>();
                 foreach (var item in MasterManager.ManagerGlobalData.GetItemDataInfo().itemData)
                 {
-                    if (avail.Contains(item.Item_type))
+                    if (item.Tier == MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier)
                     {
-                        if (Random.value >= 0.5f)
-                        {
-                            avail.Remove(item.Item_type);
-                            a.itemList.Add(item);
-                        }
+                        tierItems.Add(item);
                     }
                 }
-                foreach (var i in a.itemList)
+                while(avail.Count != 0)
                 {
-                    if (Random.value >= 0.4f)
-                    {
-                        a.equipedItensId.Add(i.id);
-                    }
-                }
+                    int val = Random.Range(0, tierItems.Count);
 
-                ValidEnemies.Add(a.statsList[0].Name, index);
+                    ItemDataInfo currentItem = tierItems[val];
+
+                    if (avail.Contains(currentItem.Item_type) && !enemy.itemList.Contains(currentItem))
+                    {
+                        avail.Remove(currentItem.Item_type);
+                        enemy.itemList.Add(currentItem);
+                        enemy.equipedItensId.Add(currentItem.id);
+                    }
+
+                }
+                
+                ValidEnemies.Add(enemy.statsList[0].Name, index);
             }
             index++;
 
