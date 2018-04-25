@@ -50,7 +50,7 @@ public static class Utility
 
         }
 
-        Process.Start("notepad.exe", fn);
+        //Process.Start("notepad.exe", fn);
         File.WriteAllLines(fn, lines.ToArray());
 
     }

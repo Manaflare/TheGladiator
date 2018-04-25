@@ -64,6 +64,7 @@ public class WorkPanel : MonoBehaviour
         }
         else
         {
+            workList.Clear();
             ListWorkInfo allWorkInfo = MasterManager.ManagerGlobalData.GetAllWorkData();
             for (int i = 0; i < playerData.workIndexList.Count; ++i)
             {
@@ -136,7 +137,8 @@ public class WorkPanel : MonoBehaviour
 
             listSize--;
         }
-
+        //save player data
+        MasterManager.ManagerGlobalData.SavePlayerData();
         //current work page setup
         SetCurrentWork();
     }
