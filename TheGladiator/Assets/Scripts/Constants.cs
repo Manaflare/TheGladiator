@@ -144,7 +144,7 @@ public static class Constants
         WORK,
     }
 
-    public static int MAX_ENEMY_RANK = 10;
+    public static int MAX_ENEMY_RANK = 11;
 
     public static float HOUR_SPENT = 8.0f;
     public static float STAMINA_REGEN_INTERVAL = 1.0f;
