@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+//using GameAnalyticsSDK;
 
 public class ShopManager : InventoryManager {
 
@@ -47,7 +48,7 @@ public class ShopManager : InventoryManager {
 
         for (int p = 0; p < allItens.Count; p++)
         {
-            if(allItens[p].Tier == playerData.playerTier)
+            if(allItens[p].Tier == playerData.playerTier )
             {
                 itemList.Add(allItens[p]);
             }
@@ -267,6 +268,7 @@ public class ShopManager : InventoryManager {
             ItemDataInfo item = filteredItemList[selectedItemID];
             if (envData.gold >= item.price)
             {
+                //GameAnalytics.NewResourceEvent(GAResourceFlowType.Sink, "gold", item.price, item.Item_type.ToString() , item.Stats.Name);
                 envData.gold -= item.price;
                 playerData.itemList.Add(item);
                 MasterManager.ManagerGlobalData.SaveAllData();

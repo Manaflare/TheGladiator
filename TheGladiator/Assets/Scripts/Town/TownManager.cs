@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GameAnalyticsSDK;
+
 public class TownManager : MonoBehaviour
 {
 
@@ -61,7 +63,10 @@ public class TownManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (PlayerPrefs.GetInt("WinBracket") == 1)
+
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Undefined, "Week: " + MasterManager.ManagerGlobalData.GetEnvData().weeks, "Gold: " + MasterManager.ManagerGlobalData.GetEnvData().gold, "Tier: " + MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier, MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier);
+
+        if (PlayerPrefs.GetInt("WinBracket") == 1 && MasterManager.ManagerGlobalData.GetPlayerDataInfo().playerTier <= Constants.MAX_ENEMY_RANK)
         {
             //call popup window
             for (int i = 0; i < 2; i++)
